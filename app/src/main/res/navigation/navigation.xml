@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment">
-
+    app:startDestination="@id/mainFragment2">
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/mainFragment2"
         android:name="com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment" />

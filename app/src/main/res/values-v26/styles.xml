@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Toolbar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
+
+        <item name="android:textColor">#fff</item>
+        <item name="android:iconTint">#fff</item>
+        <item name="android:tint">#fff</item>
+    </style>
+</resources>

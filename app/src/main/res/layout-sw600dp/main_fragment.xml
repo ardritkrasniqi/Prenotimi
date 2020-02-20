@@ -7,95 +7,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.mainPage.MainFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
-        android:id="@+id/addEventFragment"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="350dp" />
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/toolbar_color"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintEnd_toEndOf="@id/calendarFragment"
-        app:layout_constraintStart_toStartOf="@id/calendarFragment"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="14dp">
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/toolbarGuide"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="348dp" />
-
-            <ImageView
-                android:id="@+id/previousMonthButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/text_grey"
-                android:src="@drawable/ic_left_direction"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/toolbarGuide"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_left_direction" />
-
-            <TextView
-                android:id="@+id/monthYear_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:textColor="@color/text_grey"
-                android:textSize="25sp"
-                android:text="April 2018"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/nextMonthButton"
-                app:layout_constraintStart_toEndOf="@id/previousMonthButton"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="April 2018" />
-
-            <ImageView
-                android:id="@+id/nextMonthButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_right_direction"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:tint="@color/text_grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_right_direction" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/calendarFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        android:layout_height="match_parent"
+        android:text="Calendar Goes here :D :D"
+        android:gravity="center"
+        android:textSize="30sp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,13 +2,12 @@ package com.ardritkrasniqi.prenotimi.ui.mainPage
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 
 import com.ardritkrasniqi.prenotimi.R
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : Fragment() {
 
@@ -22,6 +21,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
@@ -33,5 +33,7 @@ class MainFragment : Fragment() {
 
 
     }
+
+
 
 }
