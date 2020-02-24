@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cv_dayViewResource="@layout/calendar_day"
-        app:cv_monthHeaderResource="@layout/calendar_days_header"
         app:cv_orientation="horizontal"
         app:cv_outDateStyle="endOfGrid"
         app:cv_scrollMode="paged"
