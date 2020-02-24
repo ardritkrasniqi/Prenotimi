@@ -51,7 +51,7 @@ class MainFragment : Fragment() {
 
         class DayViewContainer(view: View) : ViewContainer(view) {
             lateinit var day: CalendarDay
-            val textView: TextView = view.calendarDay_text
+            var textView: TextView = view.calendarDay_text
             val layout: ConstraintLayout = view.calendarDay_layout
 
             init {
@@ -73,7 +73,11 @@ class MainFragment : Fragment() {
             override fun create(view: View) = DayViewContainer(view)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.day = day
-                container.textView.text = day.date.dayOfMonth.toString()
+                val textView = container.textView
+                val layout = container.layout
+
+                textView.text = day.date.dayOfMonth.toString()
+
                 Log.i("CLICKED" , "DATE HAS BEEN CLICKED")
             }
         }
