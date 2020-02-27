@@ -1,26 +1,44 @@
 package com.ardritkrasniqi.prenotimi.ui.mainPage
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.daysOfWeekFromLocale
+import com.ardritkrasniqi.prenotimi.makeInVisible
+import com.ardritkrasniqi.prenotimi.setTextColorRes
+import com.ardritkrasniqi.prenotimi.ui.MainActivity
+import com.ardritkrasniqi.prenotimi.ui.dayUI.DayFragment
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
+import com.kizitonwose.calendarview.model.CalendarMonth
 import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
+import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
+import kotlinx.android.synthetic.main.calendar_day.*
 import kotlinx.android.synthetic.main.calendar_day.view.*
+import kotlinx.android.synthetic.main.calendar_days_header.view.*
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
+import org.threeten.bp.format.TextStyle
+import java.util.*
 
 class MainFragment : Fragment() {
 
@@ -29,6 +47,8 @@ class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var calendarView: CalendarView
+    private val today = LocalDate.now()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +56,14 @@ class MainFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         calendarView = view.findViewById(R.id.calendarView)
+
+
 
         val daysOfWeek: Array<DayOfWeek> = daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
+        
+
         calendarView.setup(
             currentMonth.minusMonths(10),
             currentMonth.plusMonths(10),
@@ -52,9 +75,16 @@ class MainFragment : Fragment() {
         class DayViewContainer(view: View) : ViewContainer(view) {
             lateinit var day: CalendarDay
             var textView: TextView = view.calendarDay_text
-            val layout: ConstraintLayout = view.calendarDay_layout
+            var layout: ConstraintLayout = view.calendarDay_layout
+            val sotIndicator: ImageView = view.sot_indicator
+
+
 
             init {
+                view.setOnLongClickListener{
+                    NavHostFragment.findNavController(this@MainFragment).navigate(R.id.dayFragment)
+                    true
+                }
                 view.setOnClickListener {
                     if (day.owner == DayOwner.THIS_MONTH) {
                         if (selectedDate != day.date) {
@@ -62,12 +92,16 @@ class MainFragment : Fragment() {
                             selectedDate = day.date
                             calendarView.notifyDateChanged(day.date)
                             oldDate.let { calendarView.notifyDateChanged(it) }
+
+
+
+
                         }
                     }
                 }
             }
-
         }
+
 
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
@@ -75,38 +109,75 @@ class MainFragment : Fragment() {
                 container.day = day
                 val textView = container.textView
                 val layout = container.layout
+                val sotIndicator = container.sotIndicator
+
 
                 textView.text = day.date.dayOfMonth.toString()
 
-                Log.i("CLICKED" , "DATE HAS BEEN CLICKED")
+
+                if (day.owner == DayOwner.THIS_MONTH) {
+                    when(day.date){
+                        today -> {
+                            layout.setBackgroundResource(R.drawable.today_date_background)
+                            sotIndicator.visibility = View.VISIBLE
+                        }
+                        selectedDate ->{
+                            layout.setBackgroundResource(R.drawable.selected_bg)
+
+                        }
+                        else -> {
+                            layout.background = null
+                        }
+                    }
+//                    textView.setTextColorRes(R.color.toolbar_color)
+//                    layout.setBackgroundResource(if (day.date == selectedDate) R.drawable.selected_bg else 0)
+
+                } else {
+                    // per datat te cilat nuk i perkasin muajit i cili eshte i paraqitur
+                    textView.setTextColorRes(R.color.white)
+                    layout.background = null
+
+                }
+            }
+        }
+
+        class MonthViewContainer(view: View) : ViewContainer(view) {
+            val legendLayout = view.legendLayout
+        }
+        calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
+            override fun create(view: View) = MonthViewContainer(view)
+            override fun bind(container: MonthViewContainer, month: CalendarMonth) {
+                // Setup each header day text if we have not done that already.
+                if (container.legendLayout.tag == null) {
+                    container.legendLayout.tag = month.yearMonth
+                    container.legendLayout.children.map { it as TextView }
+                        .forEachIndexed { index, tv ->
+                            tv.text =
+                                daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
+                                    .toUpperCase(Locale.ENGLISH)
+                            tv.setTextColorRes(R.color.white)
+                            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
+                        }
+
+                    month.yearMonth
+                }
             }
         }
 
 
+        calendarView.monthScrollListener = { month ->
+            val title = "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
+            //monthYear_text.text = title
 
+            selectedDate?.let {
+                // Clear selection if we scroll to a new month.
+                selectedDate = null
+                calendarView.notifyDateChanged(it)
 
+            }
+        }
         return view
     }
 
-
-//    class MonthViewContainer(view: View) : ViewContainer(view) {
-//        val legendLayout = view.legendLayout
-//    }
-//    calendarView.monthHeaderBinder = object : MonthHeaderFooterBinder<MonthViewContainer> {
-//        override fun create(view: View) = MonthViewContainer(view)
-//        override fun bind(container: MonthViewContainer, month: CalendarMonth) {
-//            // Setup each header day text if we have not done that already.
-//            if (container.legendLayout.tag == null) {
-//                container.legendLayout.tag = month.yearMonth
-//                container.legendLayout.children.map { it as TextView }.forEachIndexed { index, tv ->
-//                    tv.text = daysOfWeek[index].getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
-//                        .toUpperCase(Locale.ENGLISH)
-//                    tv.setTextColorRes(R.color.example_5_text_grey)
-//                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
-//                }
-//                month.yearMonth
-//            }
-//        }
-//    }
 
 }

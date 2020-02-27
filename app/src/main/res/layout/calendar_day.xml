@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:id="@+id/calendarDay_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/day_form">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/item_view_bg_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_margin="3dp"
+        android:background="@drawable/day_form"
+        tools:layout_editor_absoluteX="-204dp"
+        tools:layout_editor_absoluteY="128dp">
 
         <TextView
             android:id="@+id/calendarDay_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="3dp"
-            android:textColor="@color/text_grey"
-            android:textSize="25sp"
-            tools:text="30" />
+            android:layout_gravity="top|end"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="13dp"
+            android:fontFamily="@font/amiko"
+            android:gravity="center"
+            android:textColor="@color/page_bg_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="24" />
+
+        <ImageView
+            android:id="@+id/sot_indicator"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="4dp"
+            android:visibility="invisible"
+            android:layout_marginEnd="9dp"
+            android:background="@drawable/today_indicator_circle" />
+
+
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

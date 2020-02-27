@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.ardritkrasniqi.prenotimi.R
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainActivity : AppCompatActivity() {
 

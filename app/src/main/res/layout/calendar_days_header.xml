@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText"
+    android:background="@color/item_view_bg_color">
 
     <TextView
         android:id="@+id/sun"
@@ -14,7 +15,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="SUN"
-        android:textColor="#000"
+        android:textColor="#fff"
         android:textSize="14sp" />
 
     <TextView
@@ -24,8 +25,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="MON"
-        android:textColor="#000"
-        android:textSize="14sp" />
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tue"
@@ -34,8 +35,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="TUE"
-        android:textColor="#000"
-        android:textSize="14sp" />
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/wed"
@@ -44,8 +45,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="WED"
-        android:textColor="#000"
-        android:textSize="14sp" />
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/thu"
@@ -54,8 +55,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="THU"
-        android:textColor="#000"
-        android:textSize="14sp" />
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/fri"
@@ -64,8 +65,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="FRI"
-        android:textColor="#000"
-        android:textSize="14sp" />
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/sat"
@@ -74,7 +75,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="SAT"
-        android:textColor="#000"
-        android:textSize="14sp" />
+        android:textColor="#fff"
+        android:textSize="18sp" />
 
 </LinearLayout>

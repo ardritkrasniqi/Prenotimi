@@ -1,5 +1,11 @@
 package com.ardritkrasniqi.prenotimi
 
+import android.content.Context
+import android.util.TypedValue
+import android.view.View
+import android.widget.TextView
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.temporal.WeekFields
 import java.util.*
@@ -15,3 +21,23 @@ fun daysOfWeekFromLocale(): Array<DayOfWeek> {
     }
     return daysOfWeek
 }
+
+
+
+internal fun TextView.setTextColorRes(@ColorRes color: Int) = setTextColor(context.getColorCompat(color))
+internal fun Context.getColorCompat(@ColorRes color: Int) = ContextCompat.getColor(this, color)
+
+fun View.makeInVisible() {
+    visibility = View.INVISIBLE
+}
+
+fun View.makeGone() {
+    visibility = View.GONE
+}
+
+public fun dpToPx(dp: Int, context: Context): Int =
+    TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(),
+        context.resources.displayMetrics
+    ).toInt()
+
