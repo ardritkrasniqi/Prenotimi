@@ -11,4 +11,5 @@
     <color name="white">#fff</color>
     <color name="day_cell">#161515</color>
     <color name="border_color">#D5CDCD</color>
+    <color name="black_color">#000</color>
 </resources>

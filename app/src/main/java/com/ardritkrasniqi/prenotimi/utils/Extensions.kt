@@ -1,4 +1,4 @@
-package com.ardritkrasniqi.prenotimi
+package com.ardritkrasniqi.prenotimi.utils
 
 import android.content.Context
 import android.util.TypedValue

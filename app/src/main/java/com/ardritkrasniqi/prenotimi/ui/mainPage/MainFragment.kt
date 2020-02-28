@@ -1,6 +1,5 @@
 package com.ardritkrasniqi.prenotimi.ui.mainPage
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -10,19 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.ardritkrasniqi.prenotimi.R
-import com.ardritkrasniqi.prenotimi.daysOfWeekFromLocale
-import com.ardritkrasniqi.prenotimi.makeInVisible
-import com.ardritkrasniqi.prenotimi.setTextColorRes
-import com.ardritkrasniqi.prenotimi.ui.MainActivity
-import com.ardritkrasniqi.prenotimi.ui.dayUI.DayFragment
+import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
+import com.ardritkrasniqi.prenotimi.utils.setTextColorRes
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
@@ -30,7 +22,6 @@ import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
-import kotlinx.android.synthetic.main.calendar_day.*
 import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_days_header.view.*
 import org.threeten.bp.DayOfWeek
@@ -60,7 +51,8 @@ class MainFragment : Fragment() {
 
 
 
-        val daysOfWeek: Array<DayOfWeek> = daysOfWeekFromLocale()
+        val daysOfWeek: Array<DayOfWeek> =
+            daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
         
 

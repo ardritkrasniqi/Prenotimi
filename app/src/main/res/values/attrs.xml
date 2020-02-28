@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="EventDay">
-        <attr name="hourTextWidth" format="float"/>
-        <attr name="hourTextFirstTopPadding" format="float"/>
-        <attr name="hourTextPadding" format="float"/>
-        <attr name="eventLineFirstTopPadding" format="float"/>
-        <attr name="eventLinePadding" format="float"/>
-        <attr name="hourColor" format="color"/>
-    </declare-styleable>
 
+<resources>
+    <declare-styleable name="CustomView">
+        <attr name="eachRowHeight" format="dimension"/>
+        <attr name="minimumPercentage" format="float"/>
+        <attr name="dividerColor" format="color"/>
+        <attr name="dividerTextColor" format="color"/>
+        <attr name="dividerTitles" format="color"/>
+        <attr name="dividerStartOffset" format="dimension"/>
+    </declare-styleable>
 </resources>
