@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/authFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragment"
@@ -18,4 +18,13 @@
         android:name="com.ardritkrasniqi.prenotimi.ui.dayUI.DayFragment"
         android:label="fragment_day"
         tools:layout="@layout/fragment_day" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.ardritkrasniqi.prenotimi.ui.authUi.AuthFragment"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth" >
+        <action
+            android:id="@+id/action_authFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

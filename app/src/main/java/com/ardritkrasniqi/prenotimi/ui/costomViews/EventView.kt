@@ -1,4 +1,4 @@
-package com.ardritkrasniqi.timelinetest
+package com.ardritkrasniqi.prenotimi.ui.costomViews
 
 
 
@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.ardritkrasniqi.prenotimi.R
+import com.ardritkrasniqi.prenotimi.model.Event
 import kotlin.math.roundToInt
 
 
@@ -67,7 +68,7 @@ class EventView<T : Event> : FrameLayout {
 
         val oneHourHeight = ((parent as CustomView).eachHourHeightInDp).toPx()
         val minDelta = ((parent as CustomView).minimumHeightEachSellPercentage)
-        var calculatedHeight: Float
+        val calculatedHeight: Float
         calculatedHeight = if (endTime - startTime < minDelta) {
             oneHourHeight * minDelta
         } else {
@@ -93,4 +94,6 @@ class EventView<T : Event> : FrameLayout {
         val r = resources
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), r.displayMetrics).toInt()
     }
+
+
 }

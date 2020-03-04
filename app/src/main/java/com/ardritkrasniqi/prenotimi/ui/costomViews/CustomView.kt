@@ -1,4 +1,4 @@
-package com.ardritkrasniqi.timelinetest
+package com.ardritkrasniqi.prenotimi.ui.costomViews
 
 import androidx.core.content.ContextCompat
 import android.animation.LayoutTransition
@@ -14,6 +14,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 import com.ardritkrasniqi.prenotimi.R
+import com.ardritkrasniqi.prenotimi.model.Event
 import java.sql.Time
 
 
@@ -65,7 +66,6 @@ class CustomView : ViewGroup {
 
 
         if (set == null) {
-
             dividerPaint = Paint().apply {
                 strokeWidth = 1f.toPx().toFloat()
                 style = Paint.Style.FILL
@@ -83,6 +83,7 @@ class CustomView : ViewGroup {
             return
         }
 
+
         val typedArray = context.obtainStyledAttributes(set, R.styleable.CustomView)
         eachHourHeightInDp = typedArray.getDimension(R.styleable.CustomView_eachRowHeight, 118f)
         minimumHeightEachSellPercentage = typedArray.getFloat(R.styleable.CustomView_minimumPercentage, .25f)
@@ -99,8 +100,11 @@ class CustomView : ViewGroup {
             if (dividerTitles.size < NUMBER_OF_ROWS)
                 throw ArrayIndexOutOfBoundsException("Divider titles array size is smaller than number of rows")
         }
+        // redrawing for changes or differences on the ui
         typedArray.recycle()
 
+
+        // divider attributes
         dividerPaint = Paint().apply {
             // divider styles and colors
             strokeWidth = 2f.toPx().toFloat()
@@ -109,18 +113,24 @@ class CustomView : ViewGroup {
             color = dividerColorId
         }
 
+        // hourText attributes
         textPaint = Paint().apply {
             @SuppressLint("ResourceAsColor")
             // the color of hour text
             color = dividerTextColorId
             textSize = TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 16f,
+                TypedValue.COMPLEX_UNIT_DIP, 18f,
                 resources.displayMetrics
             )
         }
 
 
     }
+
+
+
+
+
 
 
 
@@ -230,7 +240,7 @@ class CustomView : ViewGroup {
 
 
     override fun generateLayoutParams(attrs: AttributeSet): LayoutParams {
-        return CustomView.LayoutParams(context, attrs)
+        return LayoutParams(context, attrs)
     }
 
     override fun generateDefaultLayoutParams(): LayoutParams {
