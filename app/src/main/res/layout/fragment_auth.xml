@@ -7,9 +7,6 @@
         <variable
             name="authViewModel"
             type="com.ardritkrasniqi.prenotimi.ui.authUi.AuthFragmentViewModel" />
-        <variable
-            name="loginResponse"
-            type="com.ardritkrasniqi.prenotimi.model.LoginResponse" />
     </data>
 
 
@@ -77,7 +74,7 @@
                 android:text="Forgot Password?"
                 android:clickable="true"
                 android:focusable="true"
-                android:textSize="30sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

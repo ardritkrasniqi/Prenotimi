@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.FragmentAuthBinding
 import com.ardritkrasniqi.prenotimi.model.LoginRequest
+import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
 import kotlinx.android.synthetic.main.fragment_auth.*
 
 
@@ -34,16 +35,22 @@ class AuthFragment : Fragment() {
         binding.authViewModel = authViewModel
 
 
+        saveTo
+
+
         binding.apply {
             forgotpasswordText.paintFlags = forgotpasswordText.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
             loginButton.setOnClickListener{
-                authViewModel.loginRequest.value =  LoginRequest(
-                   etUsername.text.toString().trim(),
-                    et_password.text.toString().trim())
-
-
-                authViewModel.authenticate()
+                if(etUsername.text.contains("@") && etUsername.text.isNotBlank()) {
+                    authViewModel.loginRequest.value = LoginRequest(
+                        etUsername.text.toString().trim(),
+                        et_password.text.toString().trim())
+                    authViewModel.authenticate()
+                } else
+                {
+                    Toast.makeText(context, "Please fill required fields with valid data", Toast.LENGTH_SHORT).show()
+                }
             }
 
 
@@ -62,5 +69,7 @@ class AuthFragment : Fragment() {
 
 
     }
+
+
 
 }
