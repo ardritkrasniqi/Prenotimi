@@ -21,75 +21,59 @@
             android:layout_height="match_parent">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:text="Log In"
-                android:textSize="50sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <EditText
                 android:id="@+id/et_username"
-                android:layout_width="300dp"
-                android:hint="username"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="216dp"
+                android:layout_marginTop="136dp"
+                android:drawableStart="@drawable/ic_account_box_black_24dp"
+                android:hint=" Username"
+                android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <EditText
                 android:id="@+id/et_password"
-                android:hint="password"
-                android:layout_width="300dp"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="32dp"
+                android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+                android:hint=" Password"
+                android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_username" />
 
-
             <Button
                 android:id="@+id/login_button"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="88dp"
+                android:background="@drawable/day_form"
+                android:elevation="20dp"
                 android:text="Log In"
-                app:layout_constraintBottom_toTopOf="@+id/forgotpassword_text"
+                android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="@+id/et_password"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="@+id/et_password"
-                app:layout_constraintTop_toBottomOf="@+id/et_password"
-                app:layout_constraintVertical_bias="0.3" />
+                app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
             <TextView
                 android:id="@+id/forgotpassword_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="156dp"
-                android:text="Forgot Password?"
+                android:layout_marginTop="64dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:text="Forgot Password?"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
-            <TextView
-                android:id="@+id/testText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="40dp"
-                android:text="@{authViewModel.status}"
-                android:textSize="20sp"/>
+                app:layout_constraintTop_toBottomOf="@+id/login_button" />
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,21 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.FragmentAuthBinding
 import com.ardritkrasniqi.prenotimi.model.LoginRequest
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_auth.*
 
 
 /**
  * A simple [Fragment] subclass.
  */
+
 class AuthFragment : Fragment() {
+
+    private var message: String? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,27 +41,38 @@ class AuthFragment : Fragment() {
         binding.authViewModel = authViewModel
 
 
-        saveTo
-
+        val sharedPreference = PreferenceProvider(context?.applicationContext)
 
         binding.apply {
-            forgotpasswordText.paintFlags = forgotpasswordText.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            forgotpasswordText.paintFlags =
+                forgotpasswordText.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
-            loginButton.setOnClickListener{
-                if(etUsername.text.contains("@") && etUsername.text.isNotBlank()) {
+            authViewModel.status.observe(viewLifecycleOwner, Observer { message ->
+                if (message.isNotEmpty()) {
+                    if (message == "token_generated") {
+                        makeToast(message)
+                        NavHostFragment.findNavController(this@AuthFragment)
+                            .navigate(R.id.mainFragment)
+                    } else {
+                        makeToast(message)
+                    }
+                    authViewModel.clearStatus()
+                }
+            })
+
+
+            loginButton.setOnClickListener {
+                if (etUsername.text.contains("@") && etUsername.text.isNotBlank()) {
                     authViewModel.loginRequest.value = LoginRequest(
                         etUsername.text.toString().trim(),
-                        et_password.text.toString().trim())
+                        et_password.text.toString().trim()
+                    )
                     authViewModel.authenticate()
-                } else
-                {
-                    Toast.makeText(context, "Please fill required fields with valid data", Toast.LENGTH_SHORT).show()
+                    sharedPreference.saveToken(authViewModel.authToken)
+                } else {
+                    makeToast("Please fill required fields with valid data")
                 }
             }
-
-
-
-
         }
 
 
@@ -67,9 +84,15 @@ class AuthFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
     }
 
+
+    private fun makeToast(message: String): Unit? {
+        return if (message == "token_generated") {
+            context?.let { Toasty.success(it, message, Toasty.LENGTH_SHORT).show() }
+        } else
+            context?.let { Toasty.error(it, message, Toasty.LENGTH_SHORT).show() }
+    }
 
 
 }

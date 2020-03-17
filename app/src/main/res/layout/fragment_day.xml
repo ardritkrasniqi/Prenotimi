@@ -10,11 +10,10 @@
         android:layout_height="match_parent">
 
 
-    <com.ardritkrasniqi.prenotimi.ui.costomViews.CustomView
+    <com.ardritkrasniqi.prenotimi.ui.costomViews.CalendarDayView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        />
+        app:dayHeight="30dp"/>
     </ScrollView>
 
 

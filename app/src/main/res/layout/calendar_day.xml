@@ -11,8 +11,8 @@
         android:layout_height="match_parent"
         android:layout_margin="3dp"
         android:background="@drawable/day_form"
-        tools:layout_editor_absoluteX="-204dp"
-        tools:layout_editor_absoluteY="128dp">
+        tools:layout_editor_absoluteX="-69dp"
+        tools:layout_editor_absoluteY="86dp">
 
         <TextView
             android:id="@+id/calendarDay_text"
@@ -30,13 +30,13 @@
 
         <ImageView
             android:id="@+id/sot_indicator"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="33dp"
+            android:layout_height="36dp"
             android:layout_gravity="top|end"
             android:layout_marginTop="4dp"
-            android:visibility="invisible"
             android:layout_marginEnd="9dp"
-            android:background="@drawable/today_indicator_circle" />
+            android:background="@drawable/today_indicator_circle"
+            android:visibility="invisible"/>
 
 
     </FrameLayout>

@@ -1,4 +1,4 @@
-package com.ardritkrasniqi.prenotimi.ui
+package com.ardritkrasniqi.prenotimi.ui.mainAcitivity
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,10 +7,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.ActivityMainBinding
+import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +31,24 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
+        val mainViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+
+        val preference = PreferenceProvider(this.applicationContext)
+
+        mainViewModel.token.value = preference.getToken()
+
+
+        // BOTTOMSHEET DIALOG BEHAVIORS ON ADD CLICK
+        binding.buttonAddEvent.setOnClickListener {
+            val dialog =
+                ShtoRezervimDialog()
+            dialog.show(supportFragmentManager, "BOTTOMSHEETDIALOG")
+        }
+
+
+
+
+
 
 
         drawer = findViewById(R.id.drawerLayout)
@@ -40,18 +62,23 @@ class MainActivity : AppCompatActivity() {
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
+
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
 
         navHostFragment?.navController?.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.authFragment) {
                 binding.toolbar.visibility = View.GONE
+                binding.buttonAddEvent.visibility = View.GONE
+            } else {
+                binding.toolbar.visibility = View.VISIBLE
+                binding.buttonAddEvent.visibility = View.VISIBLE
             }
         }
 
     }
-
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

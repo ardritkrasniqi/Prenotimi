@@ -1,17 +1,51 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.Toolbar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" >
 
+    <style name="AppTheme.Toolbar" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar">
         <item name="android:textColor">#fff</item>
+    </style>
 
+    <style name="hintTextAppearance">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/black_color</item>
+        <item name="android:textStyle">italic</item>
+        <item name="fontFamily">@font/basic</item>
+    </style>
+
+
+    <!--    style for materialEditText-->
+    <style name="MaterialEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusBottomEnd">40dp</item>
+        <item name="boxCornerRadiusTopEnd">40dp</item>
+        <item name="boxCornerRadiusTopStart">40dp</item>
+        <item name="boxCornerRadiusBottomStart">40dp</item>
+        <item name="boxStrokeColor">#FF0000</item>
+
+    </style>
+
+
+    <style name="CustomDatePickerDialog"
+        parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:dialogTheme">@style/MyDialogTheme</item>
+        <item name="android:timePickerStyle">@style/MyDatePicker</item>
+    </style>
+
+    <style name="MyDialogTheme"
+        parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:timePickerStyle">@style/MyDatePicker</item>
+    </style>
+
+    <style name="MyDatePicker"
+        parent="@android:style/Widget.Material.Light.TimePicker">
+        <item name="android:timePickerMode">spinner</item>
     </style>
 
 </resources>

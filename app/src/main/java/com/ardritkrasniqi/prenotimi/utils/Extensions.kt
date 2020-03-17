@@ -1,13 +1,18 @@
 package com.ardritkrasniqi.prenotimi.utils
 
 import android.content.Context
+import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.temporal.WeekFields
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun daysOfWeekFromLocale(): Array<DayOfWeek> {
@@ -40,4 +45,15 @@ public fun dpToPx(dp: Int, context: Context): Int =
         TypedValue.COMPLEX_UNIT_DIP, dp.toFloat(),
         context.resources.displayMetrics
     ).toInt()
+
+fun screenDimensions(heightOrWidth: String): Int{
+    val displayMetrics: DisplayMetrics = DisplayMetrics()
+
+    return if(heightOrWidth == "height") displayMetrics.heightPixels else displayMetrics.widthPixels
+}
+
+
+
+
+
 

@@ -3,6 +3,7 @@ package com.ardritkrasniqi.prenotimi.ui.authUi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ardritkrasniqi.prenotimi.model.LoginErrorResponse
 import com.ardritkrasniqi.prenotimi.model.LoginRequest
 import com.ardritkrasniqi.prenotimi.model.LoginResponse
@@ -21,9 +22,9 @@ class AuthFragmentViewModel : ViewModel() {
 
     val loginRequest = MutableLiveData<LoginRequest>()
 
-//    private val _authToken = MutableLiveData<String>()
-//    val authToken: LiveData<String>
-//        get() = _authToken
+    private val _authToken = MutableLiveData<String>()
+    val authToken: LiveData<String>
+        get() = _authToken
 
 
     private var _status = MutableLiveData<String>()
@@ -35,15 +36,18 @@ class AuthFragmentViewModel : ViewModel() {
     val loginResponse: LiveData<LoginResponse>
     get() = _loginResponse
 
+    init {
+        _authToken.value = ""
+    }
+
 
     fun authenticate() {
-        scope.launch {
+        viewModelScope.launch {
             val sendUser = ApiService.retrofitService.login(loginRequest.value)
             try {
                 val loginResult: LoginResponse = sendUser.await()
-
-
-                _status.value = "succes ${loginResult.message}"
+                _status.value = loginResult.message
+                _authToken.value = loginResult.data.token
                 _loginResponse.value = loginResult
 
             } catch (e: HttpException) {
@@ -66,6 +70,10 @@ class AuthFragmentViewModel : ViewModel() {
         viewModelJob.cancel()
         coroutineContext.cancel()
         scope.cancel()
+    }
+
+    fun clearStatus() {
+        _status.value = ""
     }
 
 

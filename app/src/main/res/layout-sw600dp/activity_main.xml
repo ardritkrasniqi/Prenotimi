@@ -11,20 +11,19 @@
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
-
+        tools:context=".ui.mainAcitivity.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/toolbarConstraint"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/toolbarConstraint">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
+                style="@style/AppTheme.Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:animationCache="true"
-                style="@style/AppTheme.Toolbar"
                 android:background="@color/toolbar_color"
                 android:elevation="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -86,10 +85,18 @@
 
             </androidx.appcompat.widget.Toolbar>
 
-
             <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/button_addEvent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="40dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_add" />
 
                 <fragment
                     android:id="@+id/main"
@@ -102,8 +109,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/toolbar"
-                    app:navGraph="@navigation/navigation" />
-
+                    app:navGraph="@navigation/navigation"></fragment>
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -112,12 +118,12 @@
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:itemTextColor="#fff"
-            app:itemIconTint="#fff"
             android:layout_gravity="start"
-            app:headerLayout="@layout/navigation_header"
             android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
             android:background="#263238"
+            app:headerLayout="@layout/navigation_header"
+            app:itemIconTint="#fff"
+            app:itemTextColor="#fff"
             app:menu="@menu/navigation_drawer_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

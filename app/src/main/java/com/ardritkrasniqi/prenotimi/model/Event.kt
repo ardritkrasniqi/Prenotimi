@@ -1,17 +1,28 @@
 package com.ardritkrasniqi.prenotimi.model
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import com.ardritkrasniqi.prenotimi.model.data.IEvent
+import com.squareup.moshi.Json
 
-@Entity(tableName = "event_table")
-open class Event {
-    @PrimaryKey(autoGenerate = false)
-    val id: Int = 1
-    @ColumnInfo(name = "title")
-    var title: String = ""
-    @ColumnInfo(name = "start_time")
-    var startTime = 0f
-    @ColumnInfo(name = "end_time")
-    var endTime = 0f
+
+
+data class Event(
+    @Json(name = "client_name")
+    override val name: String,
+    @Json(name = "client_phone")
+    val phone: String,
+    @Json(name = "start_date")
+    val start_date: String,
+    @Json(name = "end_date")
+    val end_date: String,
+    @Json(name = "recurring")
+    val recurring: Int = 0,
+    @Json(name = "comment")
+    val comment: String = ""
+) : IEvent {
+    override val color: Int
+        get() = color
+    override val startTime: String
+        get() = start_date
+    override val endTime: String
+        get() = end_date
 }

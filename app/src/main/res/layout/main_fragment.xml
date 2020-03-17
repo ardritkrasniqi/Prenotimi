@@ -4,32 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:background="#BFBFBF"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.mainPage.MainFragment">
-
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <com.kizitonwose.calendarview.CalendarView
             android:id="@+id/calendarView"
+            android:padding="2dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cv_dayViewResource="@layout/calendar_day"
-            app:cv_inDateStyle="firstMonth"
-            app:cv_orientation="vertical"
-            app:cv_outDateStyle="none"
-            app:cv_scrollMode="continuous"
+            app:cv_inDateStyle="allMonths"
+            app:cv_monthHeaderResource="@layout/calendar_days_header"
+            app:cv_orientation="horizontal"
+            app:cv_outDateStyle="endOfRow"
+            app:cv_hasBoundaries="true"
+            app:cv_scrollMode="paged"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
