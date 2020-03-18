@@ -80,7 +80,7 @@ class EventView : FrameLayout {
     fun setEvent(event: IEvent) {
         mEvent = event
         mEventName?.text = String.valueOf(event.name)
-        mEventContent?.setBackgroundColor(event.color)
+        mEventContent?.setBackgroundColor(R.color.eventColor)
     }
 
     private val headerHeight: Int

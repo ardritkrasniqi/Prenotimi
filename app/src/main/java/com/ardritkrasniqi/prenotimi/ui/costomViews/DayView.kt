@@ -11,9 +11,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.ardritkrasniqi.prenotimi.R
 
+private lateinit var textHour: TextView
+private lateinit var separateHour: LinearLayout
+private val source: String = "12:00"
+
 class DayView : FrameLayout {
-    private var mTextHour: TextView? = null
-    private var mSeparateHour: LinearLayout? = null
 
     constructor(context: Context?) : super((context)!!) {
         init(null)
@@ -36,19 +38,19 @@ class DayView : FrameLayout {
 
     private fun init(attrs: AttributeSet?) {
         LayoutInflater.from(context).inflate(R.layout.view_day, this, true)
-        mTextHour = findViewById<View>(R.id.text_hour) as TextView
-        mSeparateHour = findViewById<View>(R.id.separate_hour) as LinearLayout
+        textHour = findViewById<View>(R.id.text_hour) as TextView
+        separateHour = findViewById<View>(R.id.separate_hour) as LinearLayout
     }
 
     fun setText(text: String?) {
-        mTextHour!!.text = text
+        textHour.text = text
     }
 
     val hourTextWidth: Float
         get() {
             val param: LinearLayout.LayoutParams =
-                mTextHour!!.layoutParams as LinearLayout.LayoutParams
-            val measureTextWidth: Float = mTextHour!!.paint.measureText("12:00")
+                textHour.layoutParams as LinearLayout.LayoutParams
+            val measureTextWidth: Float = textHour.paint.measureText("12:00")
             return (measureTextWidth.coerceAtLeast(param.width.toFloat())
                     + param.marginEnd
                     + param.marginStart)
@@ -56,20 +58,22 @@ class DayView : FrameLayout {
 
     val hourTextHeight: Float
         get() = (StaticLayout(
-            "12:00", mTextHour!!.paint, hourTextWidth.toInt(),
-            Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true)).height.toFloat()
+            "12:00", textHour.paint, hourTextWidth.toInt(),
+            Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true
+        )).height.toFloat()
+
 
     val separateHeight: Float
         get() {
-            return mSeparateHour!!.layoutParams.height.toFloat()
+            return separateHour.layoutParams.height.toFloat()
         }
 
     private fun setHourSeparatorAsInvisible() {
-        mSeparateHour!!.visibility = View.INVISIBLE
+        separateHour.visibility = View.INVISIBLE
     }
 
     private fun setHourSeparatorAsVisible() {
-        mSeparateHour!!.visibility = View.VISIBLE
+        separateHour.visibility = View.VISIBLE
     }
 
     fun setHourSeparatorIsVisible(b: Boolean) {

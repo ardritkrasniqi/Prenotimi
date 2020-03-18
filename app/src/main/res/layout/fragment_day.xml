@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.dayUI.DayFragment">
-    <ScrollView
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.dayUI.DayFragment">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    <com.ardritkrasniqi.prenotimi.ui.costomViews.CalendarDayView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:dayHeight="30dp"/>
-    </ScrollView>
+            <com.ardritkrasniqi.prenotimi.ui.costomViews.CalendarDayView
+                android:id="@+id/dayView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dayHeight="30dp" />
+        </ScrollView>
 
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

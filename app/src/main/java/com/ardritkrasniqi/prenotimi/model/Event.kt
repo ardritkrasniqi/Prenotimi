@@ -1,8 +1,9 @@
 package com.ardritkrasniqi.prenotimi.model
 
 import com.ardritkrasniqi.prenotimi.model.data.IEvent
+import com.ardritkrasniqi.prenotimi.utils.timeConverterStringToCalendar
 import com.squareup.moshi.Json
-
+import java.util.*
 
 
 data class Event(
@@ -19,8 +20,6 @@ data class Event(
     @Json(name = "comment")
     val comment: String = ""
 ) : IEvent {
-    override val color: Int
-        get() = color
     override val startTime: String
         get() = start_date
     override val endTime: String

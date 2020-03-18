@@ -54,6 +54,12 @@ fun screenDimensions(heightOrWidth: String): Int{
 
 
 
-
+fun timeConverterStringToCalendar(string: String): Calendar{
+    val sdf = SimpleDateFormat("EEEE, MMMM dd, yyyy   HH:mm:ss")
+    val calendar = Calendar.getInstance()
+    val dateFormated = sdf.parse(string)
+    calendar.time = dateFormated
+    return calendar
+}
 
 
