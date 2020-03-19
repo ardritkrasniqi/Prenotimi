@@ -21,7 +21,7 @@ data class Event(
     val comment: String = ""
 ) : IEvent {
     override val startTime: String
-        get() = start_date
+        get() = start_date.substring(10)
     override val endTime: String
-        get() = end_date
+        get() = end_date.substring(10)
 }

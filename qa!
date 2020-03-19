@@ -1,0 +1,86 @@
+[33mcommit 351bf7d25fe6ed2081acde99041d9775bfc4eabe[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Wed Mar 18 14:27:39 2020 +0100
+
+    great success :D
+
+[33mcommit c393ce9c9baef20bdb416f667e6528da2c518362[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Tue Mar 17 16:15:26 2020 +0100
+
+    finished the dayUI
+
+[33mcommit a871a2fe80cbe7927350c1e4e97ea817919f715e[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Thu Mar 5 16:04:32 2020 +0100
+
+    login is fully functioning
+
+[33mcommit 9d1494a3473da9234bf77170f601758bd7466ec0[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Wed Mar 4 20:46:37 2020 +0100
+
+    generating auth token-not complete-
+
+[33mcommit bd7e942049a2c9e9dccd225e5a6658a238d8ae64[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Fri Feb 28 15:21:29 2020 +0100
+
+    normalized the project
+
+[33mcommit 65db3c7c0bdbb7256a973d0daac8d1140d92065b[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Fri Feb 28 15:13:02 2020 +0100
+
+    normalized the commit into master(dayEventView is fixed)
+
+[33mcommit d30b325cd653f9be3a814c2b8d22de86f1621167[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Fri Feb 28 11:34:03 2020 +0100
+
+    fixed the event day layout
+
+[33mcommit 6ee0fab4d8f2130fd93b7a7e6c79bdfaa128afcf[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Thu Feb 27 17:19:22 2020 +0100
+
+    non important commit
+
+[33mcommit 77d016cd365a51be5b430a770f05bb3ef5a26f5a[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Mon Feb 24 10:50:16 2020 +0100
+
+    finished base constructions on UI
+
+[33mcommit d581a13a5119c3a062e3753468bcf1846fb06e2f[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Mon Feb 24 10:42:07 2020 +0100
+
+    additional changes and normalized the dev
+
+[33mcommit 3b0a55a6e3f8b7f36a7b723648ecbea1c7dafe20[m
+Merge: d72fe14 b05350a
+Author: Ardrit <ardritk1@gmail.com>
+Date:   Fri Feb 21 17:28:30 2020 +0100
+
+    Merge pull request #1 from ardritkrasniqi/ard-dev-ui
+    
+    Ard dev ui
+
+[33mcommit b05350a41d4affd285f29179610eb544a255caeb[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Fri Feb 21 16:05:24 2020 +0100
+
+    armagedon
+
+[33mcommit 32b3f80da38d8e50d975d5307e7544f6b5f34afe[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Thu Feb 20 16:02:59 2020 +0100
+
+    added navdrawer
+
+[33mcommit d72fe141284cbbab3c6a7abdb3438e09307ef804[m
+Author: AcerE5 <ardritk1@gmail.com>
+Date:   Wed Feb 19 22:53:53 2020 +0100
+
+    initial commit, depedencies and few stuff were preDeveloped
