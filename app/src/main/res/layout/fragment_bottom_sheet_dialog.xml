@@ -72,6 +72,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
+                android:id="@+id/emri_mbiemri"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/basic"
                 android:singleLine="true"
@@ -107,6 +108,7 @@
                 android:singleLine="true"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
+                android:id="@+id/telefoni_edit"
                 android:textSize="25sp"
                 tools:layout_editor_absoluteX="702dp"
                 tools:layout_editor_absoluteY="208dp" />

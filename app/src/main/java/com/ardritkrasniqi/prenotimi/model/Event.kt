@@ -1,9 +1,8 @@
 package com.ardritkrasniqi.prenotimi.model
 
 import com.ardritkrasniqi.prenotimi.model.data.IEvent
-import com.ardritkrasniqi.prenotimi.utils.timeConverterStringToCalendar
+
 import com.squareup.moshi.Json
-import java.util.*
 
 
 data class Event(
@@ -17,8 +16,17 @@ data class Event(
     val end_date: String,
     @Json(name = "recurring")
     val recurring: Int = 0,
+    @Json(name = "recurring_frequency")
+    val recurring_frequency: String? = null,
     @Json(name = "comment")
-    val comment: String = ""
+    val comment: String = "",
+    @Json(name = "created_at")
+    val created_at: String,
+    @Json(name = "updated_at")
+    val updated_at: String,
+    @Json(name = "id")
+    val id: Int
+
 ) : IEvent {
     override val startTime: String
         get() = start_date.substring(10)

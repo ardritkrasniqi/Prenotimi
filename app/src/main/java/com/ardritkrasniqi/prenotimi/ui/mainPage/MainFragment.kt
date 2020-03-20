@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.ardritkrasniqi.prenotimi.R
+import com.ardritkrasniqi.prenotimi.model.Event
+import com.ardritkrasniqi.prenotimi.utils.addEvents
 import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
+import com.ardritkrasniqi.prenotimi.utils.events
 import com.ardritkrasniqi.prenotimi.utils.setTextColorRes
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
@@ -50,11 +53,10 @@ class MainFragment : Fragment() {
         calendarView = view.findViewById(R.id.calendarView)
 
 
-
         val daysOfWeek: Array<DayOfWeek> =
             daysOfWeekFromLocale()
         val currentMonth = YearMonth.now()
-        
+
 
         calendarView.setup(
             currentMonth.minusMonths(10),
@@ -70,10 +72,9 @@ class MainFragment : Fragment() {
             var layout: ConstraintLayout = view.calendarDay_layout
             val sotIndicator: ImageView = view.sot_indicator
 
-
-
             init {
-                view.setOnLongClickListener{
+                view.setOnLongClickListener {
+                    day.events // TODO qoji kto evente ne DAYView
                     NavHostFragment.findNavController(this@MainFragment).navigate(R.id.dayFragment)
                     true
                 }
@@ -84,8 +85,6 @@ class MainFragment : Fragment() {
                             selectedDate = day.date
                             calendarView.notifyDateChanged(day.date)
                             oldDate.let { calendarView.notifyDateChanged(it) }
-
-
 
 
                         }
@@ -99,24 +98,29 @@ class MainFragment : Fragment() {
             override fun create(view: View) = DayViewContainer(view)
             override fun bind(container: DayViewContainer, day: CalendarDay) {
                 container.day = day
+                //day.addEvents(viewModel.events.filter { it.start_date == day.date.format() }.toMutableList())
+
                 val textView = container.textView
                 val layout = container.layout
                 val sotIndicator = container.sotIndicator
 
+//                val itemview1 = container.view1
+//                itemview1 = day.find()
+//                //TODO plotesoji vijat ne VIEW me data te eventeve
 
                 textView.text = day.date.dayOfMonth.toString()
 
 
                 if (day.owner == DayOwner.THIS_MONTH) {
-                    when(day.date){
+                    when (day.date) {
                         today -> {
                             layout.setBackgroundResource(R.drawable.today_date_background)
                             sotIndicator.visibility = View.VISIBLE
                         }
-                        selectedDate ->{
-                            layout.setBackgroundResource(R.drawable.selected_bg)
-
-                        }
+//                        selectedDate -> {
+//                            layout.setBackgroundResource(R.drawable.selected_bg)
+//
+//                        }
                         else -> {
                             layout.background = null
                         }
@@ -155,8 +159,6 @@ class MainFragment : Fragment() {
                 }
             }
         }
-
-
         calendarView.monthScrollListener = { month ->
             val title = "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
             //monthYear_text.text = title
@@ -170,7 +172,4 @@ class MainFragment : Fragment() {
         }
         return view
     }
-
-
-
 }

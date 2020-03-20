@@ -12,9 +12,6 @@ import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.decoration.CdvDecoration
 import com.ardritkrasniqi.prenotimi.decoration.CdvDecorationDefault
 import com.ardritkrasniqi.prenotimi.model.Event
-import com.ardritkrasniqi.prenotimi.model.data.IEvent
-import com.ardritkrasniqi.prenotimi.model.data.ITimeDuration
-import com.ardritkrasniqi.prenotimi.utils.timeConverterStringToCalendar
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -111,9 +108,10 @@ class CalendarDayView : FrameLayout {
     }
 
 
-    private fun getTimeBound(event:Event): Rect {
+    private fun getTimeBound(event: Event): Rect {
         val rect = Rect()
-        rect.top = getPositionOfTime(timeConverterStringToCalendar(event.startTime)) + timeHeight / 2 + separateHourHeight
+        rect.top =
+            getPositionOfTime(timeConverterStringToCalendar(event.startTime)) + timeHeight / 2 + separateHourHeight
         rect.bottom =
             getPositionOfTime(timeConverterStringToCalendar(event.endTime)) + timeHeight / 2 + separateHourHeight
         rect.left = hourWidth + eventMarginLeft
@@ -139,7 +137,7 @@ class CalendarDayView : FrameLayout {
         refresh()
     }
 
-    fun timeConverterStringToCalendar(string: String): Calendar{
+    private fun timeConverterStringToCalendar(string: String): Calendar {
         val sdf = SimpleDateFormat("HH:mm")
         val calendar = Calendar.getInstance()
         val dateFormated = sdf.parse(string)

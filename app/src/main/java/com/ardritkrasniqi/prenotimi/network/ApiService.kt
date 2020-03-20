@@ -2,9 +2,8 @@ package com.ardritkrasniqi.prenotimi.network
 
 
 
-import com.ardritkrasniqi.prenotimi.model.LoginRequest
-import com.ardritkrasniqi.prenotimi.model.LoginResponse
-import com.ardritkrasniqi.prenotimi.model.User
+import com.ardritkrasniqi.prenotimi.model.*
+
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -18,7 +17,7 @@ import retrofit2.http.POST
 
 
 
-const val BASE_URL = "http://45.76.43.73/appointment-app-backend/public/api/auth/"
+const val BASE_URL = "http://45.76.43.73/appointment-app-backend/public/api/"
 
 
 val moshi: Moshi = Moshi.Builder()
@@ -36,13 +35,25 @@ val retrofit: Retrofit = Retrofit.Builder()
 
 interface PrenotimiApplicationApiService {
 
-    @POST("login")
+    //login
+    @POST("auth/login")
     fun login(
         @Body loginRequest: LoginRequest?
     ): Deferred<LoginResponse>
 
-    @GET("user/me")
-    fun user(@Header("Authorization") token: String): Deferred<User>
+    //User profile
+    @GET("auth/user/me")
+    fun user(
+        @Header("Authorization") token: String): Deferred<User>
+
+    //Create Appointment
+    @POST("appointment/create")
+    fun createAppointment(@Header("Authorization") token: String,
+                          @Body createEvent: CreateEvent): Deferred<Event>
+
+    // All Appointments
+    @GET("appointment/all")
+    fun allAppointments(@Header("Authorization") token: String): Deferred<List<Event>>
 
 }
 

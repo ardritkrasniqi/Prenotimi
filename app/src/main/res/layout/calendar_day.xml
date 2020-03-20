@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/calendarDay_layout"
     android:layout_width="match_parent"
@@ -7,12 +8,19 @@
     android:background="@drawable/day_form">
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_margin="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
         android:background="@drawable/day_form"
-        tools:layout_editor_absoluteX="-69dp"
-        tools:layout_editor_absoluteY="86dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/calendarDay_text"
@@ -24,19 +32,74 @@
             android:fontFamily="@font/amiko"
             android:gravity="center"
             android:textColor="@color/page_bg_color"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             tools:text="24" />
 
         <ImageView
             android:id="@+id/sot_indicator"
-            android:layout_width="33dp"
-            android:layout_height="36dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_gravity="top|end"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="9dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/today_indicator_circle"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
+
+
+
+            <LinearLayout
+                android:id="@+id/event_item_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="40dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/basic"
+                    android:textColor="#fff"
+                    android:textAlignment="center"
+                    android:background="#0238F6"
+                    android:text="11:20-12:20 Ardrit Krasniqi" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#fff"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/basic"
+                    android:background="@color/colorPrimary"
+                    android:text="11:20-12:20 Ardrit Krasniqi" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textColor="#fff"
+                    android:fontFamily="@font/basic"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/colorPrimary"
+                    android:text="11:20-12:20 Ardrit Krasniqi" />
+
+            </LinearLayout>
+
 
 
     </FrameLayout>

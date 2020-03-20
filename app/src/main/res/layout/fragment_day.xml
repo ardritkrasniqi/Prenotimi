@@ -20,8 +20,7 @@
             <com.ardritkrasniqi.prenotimi.ui.costomViews.CalendarDayView
                 android:id="@+id/dayView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:textHourSize="30sp"/>
+                android:layout_height="wrap_content" />
         </ScrollView>
 
 
