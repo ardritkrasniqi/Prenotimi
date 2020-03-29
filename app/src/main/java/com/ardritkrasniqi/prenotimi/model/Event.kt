@@ -7,7 +7,7 @@ import com.squareup.moshi.Json
 
 data class Event(
     @Json(name = "client_name")
-    override val name: String,
+    val client_name: String,
     @Json(name = "client_phone")
     val phone: String,
     @Json(name = "start_date")
@@ -28,6 +28,8 @@ data class Event(
     val id: Int
 
 ) : IEvent {
+    override val clientName: String
+        get() = client_name
     override val startTime: String
         get() = start_date.substring(10)
     override val endTime: String

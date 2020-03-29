@@ -24,8 +24,6 @@ import kotlinx.android.synthetic.main.fragment_auth.*
 
 class AuthFragment : Fragment() {
 
-    private var message: String? = null
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +39,15 @@ class AuthFragment : Fragment() {
         binding.authViewModel = authViewModel
 
 
-        val sharedPreference = PreferenceProvider(context?.applicationContext)
+        val sharedP = PreferenceProvider(this.requireContext())
+
+
+
+
+        authViewModel.authToken.observe(viewLifecycleOwner, Observer { newToken ->
+            sharedP.saveToken(newToken)
+        })
+
 
         binding.apply {
             forgotpasswordText.paintFlags =
@@ -50,7 +56,6 @@ class AuthFragment : Fragment() {
             authViewModel.status.observe(viewLifecycleOwner, Observer { message ->
                 if (message.isNotEmpty()) {
                     if (message == "token_generated") {
-                        makeToast(message)
                         NavHostFragment.findNavController(this@AuthFragment)
                             .navigate(R.id.mainFragment)
                     } else {
@@ -61,6 +66,10 @@ class AuthFragment : Fragment() {
             })
 
 
+
+
+
+
             loginButton.setOnClickListener {
                 if (etUsername.text.contains("@") && etUsername.text.isNotBlank()) {
                     authViewModel.loginRequest.value = LoginRequest(
@@ -68,7 +77,6 @@ class AuthFragment : Fragment() {
                         et_password.text.toString().trim()
                     )
                     authViewModel.authenticate()
-                    sharedPreference.saveToken(authViewModel.authToken)
                 } else {
                     makeToast("Please fill required fields with valid data")
                 }
@@ -76,13 +84,9 @@ class AuthFragment : Fragment() {
         }
 
 
+
+
         return binding.root
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
 
     }
 

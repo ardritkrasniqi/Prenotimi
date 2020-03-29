@@ -1,18 +1,20 @@
 package com.ardritkrasniqi.prenotimi.model
 
 
-import com.google.gson.annotations.SerializedName
 import com.squareup.moshi.Json
+
 
 data class CreateEvent(
     @Json(name = "client_name")
-    val clientName: String,
+    val client_name: String,
     @Json(name = "client_phone")
     val clientPhone: String,
-    @SerializedName("start_date")
+    @Json(name = "start_date")
     val startDate: String,
     @Json(name = "end_date")
     val endDate: String,
+    @Json(name = "recurring")
     val recurring: Int,
+    @Json(name = "comment")
     val comment: String
 )

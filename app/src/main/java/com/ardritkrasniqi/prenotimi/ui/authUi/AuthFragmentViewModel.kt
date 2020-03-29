@@ -1,9 +1,9 @@
 package com.ardritkrasniqi.prenotimi.ui.authUi
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.lifecycle.*
 import com.ardritkrasniqi.prenotimi.model.LoginErrorResponse
 import com.ardritkrasniqi.prenotimi.model.LoginRequest
 import com.ardritkrasniqi.prenotimi.model.LoginResponse
@@ -15,9 +15,6 @@ import kotlin.coroutines.CoroutineContext
 
 class AuthFragmentViewModel : ViewModel() {
 
-    private val viewModelJob = Job()
-    private val coroutineContext: CoroutineContext get() = viewModelJob + Dispatchers.Main
-    private val scope = CoroutineScope(coroutineContext)
 
 
     val loginRequest = MutableLiveData<LoginRequest>()
@@ -32,13 +29,12 @@ class AuthFragmentViewModel : ViewModel() {
         get() = _status
 
 
+
     private var _loginResponse = MutableLiveData<LoginResponse>()
     val loginResponse: LiveData<LoginResponse>
     get() = _loginResponse
 
-    init {
-        _authToken.value = ""
-    }
+
 
 
     fun authenticate() {
@@ -49,6 +45,7 @@ class AuthFragmentViewModel : ViewModel() {
                 _status.value = loginResult.message
                 _authToken.value = loginResult.data.token
                 _loginResponse.value = loginResult
+
 
             } catch (e: HttpException) {
                 val error =
@@ -65,12 +62,7 @@ class AuthFragmentViewModel : ViewModel() {
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-        coroutineContext.cancel()
-        scope.cancel()
-    }
+
 
     fun clearStatus() {
         _status.value = ""

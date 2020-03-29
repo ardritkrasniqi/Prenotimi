@@ -73,23 +73,22 @@ class MainFragment : Fragment() {
             val sotIndicator: ImageView = view.sot_indicator
 
             init {
-                view.setOnLongClickListener {
+                view.setOnClickListener {
                     day.events // TODO qoji kto evente ne DAYView
                     NavHostFragment.findNavController(this@MainFragment).navigate(R.id.dayFragment)
-                    true
                 }
-                view.setOnClickListener {
-                    if (day.owner == DayOwner.THIS_MONTH) {
-                        if (selectedDate != day.date) {
-                            val oldDate = day.date
-                            selectedDate = day.date
-                            calendarView.notifyDateChanged(day.date)
-                            oldDate.let { calendarView.notifyDateChanged(it) }
-
-
-                        }
-                    }
-                }
+//                view.setOnClickListener {
+//                    if (day.owner == DayOwner.THIS_MONTH) {
+//                        if (selectedDate != day.date) {
+//                            val oldDate = day.date
+//                            selectedDate = day.date
+//                            calendarView.notifyDateChanged(day.date)
+//                            oldDate.let { calendarView.notifyDateChanged(it) }
+//
+//
+//                        }
+//                    }
+//                }
             }
         }
 

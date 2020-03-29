@@ -33,9 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         val mainViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
-        val preference = PreferenceProvider(this.applicationContext)
 
-        mainViewModel.token.value = preference.getToken()
 
 
         // BOTTOMSHEET DIALOG BEHAVIORS ON ADD CLICK

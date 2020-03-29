@@ -16,10 +16,10 @@ class PreferenceProvider(context: Context?) {
 
 
 
-    fun saveToken(token: LiveData<String>){
+    fun saveToken(token: String){
         preference.edit().putString(
             CURRENT_TOKEN,
-            token.value
+            token
         ).apply()
     }
 
