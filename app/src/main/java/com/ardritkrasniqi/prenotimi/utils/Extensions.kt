@@ -10,8 +10,11 @@ import androidx.core.content.ContextCompat
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.kizitonwose.calendarview.model.CalendarDay
 import org.threeten.bp.DayOfWeek
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.WeekFields
 import java.text.SimpleDateFormat
+
 import java.util.*
 
 fun daysOfWeekFromLocale(): Array<DayOfWeek> {
@@ -67,6 +70,12 @@ fun timeConverterStringToCalendar(string: String): Calendar {
     val dateFormated = sdf.parse(string)
     calendar.time = dateFormated
     return calendar
+}
+
+
+fun stringToLocalDate(string: String): LocalDate{
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    return LocalDate.parse(string,formatter)
 }
 
 

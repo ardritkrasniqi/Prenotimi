@@ -12,7 +12,7 @@
     <color name="day_cell">#161515</color>
     <color name="border_color">#D5CDCD</color>
     <color name="black_color">#000</color>
-    <color name="eventColor">#553fa9eb</color>
+    <color name="eventColor">#A83949AB</color>
     <color name="eventColorSelected">#aab2c99a</color>
 
 </resources>

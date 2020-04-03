@@ -13,7 +13,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.model.data.IEvent
-import java.lang.String
+import java.util.*
 
 
 class EventView : FrameLayout {
@@ -79,7 +79,12 @@ class EventView : FrameLayout {
 
     fun setEvent(event: IEvent) {
         mEvent = event
-        mEventName?.text = String.valueOf(event.clientName)
+        val res = resources
+        mEventName?.text = String.format(
+            res.getString(R.string.details_placeholder),
+            event.clientName.toUpperCase(Locale.getDefault()),
+            event.commenti
+        )
         mEventContent?.setBackgroundColor(R.color.eventColor)
     }
 

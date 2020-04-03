@@ -1,20 +1,18 @@
 package com.ardritkrasniqi.prenotimi.ui.authUi
 
-import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ardritkrasniqi.prenotimi.model.LoginErrorResponse
 import com.ardritkrasniqi.prenotimi.model.LoginRequest
 import com.ardritkrasniqi.prenotimi.model.LoginResponse
 import com.ardritkrasniqi.prenotimi.network.ApiService
 import com.google.gson.Gson
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import kotlin.coroutines.CoroutineContext
 
 class AuthFragmentViewModel : ViewModel() {
-
 
 
     val loginRequest = MutableLiveData<LoginRequest>()
@@ -29,12 +27,9 @@ class AuthFragmentViewModel : ViewModel() {
         get() = _status
 
 
-
     private var _loginResponse = MutableLiveData<LoginResponse>()
     val loginResponse: LiveData<LoginResponse>
-    get() = _loginResponse
-
-
+        get() = _loginResponse
 
 
     fun authenticate() {
@@ -61,7 +56,6 @@ class AuthFragmentViewModel : ViewModel() {
 
         }
     }
-
 
 
     fun clearStatus() {

@@ -11,7 +11,9 @@
         tools:layout="@layout/main_fragment" >
         <action
             android:id="@+id/action_mainFragment2_to_dayFragment"
-            app:destination="@id/dayFragment" />
+            app:destination="@id/dayFragment"/>
+
+
     </fragment>
     <fragment
         android:id="@+id/dayFragment"

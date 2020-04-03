@@ -6,7 +6,7 @@ import com.ardritkrasniqi.prenotimi.model.data.IEvent
 import com.ardritkrasniqi.prenotimi.ui.costomViews.DayView
 import com.ardritkrasniqi.prenotimi.ui.costomViews.EventView
 
-class CdvDecorationDefault(protected var mContext: Context) : CdvDecoration {
+class CdvDecorationDefault(private var mContext: Context) : CdvDecoration {
      var mEventClickListener: EventView.OnEventClickListener? = null
 
     override fun getEventView(

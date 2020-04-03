@@ -12,4 +12,11 @@
     <string name="shto_rezervim">Shto Rezervim</string>
     <string name="detajet_e_rezervimit_hint">Detajet e Rezervimit</string>
 
+
+    //EventView template for details
+    <string name="details_placeholder">%1$s,\u0020 \u0020 %2$s</string>
+
+    //CalendarDay rezervimet preview
+    <string name="rezervimet_preview">%1$s,\u0020 %2$s</string>
+
 </resources>

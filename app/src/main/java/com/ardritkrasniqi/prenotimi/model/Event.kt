@@ -1,10 +1,14 @@
 package com.ardritkrasniqi.prenotimi.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.ardritkrasniqi.prenotimi.model.data.IEvent
 
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parceler
+import kotlinx.android.parcel.Parcelize
 
-
+@Parcelize
 data class Event(
     @Json(name = "client_name")
     val client_name: String,
@@ -21,17 +25,46 @@ data class Event(
     @Json(name = "comment")
     val comment: String = "",
     @Json(name = "created_at")
-    val created_at: String,
+    val created_at: String? = null,
     @Json(name = "updated_at")
-    val updated_at: String,
+    val updated_at: String? = null,
     @Json(name = "id")
-    val id: Int
+    val id: Int? = null
 
-) : IEvent {
+) : IEvent, Parcelable {
+
+
+
     override val clientName: String
         get() = client_name
     override val startTime: String
         get() = start_date.substring(10)
     override val endTime: String
         get() = end_date.substring(10)
+    override val commenti: String
+        get() = comment
+
+    constructor(parcel: Parcel) : this(
+        parcel.readString() as String,
+        parcel.readString() as String,
+        parcel.readString() as String,
+        parcel.readString() as String,
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readString() as String,
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int
+    )
+
+    companion object : Parceler<Event> {
+
+        override fun Event.write(parcel: Parcel, flags: Int): Nothing = TODO()
+        override fun create(parcel: Parcel): Event {
+            return Event(parcel)
+        }
+    }
 }
+
+
+

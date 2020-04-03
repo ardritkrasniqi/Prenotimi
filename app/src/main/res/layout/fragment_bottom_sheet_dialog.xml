@@ -76,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/basic"
                 android:singleLine="true"
+                android:inputType="textCapWords"
                 android:paddingStart="10dp"
                 android:textSize="25sp" />
 
@@ -109,6 +110,7 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:id="@+id/telefoni_edit"
+                android:inputType="number"
                 android:textSize="25sp"
                 tools:layout_editor_absoluteX="702dp"
                 tools:layout_editor_absoluteY="208dp" />
