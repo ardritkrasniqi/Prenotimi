@@ -23,7 +23,7 @@ data class Event(
     @Json(name = "recurring_frequency")
     val recurring_frequency: String? = null,
     @Json(name = "comment")
-    val comment: String = "",
+    val comment: String? = "",
     @Json(name = "created_at")
     val created_at: String? = null,
     @Json(name = "updated_at")
@@ -41,7 +41,7 @@ data class Event(
         get() = start_date.substring(10)
     override val endTime: String
         get() = end_date.substring(10)
-    override val commenti: String
+    override val commenti: String?
         get() = comment
 
     constructor(parcel: Parcel) : this(

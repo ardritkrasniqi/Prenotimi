@@ -32,9 +32,7 @@ class DayFragment : Fragment() {
         events = mutableListOf()
 
         val bundle = arguments
-        bundle?.getParcelableArrayList<Event>("rezervminet")
 
-        Log.i("REZERVIMET", bundle?.get("rezervimet").toString())
 
 
         val eventList = bundle?.get("rezervimet") as List<Event>

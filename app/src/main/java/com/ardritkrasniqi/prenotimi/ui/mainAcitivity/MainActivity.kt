@@ -1,5 +1,6 @@
 package com.ardritkrasniqi.prenotimi.ui.mainAcitivity
 
+import android.net.sip.SipSession
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -8,10 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.ActivityMainBinding
-import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
 import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -34,6 +36,8 @@ class MainActivity : AppCompatActivity() {
         val mainViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
 
+//        val navController = this.findNavController(R.id.myNavHostFragment)
+//        NavigationUI.setupActionBarWithNavController(this, navController)
 
 
         // BOTTOMSHEET DIALOG BEHAVIORS ON ADD CLICK
@@ -51,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         drawer = findViewById(R.id.drawerLayout)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main) as NavHostFragment?
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment) as NavHostFragment?
         supportActionBar?.setHomeButtonEnabled(true)
 
 
@@ -86,6 +90,11 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
 
     }
+
+//    override fun onSupportNavigateUp(): Boolean {
+//        val navController = this.findNavController(R.id.myNavHostFragment)
+//        return navController.navigateUp()
+//    }
 
 
 }

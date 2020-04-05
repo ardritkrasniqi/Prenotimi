@@ -68,6 +68,9 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         viewModel.status.observe(viewLifecycleOwner, Observer { newStatus ->
             Toasty.error(this.requireContext(), newStatus).show()
+            if(newStatus != "Ky termin eshte i nxene!"){
+                dismiss()
+            }
         })
 
 
@@ -127,20 +130,23 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         // Shto rezervimin button
         shtoRezerviminButton.setOnClickListener {
-            viewModel.addAppointmentRequest.value = CreateEvent(
-                binding.emriMbiemri.text.toString(),
-                binding.telefoniEdit.text.toString(),
-                formatDate(binding.prejEdit.text.toString()),
-                formatDate(binding.deriEdit.text.toString()),
-                switcherValue,
-                binding.komentiEdit.text.toString()
-            )
 
 
-            viewModel.addEvent()
+                viewModel.addAppointmentRequest.value = CreateEvent(
+                    binding.emriMbiemri.text.toString(),
+                    binding.telefoniEdit.text.toString(),
+                    formatDate(binding.prejEdit.text.toString()),
+                    formatDate(binding.deriEdit.text.toString()),
+                    switcherValue,
+                    binding.komentiEdit.text.toString()
+                )
 
-//            Toasty.error(this.requireContext(), viewModel.status.value.toString()).show()
-        }
+
+                viewModel.addEvent()
+            }
+
+
+
 
 
         binding.switcher.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
@@ -209,6 +215,10 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             .getMetrics(displayMetrics)
         return displayMetrics.heightPixels
     }
+
+
+
+
 
 
 }

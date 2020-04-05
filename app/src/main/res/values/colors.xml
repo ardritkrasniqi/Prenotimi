@@ -8,6 +8,7 @@
     <color name="toolbar_color">#282828</color>
     <color name="text_grey">#bdbdbd</color>
     <color name="text_grey_light">#616161</color>
+    <color name="event_gone_color">#8E8E8E</color>
     <color name="white">#fff</color>
     <color name="day_cell">#161515</color>
     <color name="border_color">#D5CDCD</color>

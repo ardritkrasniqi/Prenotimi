@@ -7,6 +7,9 @@
     android:background="#BFBFBF"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.mainPage.MainFragment">
+
+
+
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">

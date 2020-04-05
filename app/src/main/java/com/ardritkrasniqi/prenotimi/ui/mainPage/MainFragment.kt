@@ -1,5 +1,7 @@
 package com.ardritkrasniqi.prenotimi.ui.mainPage
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -12,9 +14,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.ardritkrasniqi.prenotimi.R
@@ -39,7 +39,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import java.io.Serializable
 import java.util.*
 
-class MainFragment : Fragment(), Serializable {
+class MainFragment : Fragment(){
 
     private var selectedDate: LocalDate? = null
     private val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
@@ -73,8 +73,9 @@ class MainFragment : Fragment(), Serializable {
         allAppointments = mutableListOf()
         viewModel.listOfAppointments.observe(viewLifecycleOwner, Observer { list ->
             allAppointments = list as MutableList<Event>
-        })
+            calendarView.notifyCalendarChanged()
 
+        })
 
 
 
@@ -86,66 +87,71 @@ class MainFragment : Fragment(), Serializable {
         calendarView.scrollToMonth(currentMonth)
 
 
-            class DayViewContainer(view: View) : ViewContainer(view), Serializable {
-                lateinit var day: CalendarDay
-                var textView: TextView = view.calendarDay_text
-                var layout: ConstraintLayout = view.calendarDay_layout
-                val sotIndicator: ImageView = view.sot_indicator
-                val eventItem1 = view.event_item_1
-                val eventItem2 = view.event_item_2
-                val eventItem3 = view.event_item_3
-                val moreEvents = view.more_appointments_dots
 
-                val bundle = Bundle()
 
-                // klikimi mbi qdo qeli te kalendarit
-                init {
+        class DayViewContainer(view: View) : ViewContainer(view), Serializable {
+            lateinit var day: CalendarDay
+            var textView: TextView = view.calendarDay_text
+            var layout: ConstraintLayout = view.calendarDay_layout
+            val sotIndicator: ImageView = view.sot_indicator
+            val eventItem1 = view.event_item_1
+            val eventItem2 = view.event_item_2
+            val eventItem3 = view.event_item_3
+            val moreEvents = view.more_appointments_dots
 
-                    view.setOnClickListener {
-                        val dayList = allAppointments.filter {
-                            stringToLocalDate(it.start_date.substring(0, 10)) == (day.date)
-                        }
-                        Log.i("QELIA", day.date.toString())
-                        bundle.putParcelableArrayList(
-                            "rezervimet",
-                            dayList as ArrayList<out Parcelable>
-                        )
-                        view.findNavController()
-                            .navigate(R.id.action_mainFragment2_to_dayFragment, bundle)
+            val bundle = Bundle()
+
+
+            // klikimi mbi qdo qeli te kalendarit
+            init {
+
+                view.setOnClickListener {
+                    val dayList = allAppointments.filter {
+                        stringToLocalDate(it.start_date.substring(0, 10)) == (day.date)
                     }
+                    bundle.putParcelableArrayList(
+                        "rezervimet",
+                        dayList as ArrayList<out Parcelable>
+                    )
+                    view.findNavController()
+                        .navigate(R.id.action_mainFragment2_to_dayFragment, bundle)
                 }
             }
+        }
 
 
-            // krijimi e diteve te kalendarit
+        // krijimi e diteve te kalendarit
+        calendarView.dayBinder = object : DayBinder<DayViewContainer> {
+            override fun create(view: View) = DayViewContainer(view)
+            @SuppressLint("NewApi")
+            override fun bind(container: DayViewContainer, day: CalendarDay) {
+                container.day = day
+                var eventItemCounter = 0
+                val eventList = mutableListOf<Event>()
+                val res = resources
 
-            calendarView.dayBinder = object : DayBinder<DayViewContainer> {
-                override fun create(view: View) = DayViewContainer(view)
-                override fun bind(container: DayViewContainer, day: CalendarDay) {
-                    container.day = day
-                    var eventItemCounter = 0
-                    val eventList = mutableListOf<Event>()
-                    val res = resources
-
-                    for (i in allAppointments) {
-                        if (stringToLocalDate(i.start_date.substring(0, 10)) == (day.date)) {
-                            eventItemCounter++
-                            eventList.add(i)
-                        }
+                for (i in allAppointments) {
+                    if (stringToLocalDate(i.start_date.substring(0, 10)) == (day.date)) {
+                        eventItemCounter++
+                        eventList.add(i)
                     }
+                }
 
-                    //Log.i("DAYLIST", day.events.toString())
-                    val textView = container.textView
-                    val layout = container.layout
-                    val sotIndicator = container.sotIndicator
-                    val eventItem1 = container.eventItem1
-                    val eventItem2 = container.eventItem2
-                    val eventItem3 = container.eventItem3
-                    val moreEvents = container.moreEvents
+                //Log.i("DAYLIST", day.events.toString())
+                val textView = container.textView
+                val layout = container.layout
+                val sotIndicator = container.sotIndicator
+                val eventItem1 = container.eventItem1
+                val eventItem2 = container.eventItem2
+                val eventItem3 = container.eventItem3
+                val moreEvents = container.moreEvents
 
-                    if (day.owner == DayOwner.THIS_MONTH) {
+                if (day.owner == DayOwner.THIS_MONTH) {
+                    if (eventItemCounter > 0) {
+
                         when (eventItemCounter) {
                             1 -> {
+
                                 eventItem1.visibility = View.VISIBLE
                                 eventItem1.text = String.format(
                                     res.getString(R.string.rezervimet_preview),
@@ -178,21 +184,21 @@ class MainFragment : Fragment(), Serializable {
                                 eventItem2.text = String.format(
                                     res.getString(R.string.rezervimet_preview),
                                     eventList[1].start_date.substring(10, 16),
-                                    eventList[1].client_name.toUpperCase()
+                                    eventList[1].client_name.toUpperCase(Locale.getDefault())
                                 )
                                 eventItem3.visibility = View.VISIBLE
                                 eventItem3.text = String.format(
                                     res.getString(R.string.rezervimet_preview),
                                     eventList[2].start_date.substring(10, 16),
-                                    eventList[2].client_name.toUpperCase()
+                                    eventList[2].client_name.toUpperCase(Locale.getDefault())
                                 )
                             }
-                            4 -> {
+                            else -> {
                                 eventItem1.visibility = View.VISIBLE
                                 eventItem1.text = String.format(
                                     res.getString(R.string.rezervimet_preview),
                                     eventList[0].start_date.substring(10, 16),
-                                    eventList[0].client_name.toUpperCase()
+                                    eventList[0].client_name.toUpperCase(Locale.getDefault())
                                 )
                                 eventItem2.visibility = View.VISIBLE
                                 eventItem2.text = String.format(
@@ -210,33 +216,41 @@ class MainFragment : Fragment(), Serializable {
                             }
                         }
                     }
+                }
+
+                // if its earlier than today appointpreviews become grey :D
+                if(day.date < today){
+                    eventItem1.setBackgroundColor(resources.getColor(R.color.event_gone_color,null))
+                    eventItem2.setBackgroundColor(resources.getColor(R.color.event_gone_color,null))
+                    eventItem3.setBackgroundColor(resources.getColor(R.color.event_gone_color,null))
+                }
 
 
 
-                    textView.text = day.date.dayOfMonth.toString()
+                textView.text = day.date.dayOfMonth.toString()
 
-                    if (day.owner == DayOwner.THIS_MONTH) {
-                        when (day.date) {
-                            today -> {
-                                layout.setBackgroundResource(R.drawable.today_date_background)
-                                sotIndicator.visibility = View.VISIBLE
-                            }
-
-                            else -> {
-                                layout.background = null
-                            }
+                if (day.owner == DayOwner.THIS_MONTH) {
+                    when (day.date) {
+                        today -> {
+                            layout.setBackgroundResource(R.drawable.today_date_background)
+                            sotIndicator.visibility = View.VISIBLE
                         }
 
+                        else -> {
+                            layout.background = null
 
-                    } else {
-                        // per datat te cilat nuk i perkasin muajit i cili eshte i paraqitur
-                        textView.setTextColorRes(R.color.white)
-                        layout.background = null
-
+                        }
                     }
+
+
+                } else {
+                    // per datat te cilat nuk i perkasin muajit i cili eshte i paraqitur
+                    textView.setTextColorRes(R.color.white)
+                    layout.background = null
+
                 }
             }
-            
+        }
 
 
         class MonthViewContainer(view: View) : ViewContainer(view) {
@@ -275,7 +289,6 @@ class MainFragment : Fragment(), Serializable {
         }
         return view
     }
-
 
 
 
