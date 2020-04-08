@@ -36,6 +36,8 @@ class ShtoRezervimViewModel : ViewModel() {
             try {
                 val addAppointment: CreatedAppointment = addEvent.await()
                 _addAppointmentResponse.value = addAppointment
+                _status.value = "200"
+
             } catch (e: HttpException) {
                 val error =
                     Gson()

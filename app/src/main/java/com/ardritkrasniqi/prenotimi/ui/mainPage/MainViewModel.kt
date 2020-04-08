@@ -1,5 +1,6 @@
 package com.ardritkrasniqi.prenotimi.ui.mainPage
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,6 +36,7 @@ class MainViewModel : ViewModel() {
             try {
                 val appointmentsResult = getAppointments.await()
                 _listOfAppointments.value = appointmentsResult
+                Log.i("GETAPPOINTMENTS", "HELLO HELLO")
             } catch (e: HttpException) {
                 val error =
                     Gson().fromJson(

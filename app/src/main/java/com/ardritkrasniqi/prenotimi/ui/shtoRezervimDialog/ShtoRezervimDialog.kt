@@ -5,7 +5,9 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.ComponentCallbacks
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
@@ -16,12 +18,14 @@ import android.widget.CompoundButton
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.FragmentBottomSheetDialogBinding
 import com.ardritkrasniqi.prenotimi.model.CreateEvent
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -31,6 +35,19 @@ import java.util.*
 
 
 class ShtoRezervimDialog : BottomSheetDialogFragment() {
+
+
+    lateinit var callback: DialogClosedListener
+
+    interface DialogClosedListener{
+        fun dialogIsClosed()
+    }
+
+    fun setDialogClosedListener(callback: DialogClosedListener){
+        this.callback = callback
+    }
+
+
 
 
     private lateinit var calendar: Calendar
@@ -51,14 +68,12 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                 inflater, R.layout.fragment_bottom_sheet_dialog, container, false
             )
         val viewModel = ViewModelProvider(this).get(ShtoRezervimViewModel::class.java)
-
         val sharedP = PreferenceProvider(this.requireContext())
 
 
-//        viewModel.token.value = sharedP.getToken() // gets token and sends it to livedata in viewmodel
-
         val tokenAuth = "Bearer ${sharedP.getToken()}"
         viewModel.token.value = tokenAuth
+
 
         prejEdit = binding.prejEdit
         deriEdit = binding.deriEdit
@@ -66,12 +81,18 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         calendar = Calendar.getInstance()
 
+
+
+
         viewModel.status.observe(viewLifecycleOwner, Observer { newStatus ->
-            Toasty.error(this.requireContext(), newStatus).show()
-            if(newStatus != "Ky termin eshte i nxene!"){
-                dismiss()
+            if (newStatus != "200") {
+                Toasty.error(this.requireContext(), newStatus).show()
+            } else {
+                dialog?.let { it1 -> onDismiss(it1) }
             }
         })
+                callback.dialogIsClosed()
+
 
 
         // merr daten e dhene ne datepicker dhe i ben update EditTextit
@@ -132,18 +153,20 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         shtoRezerviminButton.setOnClickListener {
 
 
-                viewModel.addAppointmentRequest.value = CreateEvent(
-                    binding.emriMbiemri.text.toString(),
-                    binding.telefoniEdit.text.toString(),
-                    formatDate(binding.prejEdit.text.toString()),
-                    formatDate(binding.deriEdit.text.toString()),
-                    switcherValue,
-                    binding.komentiEdit.text.toString()
-                )
+            viewModel.addAppointmentRequest.value = CreateEvent(
+                binding.emriMbiemri.text.toString(),
+                binding.telefoniEdit.text.toString(),
+                formatDate(binding.prejEdit.text.toString()),
+                formatDate(binding.deriEdit.text.toString()),
+                switcherValue,
+                binding.komentiEdit.text.toString()
+            )
 
 
-                viewModel.addEvent()
-            }
+            viewModel.addEvent()
+
+
+        }
 
 
 
@@ -187,6 +210,10 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             bottomSheetDialog.behavior.setPeekHeight(getWindowHeight(), false)
             setupFullHeight(bottomSheetDialog)
 
+
+            fun closeDialog() {
+                onDismiss(dialog)
+            }
         }
         return dialog
 
@@ -217,8 +244,8 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
     }
 
 
-
-
-
-
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        fun dismissed(){}
+    }
 }

@@ -8,6 +8,7 @@
         android:id="@+id/mainFragment"
         android:name="com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragment"
         android:label="main_fragment"
+        android:tag="MAINFRAGMENT"
         tools:layout="@layout/main_fragment" >
         <action
             android:id="@+id/action_mainFragment2_to_dayFragment"

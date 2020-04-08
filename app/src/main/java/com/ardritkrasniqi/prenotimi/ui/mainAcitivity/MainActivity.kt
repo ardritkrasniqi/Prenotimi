@@ -1,6 +1,5 @@
 package com.ardritkrasniqi.prenotimi.ui.mainAcitivity
 
-import android.net.sip.SipSession
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -8,17 +7,37 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.ActivityMainBinding
+import com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragment
 import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
+val FragmentManager.currentNavigationFragment: androidx.fragment.app.Fragment?
+    get() = primaryNavigationFragment?.childFragmentManager?.fragments?.first()
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListener{
+
+    override fun onAttachFragment(fragment: androidx.fragment.app.Fragment){
+        if(fragment is ShtoRezervimDialog){
+            fragment.setDialogClosedListener(this)
+        }
+    }
+
+    override fun dialogIsClosed() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment) as NavHostFragment
+        val mainFragment = navHostFragment.childFragmentManager.fragments[0] as MainFragment
+        mainFragment.getAppointments()
+    }
+
+
+
+
+
 
 
     private lateinit var toggle: ActionBarDrawerToggle
@@ -36,8 +55,8 @@ class MainActivity : AppCompatActivity() {
         val mainViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
 
-//        val navController = this.findNavController(R.id.myNavHostFragment)
-//        NavigationUI.setupActionBarWithNavController(this, navController)
+
+
 
 
         // BOTTOMSHEET DIALOG BEHAVIORS ON ADD CLICK
@@ -46,6 +65,14 @@ class MainActivity : AppCompatActivity() {
                 ShtoRezervimDialog()
             dialog.show(supportFragmentManager, "BOTTOMSHEETDIALOG")
         }
+
+
+
+
+
+
+
+
 
 
 
@@ -83,6 +110,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
             return true
@@ -91,10 +119,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        val navController = this.findNavController(R.id.myNavHostFragment)
-//        return navController.navigateUp()
-//    }
+
+
+
+
+
+
+
 
 
 }

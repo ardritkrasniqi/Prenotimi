@@ -14,12 +14,18 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog
+import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimViewModel
 import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
 import com.ardritkrasniqi.prenotimi.utils.setTextColorRes
 import com.ardritkrasniqi.prenotimi.utils.stringToLocalDate
@@ -32,6 +38,7 @@ import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
 import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_days_header.view.*
+import kotlinx.coroutines.isActive
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
@@ -51,12 +58,17 @@ class MainFragment : Fragment(){
     val ditetEJaves = arrayOf("Dielë", "Hënë", "Martë", "Mërkurë", "Enjte", "Premte", "Shtunë")
 
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+
+
         val sharedPreferences = PreferenceProvider(this.requireContext())
         viewModel.token.value = "Bearer ${sharedPreferences.getToken()}"
         viewModel.getAppointments()
@@ -70,12 +82,18 @@ class MainFragment : Fragment(){
 
 
 
+
+
         allAppointments = mutableListOf()
         viewModel.listOfAppointments.observe(viewLifecycleOwner, Observer { list ->
             allAppointments = list as MutableList<Event>
             calendarView.notifyCalendarChanged()
 
         })
+
+
+
+
 
 
 
@@ -287,8 +305,17 @@ class MainFragment : Fragment(){
 
             }
         }
+
         return view
     }
+
+
+
+    fun getAppointments(){
+        Log.i("Hello", "hello biaaaaaatch")
+    }
+
+
 
 
 
