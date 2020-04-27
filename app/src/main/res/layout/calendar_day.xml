@@ -10,7 +10,7 @@
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_margin="3dp"
         android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
@@ -47,7 +47,7 @@
             android:visibility="invisible" />
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/event_item_parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,6 +67,9 @@
                 android:layout_marginEnd="5dp"
                 android:background="#0238F6"
                 android:fontFamily="@font/basic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:text="11:20-12:20 Ardrit Krasniqi"
                 android:textAlignment="center"
                 android:visibility="invisible"
@@ -78,6 +81,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_1"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 android:background="#0238F6"
@@ -98,11 +104,14 @@
                 android:background="#0238F6"
                 android:fontFamily="@font/basic"
                 android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_2"
                 android:text="11:20-12:20 Ardrit Krasniqi"
                 android:textAlignment="center"
                 android:textColor="#fff"
                 android:textSize="15sp" />
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/more_appointments_dots"

@@ -8,22 +8,21 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.model.data.IEvent
 import java.util.*
 
 
 class EventView : FrameLayout {
-    var mEvent: IEvent? = null
-    var mEventClickListener: OnEventClickListener? = null
-    var mEventHeader: RelativeLayout? = null
-    var mEventContent: LinearLayout? = null
-    var mEventHeaderText1: TextView? = null
-    var mEventHeaderText2: TextView? = null
-    var mEventName: TextView? = null
+    private lateinit var eventi: IEvent
+    private lateinit var eventClickListener: OnEventClickListener
+    private lateinit var eventContent: ConstraintLayout
+    private lateinit var eventName: TextView
+    private lateinit var topTime: TextView
+    private lateinit var bottomTime:TextView
+
 
     constructor(context: Context?) : super(context!!) {
         init(null)
@@ -46,31 +45,23 @@ class EventView : FrameLayout {
 
     private fun init(attrs: AttributeSet?) {
         LayoutInflater.from(context).inflate(R.layout.view_event, this, true)
-        mEventHeader = findViewById<View>(R.id.item_event_header) as RelativeLayout
-        mEventContent = findViewById<View>(R.id.item_event_content) as LinearLayout
-        mEventName = findViewById<View>(R.id.item_event_name) as TextView
-        mEventHeaderText1 =
-            findViewById<View>(R.id.item_event_header_text1) as TextView
-        mEventHeaderText2 =
-            findViewById<View>(R.id.item_event_header_text2) as TextView
+        eventContent = findViewById(R.id.item_event_content)
+        eventName = findViewById(R.id.item_event_name)
+        topTime = findViewById(R.id.top_time)
+        bottomTime = findViewById(R.id.bottom_time)
         super.setOnClickListener {
-            if (mEventClickListener != null) {
-                mEventClickListener!!.onEventClick(this@EventView, mEvent)
-            }
+            eventClickListener.onEventClick(this@EventView, eventi)
         }
         val eventItemClickListener =
             OnClickListener { v ->
-                if (mEventClickListener != null) {
-                    mEventClickListener!!.onEventViewClick(v, this@EventView, mEvent)
-                }
+                eventClickListener.onEventViewClick(v, this@EventView, eventi)
             }
-        mEventHeaderText1!!.setOnClickListener(eventItemClickListener)
-        mEventHeaderText2!!.setOnClickListener(eventItemClickListener)
-        mEventContent!!.setOnClickListener(eventItemClickListener)
+
+        eventContent.setOnClickListener(eventItemClickListener)
     }
 
-    fun setOnEventClickListener(listener: OnEventClickListener?) {
-        mEventClickListener = listener
+    fun setOnEventClickListener(listener: OnEventClickListener) {
+        eventClickListener = listener
     }
 
     override fun setOnClickListener(l: OnClickListener?) {
@@ -78,44 +69,42 @@ class EventView : FrameLayout {
     }
 
     fun setEvent(event: IEvent) {
-        mEvent = event
+        eventi = event
         val res = resources
-        mEventName?.text = String.format(
+        eventName.text = String.format(
             res.getString(R.string.details_placeholder),
             event.clientName.toUpperCase(Locale.getDefault()),
             event.commenti
         )
-        mEventContent?.setBackgroundColor(R.color.eventColor)
+        topTime.text = event.startTime.substring(0,6)
+        bottomTime.text = event.endTime.subSequence(0,6)
+
     }
 
-    private val headerHeight: Int
-        get() = mEventHeader!!.measuredHeight
 
-    private val headerPadding: Int
-        get() = mEventHeader!!.paddingBottom + mEventHeader!!.paddingTop
 
     fun setPosition(rect: Rect, topMargin: Int, bottomMargin: Int) {
         val params = LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        params.topMargin = (rect.top - headerHeight - headerPadding + topMargin
-                - resources.getDimensionPixelSize(R.dimen.cdv_extra_dimen))
+        params.topMargin = (rect.top - 0 - 8 + topMargin)
         params.height = (rect.height()
-                + headerHeight
-                + headerPadding
+                + 0
+                + 8
                 + bottomMargin
                 + resources.getDimensionPixelSize(R.dimen.cdv_extra_dimen))
         params.leftMargin = rect.left
+        params.rightMargin = 3
         layoutParams = params
     }
 
     interface OnEventClickListener {
-        fun onEventClick(view: EventView?, data: IEvent?)
+        fun onEventClick(view: EventView, data: IEvent)
         fun onEventViewClick(
-            view: View?,
-            eventView: EventView?,
-            data: IEvent?
+            view: View,
+            eventView: EventView,
+            data: IEvent
         )
     }
 }

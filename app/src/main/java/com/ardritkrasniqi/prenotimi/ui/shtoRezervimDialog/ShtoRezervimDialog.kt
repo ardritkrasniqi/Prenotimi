@@ -24,7 +24,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.FragmentBottomSheetDialogBinding
 import com.ardritkrasniqi.prenotimi.model.CreateEvent
+import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+import com.ardritkrasniqi.prenotimi.utils.formatDateForEdits
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -56,6 +58,7 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
     lateinit var shtoRezerviminButton: Button
     private var index = 0
     private var switcherValue = 0
+    private  var event: Event? = null
 
 
     override fun onCreateView(
@@ -74,12 +77,30 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         val tokenAuth = "Bearer ${sharedP.getToken()}"
         viewModel.token.value = tokenAuth
 
-
+        // instantiating stuff
         prejEdit = binding.prejEdit
         deriEdit = binding.deriEdit
         shtoRezerviminButton = binding.shtoRezerviminButton
 
         calendar = Calendar.getInstance()
+
+        // merr argumentet nga dayFragment si argument i llojit Event
+        val args = ShtoRezervimDialogArgs.fromBundle(arguments!!)
+        event = args.event
+
+
+        if(args.isEditing && event != null) {
+            binding.shtoRezerviminButton.text = getString(R.string.ndrysho_text)
+            binding.shtoRezerviminButton.setCompoundDrawables(
+                resources.getDrawable(R.drawable.ic_ndrysho,null),null,null,null)
+            binding.fshiRezerviminButton.visibility = View.VISIBLE
+            binding.emriMbiemri.setText(event?.client_name)
+            binding.telefoniEdit.setText(event?.phone)
+            binding.prejEdit.setText(formatDateForEdits(event!!.start_date))
+            binding.deriEdit.setText(formatDateForEdits(event!!.end_date))
+            switcherValue = event?.recurring!!
+            binding.komentiEdit.setText(event?.comment)
+        }
 
 
 
@@ -89,9 +110,9 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                 Toasty.error(this.requireContext(), newStatus).show()
             } else {
                 dialog?.let { it1 -> onDismiss(it1) }
+                callback.dialogIsClosed()
             }
         })
-                callback.dialogIsClosed()
 
 
 
@@ -123,8 +144,6 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             context, R.style.CustomDatePickerDialog, time, calendar.get(Calendar.HOUR_OF_DAY),
             calendar.get(Calendar.MINUTE), true
         )
-
-
 
 
 
@@ -170,8 +189,6 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
 
 
-
-
         binding.switcher.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
             switcherValue = if (b) {
                 1
@@ -211,9 +228,6 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             setupFullHeight(bottomSheetDialog)
 
 
-            fun closeDialog() {
-                onDismiss(dialog)
-            }
         }
         return dialog
 
@@ -248,4 +262,5 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         super.onDismiss(dialog)
         fun dismissed(){}
     }
+
 }

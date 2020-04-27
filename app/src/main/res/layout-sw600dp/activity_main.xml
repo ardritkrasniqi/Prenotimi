@@ -26,6 +26,7 @@
                 android:animationCache="true"
                 android:background="@color/toolbar_color"
                 android:elevation="10dp"
+                android:theme="@style/ToolbarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -109,7 +110,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/toolbar"
-                    app:navGraph="@navigation/navigation"></fragment>
+                    app:navGraph="@navigation/navigation"/>
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -118,6 +119,7 @@
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/nav_view"
             android:layout_gravity="start"
             android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
             android:background="#263238"

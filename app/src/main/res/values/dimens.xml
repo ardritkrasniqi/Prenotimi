@@ -3,7 +3,7 @@
     <dimen name="dayHeight">64dp</dimen>
 
     <!-- Calendar Day View -->
-    <dimen name="cdv_extra_dimen">3dp</dimen>
+    <dimen name="cdv_extra_dimen">1dp</dimen>
 
     <!-- Day View -->
 
@@ -12,8 +12,5 @@
     <dimen name="event_header_padding_bottom">8dp</dimen>
 
 
-    <!-- Popup View -->
-    <dimen name="popup_quote_width">150dp</dimen>
-    <dimen name="popup_quote_height">40dp</dimen>
-    <dimen name="popup_quote_margin_top">-30dp</dimen>
+
 </resources>

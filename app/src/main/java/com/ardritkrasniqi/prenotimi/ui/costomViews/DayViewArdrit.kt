@@ -4,13 +4,14 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.NonNull
 import com.ardritkrasniqi.prenotimi.R
-import com.ardritkrasniqi.prenotimi.decoration.CdvDecoration
-import com.ardritkrasniqi.prenotimi.decoration.CdvDecorationDefault
+import com.ardritkrasniqi.prenotimi.decoration.IDecoration
+import com.ardritkrasniqi.prenotimi.decoration.Decoration
 import com.ardritkrasniqi.prenotimi.model.Event
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,7 +27,7 @@ class CalendarDayView : FrameLayout {
     private var endHour = 24
     private var layoutDayView: LinearLayout? = null
     private var layoutEvent: FrameLayout? = null
-    private var decorationn: CdvDecoration? = null
+    private var decorationn: IDecoration? = null
     private var events: List<Event>? = null
 
 
@@ -71,7 +72,7 @@ class CalendarDayView : FrameLayout {
             }
         }
         events = ArrayList()
-        decorationn = CdvDecorationDefault(context)
+        decorationn = Decoration(context)
         refresh()
     }
 
@@ -84,7 +85,7 @@ class CalendarDayView : FrameLayout {
         layoutDayView!!.removeAllViews()
         var dayView: DayView? = null
         for (i in startHour..endHour) {
-            dayView = decoration?.getDayView(i)
+            dayView = decorationn?.getDayView(i)
             layoutDayView!!.addView(dayView)
         }
         if (dayView != null) {
@@ -100,7 +101,7 @@ class CalendarDayView : FrameLayout {
             val rect = getTimeBound(event)
             // add event view
             val eventView: EventView? =
-                decoration?.getEventView(event, rect, timeHeight, separateHourHeight)
+                decorationn?.getEventView(event, rect, timeHeight, separateHourHeight)
             if (eventView != null) {
                 layoutEvent!!.addView(eventView, eventView.layoutParams)
             }
@@ -148,11 +149,17 @@ class CalendarDayView : FrameLayout {
     /**
      * @param decorator decoration for draw event, popup, time
      */
-    fun setDecorator(@NonNull decorator: CdvDecoration?) {
+    fun setDecorator(@NonNull decorator: IDecoration?) {
         decorationn = decorator
         refresh()
     }
 
-    private val decoration: CdvDecoration?
-        get() = decorationn
+    fun getDecoration(): IDecoration? {
+        return decorationn
+    }
+
+
+    interface onTouchEvent{
+
+    }
 }

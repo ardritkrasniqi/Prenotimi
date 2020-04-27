@@ -19,6 +19,7 @@ class MainActivityViewModel : ViewModel() {
 
     val token = MutableLiveData<String>()
 
+
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
         get() = _user
@@ -28,16 +29,16 @@ class MainActivityViewModel : ViewModel() {
       get() = _status
 
 
+
     val viewModelJob = Job()
     val cororutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
 
-    fun getUserFromServer() {
+    fun logOut() {
         cororutineScope.launch {
-            val getUser = ApiService.retrofitService.user(token.toString())
+            val getUser = ApiService.retrofitService.logOut(token.value.toString())
             try {
-                val userResult = getUser.await()
-                _user.value = userResult
+
 
             } catch (e: HttpException) {
                 val error =

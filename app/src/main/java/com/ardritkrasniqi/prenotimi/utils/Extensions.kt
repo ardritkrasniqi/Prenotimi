@@ -64,18 +64,26 @@ var CalendarDay.events: MutableList<Event>
     set(value) = addEvents(value)
 
 
+// kthen kohen nga string ne kalendar
 fun timeConverterStringToCalendar(string: String): Calendar {
     val sdf = SimpleDateFormat("EEEE, MMMM dd, yyyy   HH:mm:ss")
     val calendar = Calendar.getInstance()
-    val dateFormated = sdf.parse(string)
+    val dateFormated: Date = sdf.parse(string) as Date
     calendar.time = dateFormated
     return calendar
 }
 
-
+// kthen kohen nga string ne local date
 fun stringToLocalDate(string: String): LocalDate{
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     return LocalDate.parse(string,formatter)
+}
+
+fun formatDateForEdits(string: String): String {
+    val format = "EEEE, MMMM dd, yyyy   HH:mm"
+    val simpleDateFormat: Date =
+        SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(string)
+    return SimpleDateFormat(format).format(simpleDateFormat)
 }
 
 

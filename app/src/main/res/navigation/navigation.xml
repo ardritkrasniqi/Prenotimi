@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/authFragment">
+    app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragment"
@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mainFragment2_to_dayFragment"
             app:destination="@id/dayFragment"/>
+        <action
+            android:id="@+id/action_mainFragment_to_authFragment"
+            app:destination="@id/authFragment" />
 
 
     </fragment>
@@ -20,7 +23,11 @@
         android:id="@+id/dayFragment"
         android:name="com.ardritkrasniqi.prenotimi.ui.dayUI.DayFragment"
         android:label="fragment_day"
-        tools:layout="@layout/fragment_day" />
+        tools:layout="@layout/fragment_day" >
+        <action
+            android:id="@+id/action_dayFragment_to_shtoRezervimDialog"
+            app:destination="@id/shtoRezervimDialog" />
+    </fragment>
     <fragment
         android:id="@+id/authFragment"
         android:name="com.ardritkrasniqi.prenotimi.ui.authUi.AuthFragment"
@@ -31,5 +38,19 @@
             android:id="@+id/action_authFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/shtoRezervimDialog"
+        android:name="com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog"
+        android:label="ShtoRezervimDialog" >
+        <argument
+            android:name="event"
+            app:argType="com.ardritkrasniqi.prenotimi.model.Event"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <argument
+            android:name="isEditing"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </dialog>
 
 </navigation>

@@ -11,6 +11,6 @@
         android:id="@+id/menu3"
         android:title="Menu3" />
     <item
-        android:id="@+id/menu4"
-        android:title="Menu4" />
+        android:id="@+id/logOut"
+        android:title="@string/log_out_text" />
 </menu>

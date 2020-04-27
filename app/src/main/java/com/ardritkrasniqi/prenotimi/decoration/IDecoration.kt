@@ -5,7 +5,7 @@ import com.ardritkrasniqi.prenotimi.model.data.IEvent
 import com.ardritkrasniqi.prenotimi.ui.costomViews.DayView
 import com.ardritkrasniqi.prenotimi.ui.costomViews.EventView
 
-interface CdvDecoration {
+interface IDecoration {
     fun getEventView(
         event: IEvent?,
         eventBound: Rect?,

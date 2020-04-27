@@ -58,18 +58,24 @@ interface PrenotimiApplicationApiService {
     fun getAppointments(@Header("Authorization") token: String): Deferred<List<Event>>
 
     // Edit Appointment
-    @POST("appointment/edit/")
+    @POST("appointment/edit/{id}")
     fun editAppointment(@Header("Authorization") token: String,
-                        @Query("id") id: Int,
+                        @Path("id") id: String,
                         @Body createEvent: CreateEvent?
     ): Deferred<CreatedAppointment>
 
     // Delete appointment
-    @DELETE("appointment/delete/")
+    @DELETE("appointment/delete/{id}")
     fun deleteAppointment(
         @Header("Authorization") token: String,
-        @Query("id") id: Int
-    ): Deferred<CreatedAppointment>
+        @Path("id") id: Int
+    )
+
+    //Log out
+    @DELETE("api/auth/invalidate")
+    fun logOut(
+        @Header("Authorization") token:String
+    )
 
 }
 

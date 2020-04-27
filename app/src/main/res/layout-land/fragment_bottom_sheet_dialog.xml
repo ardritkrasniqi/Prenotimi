@@ -283,14 +283,14 @@
                 android:textColor="#fff"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:icon="@drawable/ic_delete_forever_black_24dp"
                 app:layout_constraintBottom_toBottomOf="@+id/shtoRezervimin_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.825"
                 app:layout_constraintStart_toEndOf="@+id/shtoRezervimin_button"
                 app:layout_constraintTop_toTopOf="@+id/shtoRezervimin_button"
-                tools:text="Fshije"
-                android:visibility="gone"/>
+                android:text="Fshije" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

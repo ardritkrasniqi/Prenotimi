@@ -5,39 +5,38 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.ActivityMainBinding
+import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
 import com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragment
 import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog
 import kotlinx.android.synthetic.main.activity_main.*
 
-val FragmentManager.currentNavigationFragment: androidx.fragment.app.Fragment?
-    get() = primaryNavigationFragment?.childFragmentManager?.fragments?.first()
+
+class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListener {
 
 
-class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListener{
-
-    override fun onAttachFragment(fragment: androidx.fragment.app.Fragment){
-        if(fragment is ShtoRezervimDialog){
+    // listens for the attached fragment, in this case i want to call a fun if shtorezdialog is closed
+    override fun onAttachFragment(fragment: androidx.fragment.app.Fragment) {
+        if (fragment is ShtoRezervimDialog) {
             fragment.setDialogClosedListener(this)
         }
     }
 
+    // overrides the fun from shtorezervimindialog to call a function in another fragment
     override fun dialogIsClosed() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.myNavHostFragment) as NavHostFragment
         val mainFragment = navHostFragment.childFragmentManager.fragments[0] as MainFragment
         mainFragment.getAppointments()
     }
-
-
-
-
-
 
 
     private lateinit var toggle: ActionBarDrawerToggle
@@ -49,41 +48,37 @@ class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListene
 
         val binding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        setSupportActionBar(toolbar)
-
         val mainViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
+        setSupportActionBar(toolbar)
+        drawer = binding.drawerLayout
+
+
+        NavigationUI.setupActionBarWithNavController(
+            this,
+            findNavController(R.id.myNavHostFragment),
+            drawerLayout
+        )
+        NavigationUI.setupWithNavController(
+            toolbar,
+            findNavController(R.id.myNavHostFragment),
+            drawer
+        )
+
+        // preff and token related stuff :D
+        val sharedPref = PreferenceProvider(this)
+        mainViewModel.token.value = "Bearer ${sharedPref.getToken()}"
 
 
 
-
-
-        // BOTTOMSHEET DIALOG BEHAVIORS ON ADD CLICK
+        // BOTTOMSHEET DIALOG BEHAVIORS ON ADD appointment button CLICK
         binding.buttonAddEvent.setOnClickListener {
-            val dialog =
-                ShtoRezervimDialog()
-            dialog.show(supportFragmentManager, "BOTTOMSHEETDIALOG")
+            findNavController(R.id.myNavHostFragment).navigate(R.id.shtoRezervimDialog)
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        drawer = findViewById(R.id.drawerLayout)
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.myNavHostFragment) as NavHostFragment?
-        supportActionBar?.setHomeButtonEnabled(true)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.myNavHostFragment) as NavHostFragment?
 
 
         toggle = ActionBarDrawerToggle(this, drawer, R.string.open, R.string.close)
@@ -92,11 +87,8 @@ class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListene
         toggle.syncState()
 
 
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-
-
+        // checks if the current navgiation is on authFragment(if it is toolbar is invisible)
         navHostFragment?.navController?.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.authFragment) {
                 binding.toolbar.visibility = View.GONE
@@ -110,19 +102,15 @@ class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListene
     }
 
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (toggle.onOptionsItemSelected(item)) {
-            return true
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawer.openDrawer(GravityCompat.START)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
-
     }
-
-
-
-
-
 
 
 

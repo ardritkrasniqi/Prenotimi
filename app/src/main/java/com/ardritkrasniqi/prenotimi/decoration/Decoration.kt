@@ -6,35 +6,36 @@ import com.ardritkrasniqi.prenotimi.model.data.IEvent
 import com.ardritkrasniqi.prenotimi.ui.costomViews.DayView
 import com.ardritkrasniqi.prenotimi.ui.costomViews.EventView
 
-class CdvDecorationDefault(private var mContext: Context) : CdvDecoration {
-     var mEventClickListener: EventView.OnEventClickListener? = null
+class Decoration(private var context: Context) : IDecoration {
+     var eventClickListener: EventView.OnEventClickListener? = null
 
     override fun getEventView(
         event: IEvent?, eventBound: Rect?, hourHeight: Int,
         seperateHeight: Int
     ): EventView {
-        val eventView = EventView(mContext)
+        val eventView = EventView(context)
         if (event != null) {
             eventView.setEvent(event)
         }
         if (eventBound != null) {
             eventView.setPosition(eventBound, -hourHeight, hourHeight - seperateHeight * 2)
         }
-        eventView.setOnEventClickListener(mEventClickListener)
+        eventClickListener?.let { eventView.setOnEventClickListener(it) }
         return eventView
     }
 
 
+    fun setOnEventClickListener(listener: EventView.OnEventClickListener) {
+        this.eventClickListener = listener
+    }
 
     override fun getDayView(hour: Int): DayView {
-        val dayView = DayView(mContext)
+        val dayView = DayView(context)
         dayView.setText(String.format("%1$2s:00", hour))
         return dayView
     }
 
-    fun setOnEventClickListener(listener: EventView.OnEventClickListener?) {
-        mEventClickListener = listener
-    }
+
 
 
 

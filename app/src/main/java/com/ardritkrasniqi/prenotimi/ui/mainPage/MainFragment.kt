@@ -1,7 +1,7 @@
 package com.ardritkrasniqi.prenotimi.ui.mainPage
 
-import android.annotation.SuppressLint
-import android.content.Context
+
+import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -14,18 +14,13 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
-import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog
-import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimViewModel
 import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
 import com.ardritkrasniqi.prenotimi.utils.setTextColorRes
 import com.ardritkrasniqi.prenotimi.utils.stringToLocalDate
@@ -36,9 +31,10 @@ import com.kizitonwose.calendarview.model.DayOwner
 import com.kizitonwose.calendarview.ui.DayBinder
 import com.kizitonwose.calendarview.ui.MonthHeaderFooterBinder
 import com.kizitonwose.calendarview.ui.ViewContainer
+import com.kizitonwose.calendarview.utils.next
+import com.kizitonwose.calendarview.utils.previous
 import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_days_header.view.*
-import kotlinx.coroutines.isActive
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
@@ -46,18 +42,20 @@ import org.threeten.bp.format.DateTimeFormatter
 import java.io.Serializable
 import java.util.*
 
-class MainFragment : Fragment(){
+class MainFragment : Fragment() {
 
     private var selectedDate: LocalDate? = null
     private val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
     private lateinit var allAppointments: MutableList<Event>
-
+    private lateinit var nextMonthButton: ImageView
+    private lateinit var previousMonthButton: ImageView
+    private lateinit var currentMothText: TextView
     private lateinit var viewModel: MainViewModel
     private lateinit var calendarView: CalendarView
     private val today = LocalDate.now()
     val ditetEJaves = arrayOf("Dielë", "Hënë", "Martë", "Mërkurë", "Enjte", "Premte", "Shtunë")
 
-
+    private var getAppointmentsExectued = false
 
 
     override fun onCreateView(
@@ -69,26 +67,28 @@ class MainFragment : Fragment(){
 
 
 
+        //shared preference stuff
         val sharedPreferences = PreferenceProvider(this.requireContext())
+        if(sharedPreferences.getToken().isNullOrEmpty()){
+            findNavController().navigate(R.id.action_mainFragment_to_authFragment)
+        }
+
         viewModel.token.value = "Bearer ${sharedPreferences.getToken()}"
-        viewModel.getAppointments()
+
+        Log.i("called", "im called from oncreate")
+
+        if(!getAppointmentsExectued) {
+            viewModel.getAppointments()
+            getAppointmentsExectued = true
+        }
         calendarView = view.findViewById(R.id.calendarView)
 
-
-        val daysOfWeek: Array<DayOfWeek> =
-            daysOfWeekFromLocale()
-        val currentMonth = YearMonth.now()
-
-
-
-
-
-
         allAppointments = mutableListOf()
+
         viewModel.listOfAppointments.observe(viewLifecycleOwner, Observer { list ->
+            Log.i("called", "im called")
             allAppointments = list as MutableList<Event>
             calendarView.notifyCalendarChanged()
-
         })
 
 
@@ -97,6 +97,22 @@ class MainFragment : Fragment(){
 
 
 
+
+
+
+        nextMonthButton = activity?.findViewById(R.id.nextMonthButton)!!
+        previousMonthButton = activity?.findViewById(R.id.previousMonthButton)!!
+        currentMothText = activity?.findViewById(R.id.monthYear_text)!!
+
+
+
+        // formatuesi i tekstit te muajit ne toolbar
+        val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
+
+
+        val daysOfWeek: Array<DayOfWeek> =
+            daysOfWeekFromLocale()
+        val currentMonth = YearMonth.now()
         calendarView.setup(
             currentMonth.minusMonths(10),
             currentMonth.plusMonths(10),
@@ -106,6 +122,7 @@ class MainFragment : Fragment(){
 
 
 
+        calendarView.maxRowCount = 6
 
         class DayViewContainer(view: View) : ViewContainer(view), Serializable {
             lateinit var day: CalendarDay
@@ -141,12 +158,14 @@ class MainFragment : Fragment(){
         // krijimi e diteve te kalendarit
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
-            @SuppressLint("NewApi")
+
             override fun bind(container: DayViewContainer, day: CalendarDay) {
+                Log.i("bind", "bind is called")
                 container.day = day
                 var eventItemCounter = 0
                 val eventList = mutableListOf<Event>()
                 val res = resources
+
 
                 for (i in allAppointments) {
                     if (stringToLocalDate(i.start_date.substring(0, 10)) == (day.date)) {
@@ -155,7 +174,7 @@ class MainFragment : Fragment(){
                     }
                 }
 
-                //Log.i("DAYLIST", day.events.toString())
+
                 val textView = container.textView
                 val layout = container.layout
                 val sotIndicator = container.sotIndicator
@@ -237,10 +256,31 @@ class MainFragment : Fragment(){
                 }
 
                 // if its earlier than today appointpreviews become grey :D
-                if(day.date < today){
-                    eventItem1.setBackgroundColor(resources.getColor(R.color.event_gone_color,null))
-                    eventItem2.setBackgroundColor(resources.getColor(R.color.event_gone_color,null))
-                    eventItem3.setBackgroundColor(resources.getColor(R.color.event_gone_color,null))
+                if (day.date < today) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        eventItem1.setBackgroundColor(
+                            resources.getColor(
+                                R.color.event_gone_color,
+                                null
+                            )
+                        )
+                        eventItem2.setBackgroundColor(
+                            resources.getColor(
+                                R.color.event_gone_color,
+                                null
+                            )
+                        )
+                        eventItem3.setBackgroundColor(
+                            resources.getColor(
+                                R.color.event_gone_color,
+                                null
+                            )
+                        )
+                    } else {
+                        eventItem1.setBackgroundColor(R.color.event_gone_color)
+                        eventItem2.setBackgroundColor(R.color.event_gone_color)
+                        eventItem3.setBackgroundColor(R.color.event_gone_color)
+                    }
                 }
 
 
@@ -296,27 +336,47 @@ class MainFragment : Fragment(){
         }
         calendarView.monthScrollListener = { month ->
             val title = "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
-            //monthYear_text.text = title
+            currentMothText.text = title
+            calendarView.notifyCalendarChanged()
+
 
             selectedDate?.let {
                 // Clear selection if we scroll to a new month.
                 selectedDate = null
                 calendarView.notifyDateChanged(it)
-
+                calendarView.notifyCalendarChanged()
             }
         }
+
+
+
+        nextMonthButton.setOnClickListener{
+            calendarView.findFirstVisibleMonth()?.let {
+                calendarView.smoothScrollToMonth(it.yearMonth.next)
+            }
+
+        }
+        previousMonthButton.setOnClickListener{
+            calendarView.findFirstVisibleMonth()?.let {
+                calendarView.smoothScrollToMonth(it.yearMonth.previous)
+            }
+        }
+
+
+
 
         return view
     }
 
 
 
-    fun getAppointments(){
-        Log.i("Hello", "hello biaaaaaatch")
+
+
+
+    fun getAppointments() {
+        val viewmodel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewmodel.getAppointments()
     }
-
-
-
 
 
 }

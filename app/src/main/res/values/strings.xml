@@ -18,5 +18,11 @@
 
     //CalendarDay rezervimet preview
     <string name="rezervimet_preview">%1$s,\u0020 %2$s</string>
+    <string name="log_out_text">Log Out</string>
+    <string name="ndrysho_text">Ndrysho</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="log_in_text">Log In</string>
+    <string name="forgot_password_text">Forgot Password?</string>
 
 </resources>
