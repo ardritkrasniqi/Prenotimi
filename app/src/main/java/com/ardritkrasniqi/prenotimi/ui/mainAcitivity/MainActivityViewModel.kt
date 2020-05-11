@@ -3,6 +3,7 @@ package com.ardritkrasniqi.prenotimi.ui.mainAcitivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ardritkrasniqi.prenotimi.model.GetUserErrorResponse
 import com.ardritkrasniqi.prenotimi.model.LoginErrorResponse
 import com.ardritkrasniqi.prenotimi.model.User
@@ -30,30 +31,19 @@ class MainActivityViewModel : ViewModel() {
 
 
 
-    val viewModelJob = Job()
-    val cororutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+
 
 
     fun logOut() {
-        cororutineScope.launch {
+        viewModelScope.launch {
             val getUser = ApiService.retrofitService.logOut(token.value.toString())
             try {
-
+                getUser.await()
 
             } catch (e: HttpException) {
                 val error =
-                    Gson()
-                        .fromJson(
-                            e.response()?.errorBody()?.string(),
-                            GetUserErrorResponse::class.java
-                        )
-                            as GetUserErrorResponse
-
+                    Gson().fromJson(e.response()?.errorBody()?.string(), LoginErrorResponse::class.java)
                 _status.value = error.message
-
-
-
-
             }
 
         }

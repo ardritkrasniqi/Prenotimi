@@ -15,6 +15,8 @@ data class CreateEvent(
     val endDate: String,
     @Json(name = "recurring")
     val recurring: Int,
+    @Json(name = "recurring_frequency")
+    val recurringFreq: Int?,
     @Json(name = "comment")
     val comment: String
 )

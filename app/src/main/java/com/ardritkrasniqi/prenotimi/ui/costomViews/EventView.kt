@@ -74,7 +74,7 @@ class EventView : FrameLayout {
         eventName.text = String.format(
             res.getString(R.string.details_placeholder),
             event.clientName.toUpperCase(Locale.getDefault()),
-            event.commenti
+            event.commenti, event.nrTel
         )
         topTime.text = event.startTime.substring(0,6)
         bottomTime.text = event.endTime.subSequence(0,6)

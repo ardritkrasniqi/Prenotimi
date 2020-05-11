@@ -14,12 +14,13 @@ import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.FragmentAuthBinding
 import com.ardritkrasniqi.prenotimi.model.LoginRequest
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+import com.ardritkrasniqi.prenotimi.ui.mainAcitivity.MainActivity
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.fragment_auth.*
 
 
 /**
- * A simple [Fragment] subclass.
+ * Authentication Fragment
+ * Created by Ardrit Krasniqi 2020
  */
 
 class AuthFragment : Fragment() {
@@ -57,7 +58,7 @@ class AuthFragment : Fragment() {
                 if (message.isNotEmpty()) {
                     if (message == "token_generated") {
                         NavHostFragment.findNavController(this@AuthFragment)
-                            .navigate(R.id.mainFragment)
+                            .navigate(R.id.action_authFragment_to_mainFragment)
                     } else {
                         makeToast(message)
                     }
@@ -66,15 +67,11 @@ class AuthFragment : Fragment() {
             })
 
 
-
-
-
-
             loginButton.setOnClickListener {
-                if (etUsername.text.contains("@") && etUsername.text.isNotBlank()) {
+                if (etUsername.text!!.contains("@") && etUsername.text!!.isNotBlank()) {
                     authViewModel.loginRequest.value = LoginRequest(
                         etUsername.text.toString().trim(),
-                        et_password.text.toString().trim()
+                        etPassword.text.toString().trim()
                     )
                     authViewModel.authenticate()
                 } else {
@@ -86,6 +83,8 @@ class AuthFragment : Fragment() {
 
 
 
+
+        (activity as MainActivity).setDrawerLocked(true)
         return binding.root
 
     }
@@ -100,3 +99,4 @@ class AuthFragment : Fragment() {
 
 
 }
+

@@ -1,6 +1,7 @@
 package com.ardritkrasniqi.prenotimi.ui.mainPage
 
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcelable
@@ -16,9 +17,12 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.ardritkrasniqi.prenotimi.R
+import com.ardritkrasniqi.prenotimi.R.color.event_gone_color
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
 import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
@@ -69,9 +73,12 @@ class MainFragment : Fragment() {
 
         //shared preference stuff
         val sharedPreferences = PreferenceProvider(this.requireContext())
+
         if(sharedPreferences.getToken().isNullOrEmpty()){
             findNavController().navigate(R.id.action_mainFragment_to_authFragment)
+
         }
+
 
         viewModel.token.value = "Bearer ${sharedPreferences.getToken()}"
 
@@ -82,7 +89,6 @@ class MainFragment : Fragment() {
             getAppointmentsExectued = true
         }
         calendarView = view.findViewById(R.id.calendarView)
-
         allAppointments = mutableListOf()
 
         viewModel.listOfAppointments.observe(viewLifecycleOwner, Observer { list ->
@@ -95,14 +101,12 @@ class MainFragment : Fragment() {
 
 
 
-
-
-
-
-
         nextMonthButton = activity?.findViewById(R.id.nextMonthButton)!!
+        nextMonthButton.visibility = View.VISIBLE
         previousMonthButton = activity?.findViewById(R.id.previousMonthButton)!!
+        previousMonthButton.visibility = View.VISIBLE
         currentMothText = activity?.findViewById(R.id.monthYear_text)!!
+        currentMothText.visibility = View.VISIBLE
 
 
 
@@ -119,6 +123,8 @@ class MainFragment : Fragment() {
             daysOfWeek.first()
         )
         calendarView.scrollToMonth(currentMonth)
+
+
 
 
 
@@ -159,12 +165,14 @@ class MainFragment : Fragment() {
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
             override fun create(view: View) = DayViewContainer(view)
 
+            @SuppressLint("ResourceAsColor")
             override fun bind(container: DayViewContainer, day: CalendarDay) {
-                Log.i("bind", "bind is called")
                 container.day = day
                 var eventItemCounter = 0
                 val eventList = mutableListOf<Event>()
                 val res = resources
+
+                allAppointments.sortBy { it.start_date }
 
 
                 for (i in allAppointments) {
@@ -173,6 +181,7 @@ class MainFragment : Fragment() {
                         eventList.add(i)
                     }
                 }
+
 
 
                 val textView = container.textView
@@ -260,26 +269,26 @@ class MainFragment : Fragment() {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         eventItem1.setBackgroundColor(
                             resources.getColor(
-                                R.color.event_gone_color,
+                                event_gone_color,
                                 null
                             )
                         )
                         eventItem2.setBackgroundColor(
                             resources.getColor(
-                                R.color.event_gone_color,
+                                event_gone_color,
                                 null
                             )
                         )
                         eventItem3.setBackgroundColor(
                             resources.getColor(
-                                R.color.event_gone_color,
+                                event_gone_color,
                                 null
                             )
                         )
-                    } else {
-                        eventItem1.setBackgroundColor(R.color.event_gone_color)
-                        eventItem2.setBackgroundColor(R.color.event_gone_color)
-                        eventItem3.setBackgroundColor(R.color.event_gone_color)
+                        } else {
+                        eventItem1.setBackgroundColor(event_gone_color)
+                        eventItem2.setBackgroundColor(event_gone_color)
+                        eventItem3.setBackgroundColor(event_gone_color)
                     }
                 }
 
@@ -367,11 +376,6 @@ class MainFragment : Fragment() {
 
         return view
     }
-
-
-
-
-
 
     fun getAppointments() {
         val viewmodel = ViewModelProvider(this).get(MainViewModel::class.java)

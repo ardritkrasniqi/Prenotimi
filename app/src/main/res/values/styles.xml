@@ -23,30 +23,39 @@
 
     <!--    style for materialEditText-->
     <style name="MaterialEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxCornerRadiusBottomEnd">40dp</item>
-        <item name="boxCornerRadiusTopEnd">40dp</item>
-        <item name="boxCornerRadiusTopStart">40dp</item>
-        <item name="boxCornerRadiusBottomStart">40dp</item>
-        <item name="boxStrokeColor">#FF0000</item>
+       <item name="boxCornerRadiusBottomStart">5dp</item>
+        <item name="boxCornerRadiusTopStart">5dp</item>
+        <item name="boxCornerRadiusTopEnd">5dp</item>
+        <item name="boxCornerRadiusBottomEnd">5dp</item>
+
 
     </style>
 
 
     <style name="CustomDatePickerDialog"
-        parent="Theme.AppCompat.Light.Dialog.Alert">
+        parent="Theme.MaterialComponents.DayNight.Dialog">
         <item name="android:dialogTheme">@style/MyDialogTheme</item>
-        <item name="android:timePickerStyle">@style/MyDatePicker</item>
+        <item name="android:timePickerStyle">@style/TimePicker</item>
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">#3F51B5</item>
+        <item name="android:layout_width">500dp</item>
     </style>
 
     <style name="MyDialogTheme"
-        parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:timePickerStyle">@style/MyDatePicker</item>
+        parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:timePickerStyle">@style/TimePicker</item>
+
     </style>
 
-    <style name="MyDatePicker"
+    <style name="TimePicker"
         parent="@android:style/Widget.Material.Light.TimePicker">
         <item name="android:timePickerMode">spinner</item>
+        <item name="android:timePickerDialogTheme">@style/Theme.MaterialComponents.DayNight.Dialog</item>
+
+
     </style>
+
 
 
     <style name="Theme.MyToolbarFancyTheme" parent="android:Theme.Holo">

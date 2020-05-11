@@ -3,7 +3,7 @@ package com.ardritkrasniqi.prenotimi
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 
-class AppApplication: Application(){
+class Application: Application(){
     override fun onCreate() {
         super.onCreate()
         // initialises the androidthreeten lib to core app

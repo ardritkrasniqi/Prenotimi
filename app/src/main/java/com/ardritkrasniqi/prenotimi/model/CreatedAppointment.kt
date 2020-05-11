@@ -22,6 +22,8 @@ data class CreatedAppointment(
     @Json(name = "end_date")
     val endDate: String? = null,
     val recurring: Int? = null,
+    @Json(name = "recurring_frequency")
+    val recurringFreq: Int? = null,
     val comment: String? = null,
     @Json(name = "created_at")
     val createdAt: String? = null,

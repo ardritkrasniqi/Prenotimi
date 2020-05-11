@@ -2,54 +2,60 @@ package com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog
 
 import android.app.Activity
 import android.app.DatePickerDialog
+
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.content.ComponentCallbacks
-import android.content.Context
 import android.content.DialogInterface
+
+
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.recyclerview.selection.OperationMonitor
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.FragmentBottomSheetDialogBinding
 import com.ardritkrasniqi.prenotimi.model.CreateEvent
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
 import com.ardritkrasniqi.prenotimi.utils.formatDateForEdits
-
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import es.dmoral.toasty.Toasty
 import java.text.SimpleDateFormat
 import java.util.*
 
 
+/*
+Proudly developed by Ardrit Krasniqi 2020, first Project ever done
+ */
+
 class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
 
-    lateinit var callback: DialogClosedListener
+    var callback: DialogClosedListener? = null
 
-    interface DialogClosedListener{
+    interface DialogClosedListener {
         fun dialogIsClosed()
     }
 
-    fun setDialogClosedListener(callback: DialogClosedListener){
+    fun setDialogClosedListener(callback: DialogClosedListener) {
         this.callback = callback
     }
-
-
 
 
     private lateinit var calendar: Calendar
@@ -58,7 +64,8 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
     lateinit var shtoRezerviminButton: Button
     private var index = 0
     private var switcherValue = 0
-    private  var event: Event? = null
+    private var selectedItemDialog: Int? = null
+    private var event: Event? = null
 
 
     override fun onCreateView(
@@ -85,15 +92,18 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         calendar = Calendar.getInstance()
 
         // merr argumentet nga dayFragment si argument i llojit Event
-        val args = ShtoRezervimDialogArgs.fromBundle(arguments!!)
-        event = args.event
+        val args = arguments?.let { ShtoRezervimDialogArgs.fromBundle(it) }
+        event = args?.event
 
+        viewModel.appointmentId.value = args?.event?.id
 
-        if(args.isEditing && event != null) {
+        if (event != null) {
             binding.shtoRezerviminButton.text = getString(R.string.ndrysho_text)
             binding.shtoRezerviminButton.setCompoundDrawables(
-                resources.getDrawable(R.drawable.ic_ndrysho,null),null,null,null)
+                resources.getDrawable(R.drawable.ic_ndrysho, null), null, null, null
+            )
             binding.fshiRezerviminButton.visibility = View.VISIBLE
+            binding.shtoRezervimText.setText("Ndrysho Rezervimin")
             binding.emriMbiemri.setText(event?.client_name)
             binding.telefoniEdit.setText(event?.phone)
             binding.prejEdit.setText(formatDateForEdits(event!!.start_date))
@@ -110,10 +120,15 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                 Toasty.error(this.requireContext(), newStatus).show()
             } else {
                 dialog?.let { it1 -> onDismiss(it1) }
-                callback.dialogIsClosed()
+                // nese callbacku nuk eshte null, ateher eshte thirr nga MainFragment, else thirret nga dayFragment
+                //i nuk ben call dialogisclosed dhe navigon ne mainFragment
+//                if (callback != null) callback?.dialogIsClosed() else
+                 activity?.let {
+                        Navigation.findNavController(it, R.id.myNavHostFragment)
+                            .navigate(R.id.mainFragment)
+                    }
             }
         })
-
 
 
         // merr daten e dhene ne datepicker dhe i ben update EditTextit
@@ -135,9 +150,10 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         // Datepicker dialog
         val datePickerDialog = DatePickerDialog(
-            this.context as Context, date, calendar.get(Calendar.YEAR),
+            context!!, R.style.CustomDatePickerDialog, date, calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
         )
+
 
         // Timepicker dialog
         val timePickerDialog = TimePickerDialog(
@@ -160,6 +176,7 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         deriEdit.setOnClickListener {
             index = 2
             datePickerDialog.show()
+            datePickerDialog.setOnCancelListener { datePickerDialog.dismiss() }
             datePickerDialog.setOnDismissListener {
                 timePickerDialog.show()
             }
@@ -170,32 +187,81 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         // Shto rezervimin button
         shtoRezerviminButton.setOnClickListener {
-
-
+            if(binding.emriMbiemri.text.isNullOrEmpty() || binding.telefoniEdit.text.isNullOrEmpty() || binding.komentiEdit.text.isNullOrEmpty()
+                || binding.prejEdit.text.isNullOrEmpty() || binding.deriEdit.text.isNullOrEmpty()){
+                Toasty.warning(this.requireContext(), "Plotesoji te gjitha fushat").show()
+            }else {
             viewModel.addAppointmentRequest.value = CreateEvent(
                 binding.emriMbiemri.text.toString(),
                 binding.telefoniEdit.text.toString(),
                 formatDate(binding.prejEdit.text.toString()),
                 formatDate(binding.deriEdit.text.toString()),
                 switcherValue,
+                selectedItemDialog,
                 binding.komentiEdit.text.toString()
             )
 
 
-            viewModel.addEvent()
-
-
+                if (event == null) viewModel.addEvent() else viewModel.editoRezervimin()
+            }
         }
 
 
+        binding.fshiRezerviminButton.setOnClickListener {
 
-        binding.switcher.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
-            switcherValue = if (b) {
+
+            val dialog = MaterialAlertDialogBuilder(this.requireContext())
+            dialog.setMessage("Po e fshini rezervimin, a jeni i sigurte?")
+            dialog.setPositiveButton(getString(R.string.fshije_text_button)){ dialog, which ->
+                viewModel.deleteAppointment(event?.id!!)
+                dialog.dismiss()
+            }
+            dialog.setNegativeButton("Mos e fshij"){dialog, which ->
+                dialog.dismiss()
+            }
+            dialog.setCancelable(false).show()
+            }
+
+
+
+        binding.switcher.setOnCheckedChangeListener { a: CompoundButton, b: Boolean ->
+            switcherValue = (if (b) {
                 1
             } else {
                 0
+            })
+
+            if (b){
+                val items = arrayOf("","Ditore", "Javore", "Mujore")
+                val checkedItem = 0
+                var internalSelectedItem: Int? = null
+                val dialog = MaterialAlertDialogBuilder(this.requireContext())
+                dialog.apply {
+                    setTitle("Frekuenca e rezervimit")
+                    setNegativeButton("Cancel"){dialog, which ->
+                        binding.switcher.isChecked = false
+                        selectedItemDialog = null
+                        dialog.dismiss()
+                    }
+                    setPositiveButton("OK"){dialog, which ->
+                        selectedItemDialog = internalSelectedItem
+                        Log.i("tag", internalSelectedItem.toString())
+                        dialog.dismiss()
+                    }
+                    setSingleChoiceItems(items, checkedItem){ dialog, which ->
+                        internalSelectedItem = which
+                    }
+
+                    setCancelable(false)
+
+                }.show()
+            } else{
+                selectedItemDialog = null
             }
         }
+
+
+
 
         return binding.root
     }
@@ -258,9 +324,7 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
     }
 
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-        fun dismissed(){}
-    }
+
+
 
 }

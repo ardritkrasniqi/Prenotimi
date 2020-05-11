@@ -159,7 +159,4 @@ class CalendarDayView : FrameLayout {
     }
 
 
-    interface onTouchEvent{
-
-    }
 }

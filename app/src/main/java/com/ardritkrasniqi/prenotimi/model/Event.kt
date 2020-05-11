@@ -20,8 +20,8 @@ data class Event(
     val end_date: String,
     @Json(name = "recurring")
     val recurring: Int = 0,
-    @Json(name = "recurring_frequency")
-    val recurring_frequency: String? = null,
+//    @Json(name = "recurring_frequency")
+//    val recurring_frequency: Int? = null,
     @Json(name = "comment")
     val comment: String? = "",
     @Json(name = "created_at")
@@ -43,6 +43,8 @@ data class Event(
         get() = end_date.substring(10)
     override val commenti: String?
         get() = comment
+    override val nrTel: String?
+        get() = phone
 
     constructor(parcel: Parcel) : this(
         parcel.readString() as String,
@@ -50,20 +52,20 @@ data class Event(
         parcel.readString() as String,
         parcel.readString() as String,
         parcel.readInt(),
-        parcel.readString(),
+//        parcel.readInt() as Int,
         parcel.readString() as String,
         parcel.readString(),
         parcel.readString(),
         parcel.readValue(Int::class.java.classLoader) as? Int
     )
 
-    companion object : Parceler<Event> {
-
-        override fun Event.write(parcel: Parcel, flags: Int): Nothing = TODO()
-        override fun create(parcel: Parcel): Event {
-            return Event(parcel)
-        }
-    }
+//    companion object : Parceler<Event> {
+//
+//        override fun Event.write(parcel: Parcel, flags: Int): Nothing = null
+//        override fun create(parcel: Parcel): Event {
+//            return Event(parcel)
+//        }
+//    }
 }
 
 

@@ -14,15 +14,17 @@
 
 
     //EventView template for details
-    <string name="details_placeholder">%1$s,\u0020 \u0020 %2$s</string>
+    <string name="details_placeholder">%1$s,\u0020 \u0020 %2$s, \u0020 %3$s</string>
 
     //CalendarDay rezervimet preview
     <string name="rezervimet_preview">%1$s,\u0020 %2$s</string>
     <string name="log_out_text">Log Out</string>
     <string name="ndrysho_text">Ndrysho</string>
     <string name="username_text">Username</string>
-    <string name="password_text">Password</string>
-    <string name="log_in_text">Log In</string>
-    <string name="forgot_password_text">Forgot Password?</string>
+    <string name="log_in_text">Kyqu</string>
+    <string name="forgot_password_text">Keni harruar fjalëkalimin?</string>
+    <string name="password_text">Fjalëkalimi</string>
+    <string name="emaili_text">Emaili</string>
+    <string name="fshije_text_button">Fshije</string>
 
 </resources>
