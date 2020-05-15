@@ -20,8 +20,8 @@ data class Event(
     val end_date: String,
     @Json(name = "recurring")
     val recurring: Int = 0,
-//    @Json(name = "recurring_frequency")
-//    val recurring_frequency: Int? = null,
+    @Json(name = "recurring_frequency")
+    val recurring_frequency: Int? = null,
     @Json(name = "comment")
     val comment: String? = "",
     @Json(name = "created_at")
@@ -52,7 +52,7 @@ data class Event(
         parcel.readString() as String,
         parcel.readString() as String,
         parcel.readInt(),
-//        parcel.readInt() as Int,
+        parcel.readInt(),
         parcel.readString() as String,
         parcel.readString(),
         parcel.readString(),

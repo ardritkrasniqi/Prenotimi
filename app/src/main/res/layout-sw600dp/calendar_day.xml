@@ -5,26 +5,26 @@
 
     <data>
         <variable
-                name="viewModel"
-                type="com.ardritkrasniqi.prenotimi.ui.mainPage.MainViewModel" />
-            <variable
-                name="calnedarDayDateText"
-                type="String" />
-            <variable
-                name="eventItemOne"
-                type="String" />
-            <variable
-                name="eventItemTwo"
-                type="String" />
-            <variable
-                name="eventItemThree"
-                type="String" />
-            <variable
-                name="todayIndicator"
-                type="Boolean" />
-            <variable
-                name="hasMoreAppointments"
-                type="Boolean" />
+            name="viewModel"
+            type="com.ardritkrasniqi.prenotimi.ui.mainPage.MainViewModel" />
+        <variable
+            name="calnedarDayDateText"
+            type="String" />
+        <variable
+            name="eventItemOne"
+            type="String" />
+        <variable
+            name="eventItemTwo"
+            type="String" />
+        <variable
+            name="eventItemThree"
+            type="String" />
+        <variable
+            name="todayIndicator"
+            type="Boolean" />
+        <variable
+            name="hasMoreAppointments"
+            type="Boolean" />
 
     </data>
 
@@ -35,7 +35,7 @@
         android:background="@drawable/day_form">
 
         <FrameLayout
-            android:id="@+id/frameLayout"
+            android:id="@+id/calendarDay_frameLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="3dp"
@@ -59,7 +59,7 @@
                 android:fontFamily="@font/amiko"
                 android:gravity="center"
                 android:textColor="@color/page_bg_color"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="24" />
 
@@ -79,8 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,12 +88,12 @@
 
                 <TextView
                     android:id="@+id/event_item_1"
-                    android:singleLine="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:background="#0238F6"
+                    android:singleLine="true"
                     android:fontFamily="@font/basic"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -102,37 +102,37 @@
                     android:textAlignment="center"
                     android:visibility="invisible"
                     android:textColor="#fff"
-                    android:textSize="12sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/event_item_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:singleLine="true"
+                    android:layout_marginStart="5dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/event_item_1"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="10dp"
+                    android:singleLine="true"
+                    android:layout_marginEnd="5dp"
                     android:background="#0238F6"
                     android:fontFamily="@font/basic"
                     android:visibility="invisible"
                     tools:text="11:20-12:20 Filan Fisteku"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="12sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/event_item_3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:singleLine="true"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="5dp"
                     android:background="#0238F6"
                     android:fontFamily="@font/basic"
+                    android:singleLine="true"
                     android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +140,7 @@
                     tools:text="11:20-12:20 Ardrit Krasniqi"
                     android:textAlignment="center"
                     android:textColor="#fff"
-                    android:textSize="12sp" />
+                    android:textSize="15sp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView
@@ -153,6 +153,5 @@
 
 
         </FrameLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

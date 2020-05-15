@@ -33,7 +33,7 @@ import java.net.URL
 
 
 
-class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListener,
+class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener
     , DrawerLocker {
 
@@ -41,29 +41,29 @@ class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListene
 
 
     // listens for the attached fragment, in this case i want to call a fun if shtorezdialog is closed
-    override fun onAttachFragment(fragment: androidx.fragment.app.Fragment) {
-        if (fragment is ShtoRezervimDialog) {
-            fragment.setDialogClosedListener(this)
-        } else if(fragment is DayFragment){
-            isDayFragment = true
-        }
-    }
+//    override fun onAttachFragment(fragment: androidx.fragment.app.Fragment) {
+//        if (fragment is ShtoRezervimDialog) {
+//            fragment.setDialogClosedListener(this)
+//        } else if(fragment is DayFragment){
+//            isDayFragment = true
+//        }
+//    }
 
 
-    // overrides the fun from shtorezervimindialog to call a function in another fragment
-    override fun dialogIsClosed() {
-            val navHostFragment =
-                supportFragmentManager.primaryNavigationFragment as NavHostFragment
-        if(!isDayFragment) {
-            val mainFragment =
-                navHostFragment.childFragmentManager.primaryNavigationFragment as MainFragment
-            mainFragment.getAppointments()
-        } else if(isDayFragment){
-            val mainFragment = navHostFragment.childFragmentManager.fragments[0] as MainFragment
-            mainFragment.getAppointments()
-        }
-
-    }
+//    // overrides the fun from shtorezervimindialog to call a function in another fragment
+//    override fun dialogIsClosed() {
+//            val navHostFragment =
+//                supportFragmentManager.primaryNavigationFragment as NavHostFragment
+//        if(!isDayFragment) {
+//            val mainFragment =
+//                navHostFragment.childFragmentManager.primaryNavigationFragment as MainFragment
+//            mainFragment.getAppointments()
+//        } else if(isDayFragment){
+//            val mainFragment = navHostFragment.childFragmentManager.fragments[0] as MainFragment
+//            mainFragment.getAppointments()
+//        }
+//
+//    }
 
 
     private lateinit var toggle: ActionBarDrawerToggle
@@ -155,7 +155,6 @@ class MainActivity : AppCompatActivity(), ShtoRezervimDialog.DialogClosedListene
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logOut -> {
-                Log.i("Clicked", "im clicked bruda!")
                 sharedPref.saveToken("")
                 Navigation.findNavController(this, R.id.myNavHostFragment)
                     .navigate(R.id.action_mainFragment_to_authFragment)

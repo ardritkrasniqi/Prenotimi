@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="dayHeight">64dp</dimen>
+    <dimen name="dayHeight">100dp</dimen>
+
+    <dimen name="halfDayHeight">50dp</dimen>
 
     <!-- Calendar Day View -->
     <dimen name="cdv_extra_dimen">1dp</dimen>

@@ -26,8 +26,8 @@
                 android:id="@+id/outlinedTextField_email"
                 style="@style/MaterialEditText"
                 android:layout_width="500dp"
+                android:layout_marginTop="60dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
                 android:focusable="false"
                 android:focusableInTouchMode="true"
                 android:hint="@string/emaili_text"
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/basic"
                     android:singleLine="true"
-                    android:textSize="15sp" />
+                    android:textSize="13sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +78,7 @@
                     android:fontFamily="@font/basic"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     app:layout_constraintEnd_toEndOf="@+id/outlinedTextField_email"
                     app:layout_constraintStart_toStartOf="@+id/outlinedTextField_email"
                     app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_email" />
@@ -105,11 +105,12 @@
                 android:id="@+id/forgotpassword_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="15dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/forgot_password_text"
                 android:textSize="18sp"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/login_button" />

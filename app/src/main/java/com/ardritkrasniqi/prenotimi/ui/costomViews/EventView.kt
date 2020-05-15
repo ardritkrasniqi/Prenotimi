@@ -107,4 +107,7 @@ class EventView : FrameLayout {
             data: IEvent
         )
     }
+
+
+
 }

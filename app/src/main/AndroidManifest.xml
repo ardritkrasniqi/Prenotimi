@@ -17,7 +17,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.mainAcitivity.MainActivity"
             android:screenOrientation="sensorLandscape"
-            tools:ignore="LockedOrientationActivity">
+            tools:ignore="LockedOrientationActivity"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

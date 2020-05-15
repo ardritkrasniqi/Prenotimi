@@ -7,7 +7,7 @@ import com.ardritkrasniqi.prenotimi.ui.costomViews.DayView
 import com.ardritkrasniqi.prenotimi.ui.costomViews.EventView
 
 class Decoration(private var context: Context) : IDecoration {
-     var eventClickListener: EventView.OnEventClickListener? = null
+    var eventClickListener: EventView.OnEventClickListener? = null
 
     override fun getEventView(
         event: IEvent?, eventBound: Rect?, hourHeight: Int,
@@ -34,9 +34,6 @@ class Decoration(private var context: Context) : IDecoration {
         dayView.setText(String.format("%1$2s:00", hour))
         return dayView
     }
-
-
-
 
 
 }

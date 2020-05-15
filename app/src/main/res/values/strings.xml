@@ -26,5 +26,8 @@
     <string name="password_text">Fjalëkalimi</string>
     <string name="emaili_text">Emaili</string>
     <string name="fshije_text_button">Fshije</string>
+    <string name="makerspace_text">Makerspace</string>
+    <string name="makerspace_gmail_com">makerspace@gmail.com</string>
+    <string name="shko_te_rezervimi">Shko te rezervimi</string>
 
 </resources>

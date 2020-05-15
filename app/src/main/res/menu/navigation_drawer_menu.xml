@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/logOut"
-        android:title="@string/log_out_text" />
+    <group>
+        <item
+            android:id="@+id/logOut"
+            android:icon="@drawable/logout_icon"
+            android:title="@string/log_out_text" />
+    </group>
 </menu>

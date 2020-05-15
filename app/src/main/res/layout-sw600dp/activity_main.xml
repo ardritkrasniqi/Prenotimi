@@ -123,7 +123,7 @@
             android:id="@+id/nav_view"
             android:layout_gravity="start"
             android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
-            android:background="#263238"
+            android:background="#B91B1B1B"
             app:headerLayout="@layout/navigation_header"
             app:itemIconTint="#fff"
             app:itemTextColor="#fff"

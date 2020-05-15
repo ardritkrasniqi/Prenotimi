@@ -17,8 +17,6 @@ import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.ardritkrasniqi.prenotimi.R
@@ -28,6 +26,7 @@ import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
 import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
 import com.ardritkrasniqi.prenotimi.utils.setTextColorRes
 import com.ardritkrasniqi.prenotimi.utils.stringToLocalDate
+import com.google.android.material.snackbar.Snackbar
 import com.kizitonwose.calendarview.CalendarView
 import com.kizitonwose.calendarview.model.CalendarDay
 import com.kizitonwose.calendarview.model.CalendarMonth
@@ -41,6 +40,7 @@ import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_days_header.view.*
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
+import org.threeten.bp.Month
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.Serializable
@@ -56,6 +56,9 @@ class MainFragment : Fragment() {
     private lateinit var currentMothText: TextView
     private lateinit var viewModel: MainViewModel
     private lateinit var calendarView: CalendarView
+    private var currentMonthForCheck: Int? = null
+    private lateinit var bundle: Bundle
+    private var isAppointmentAdded = false
     private val today = LocalDate.now()
     val ditetEJaves = arrayOf("Dielë", "Hënë", "Martë", "Mërkurë", "Enjte", "Premte", "Shtunë")
 
@@ -67,14 +70,20 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.main_fragment, container, false)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        bundle = Bundle()
+        isAppointmentAdded = bundle.getBoolean("isAppointmentAdded")
+        return view
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
 
         //shared preference stuff
         val sharedPreferences = PreferenceProvider(this.requireContext())
 
-        if(sharedPreferences.getToken().isNullOrEmpty()){
+        if (sharedPreferences.getToken().isNullOrEmpty()) {
             findNavController().navigate(R.id.action_mainFragment_to_authFragment)
 
         }
@@ -82,18 +91,23 @@ class MainFragment : Fragment() {
 
         viewModel.token.value = "Bearer ${sharedPreferences.getToken()}"
 
-        Log.i("called", "im called from oncreate")
 
-        if(!getAppointmentsExectued) {
+        if (!getAppointmentsExectued) {
             viewModel.getAppointments()
             getAppointmentsExectued = true
         }
         calendarView = view.findViewById(R.id.calendarView)
         allAppointments = mutableListOf()
 
-        viewModel.listOfAppointments.observe(viewLifecycleOwner, Observer { list ->
-            Log.i("called", "im called")
+        viewModel.allAppointments.observe(viewLifecycleOwner, Observer { list ->
             allAppointments = list as MutableList<Event>
+            if(!isAppointmentAdded){
+                val lastAppointment = allAppointments.last()
+                Snackbar.make(view, "Rezervimi per ${lastAppointment.client_name}, prej ${lastAppointment.startTime} deri ${lastAppointment.endTime} u krijua", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(resources.getColor(R.color.infoColor, null))
+                    .setAction(R.string.shko_te_rezervimi, View.OnClickListener {
+                }).show()
+            }
             calendarView.notifyCalendarChanged()
         })
 
@@ -109,7 +123,6 @@ class MainFragment : Fragment() {
         currentMothText.visibility = View.VISIBLE
 
 
-
         // formatuesi i tekstit te muajit ne toolbar
         val monthTitleFormatter = DateTimeFormatter.ofPattern("MMMM")
 
@@ -122,11 +135,8 @@ class MainFragment : Fragment() {
             currentMonth.plusMonths(10),
             daysOfWeek.first()
         )
+
         calendarView.scrollToMonth(currentMonth)
-
-
-
-
 
         calendarView.maxRowCount = 6
 
@@ -140,7 +150,8 @@ class MainFragment : Fragment() {
             val eventItem3 = view.event_item_3
             val moreEvents = view.more_appointments_dots
 
-            val bundle = Bundle()
+
+
 
 
             // klikimi mbi qdo qeli te kalendarit
@@ -154,11 +165,17 @@ class MainFragment : Fragment() {
                         "rezervimet",
                         dayList as ArrayList<out Parcelable>
                     )
+                    bundle.putString("DATE", day.date.toString())
                     view.findNavController()
                         .navigate(R.id.action_mainFragment2_to_dayFragment, bundle)
                 }
             }
         }
+
+        Log.i("added appointment", isAppointmentAdded.toString())
+
+
+
 
 
         // krijimi e diteve te kalendarit
@@ -192,9 +209,10 @@ class MainFragment : Fragment() {
                 val eventItem3 = container.eventItem3
                 val moreEvents = container.moreEvents
 
-                if (day.owner == DayOwner.THIS_MONTH) {
-                    if (eventItemCounter > 0) {
+                if (day.owner == DayOwner.THIS_MONTH && day.date.monthValue == currentMonthForCheck) {
 
+
+                    if (eventItemCounter > 0) {
                         when (eventItemCounter) {
                             1 -> {
 
@@ -262,8 +280,6 @@ class MainFragment : Fragment() {
                             }
                         }
                     }
-                }
-
                 // if its earlier than today appointpreviews become grey :D
                 if (day.date < today) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -285,12 +301,14 @@ class MainFragment : Fragment() {
                                 null
                             )
                         )
-                        } else {
+                    } else {
                         eventItem1.setBackgroundColor(event_gone_color)
                         eventItem2.setBackgroundColor(event_gone_color)
                         eventItem3.setBackgroundColor(event_gone_color)
                     }
                 }
+                }
+
 
 
 
@@ -316,7 +334,9 @@ class MainFragment : Fragment() {
                     layout.background = null
 
                 }
+
             }
+
         }
 
 
@@ -346,6 +366,7 @@ class MainFragment : Fragment() {
         calendarView.monthScrollListener = { month ->
             val title = "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
             currentMothText.text = title
+            currentMonthForCheck = month.yearMonth.month.value
             calendarView.notifyCalendarChanged()
 
 
@@ -359,28 +380,20 @@ class MainFragment : Fragment() {
 
 
 
-        nextMonthButton.setOnClickListener{
+        nextMonthButton.setOnClickListener {
             calendarView.findFirstVisibleMonth()?.let {
                 calendarView.smoothScrollToMonth(it.yearMonth.next)
             }
 
         }
-        previousMonthButton.setOnClickListener{
+        previousMonthButton.setOnClickListener {
             calendarView.findFirstVisibleMonth()?.let {
                 calendarView.smoothScrollToMonth(it.yearMonth.previous)
             }
         }
-
-
-
-
-        return view
     }
 
-    fun getAppointments() {
-        val viewmodel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewmodel.getAppointments()
-    }
+
 
 
 }

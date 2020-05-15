@@ -2,7 +2,6 @@ package com.ardritkrasniqi.prenotimi.ui.dayUI
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import com.ardritkrasniqi.prenotimi.ui.costomViews.CalendarDayView
 import com.ardritkrasniqi.prenotimi.ui.costomViews.EventView
 import com.ardritkrasniqi.prenotimi.ui.costomViews.EventView.OnEventClickListener
 import com.ardritkrasniqi.prenotimi.utils.DrawerLocker
-import com.ardritkrasniqi.prenotimi.utils.OnSwipeTouchListener
 
 
 class DayFragment : Fragment() {
@@ -28,6 +26,7 @@ class DayFragment : Fragment() {
     private lateinit var nextMonthButton: ImageView
     private lateinit var previousMonthButton: ImageView
     private lateinit var currentMothText: TextView
+    var date: String = ""
 
 
     override fun onCreateView(
@@ -48,43 +47,35 @@ class DayFragment : Fragment() {
         for (element in eventList) {
             events.add(element)
         }
-
-        dayView.setOnClickListener {
-            Log.i("Clicked", "hello boy")
-        }
-
-
-
-
+        date = bundle.get("DATE").toString()
 
         (dayView.getDecoration() as Decoration?)?.setOnEventClickListener(
             object : OnEventClickListener {
                 override fun onEventClick(view: EventView, data: IEvent) {
-                    Log.i("TAG", data.clientName)
                 }
 
                 override fun onEventViewClick(view: View, eventView: EventView, data: IEvent) {
-                    Log.i("TAG", "${data.clientName}, jajaj")
                     view.findNavController().navigate(
                         DayFragmentDirections.actionDayFragmentToShtoRezervimDialog(
-                            data as Event, true
-                        )
+                            data as Event, true,
+                        null)
                     )
                 }
             })
+
 
 
         dayView.setEvents(events)
 
         (activity as DrawerLocker?)?.setDrawerLocked(true)
 
+
         nextMonthButton = activity?.findViewById(R.id.nextMonthButton)!!
         nextMonthButton.visibility = View.GONE
         previousMonthButton = activity?.findViewById(R.id.previousMonthButton)!!
         previousMonthButton.visibility = View.GONE
         currentMothText = activity?.findViewById(R.id.monthYear_text)!!
-        currentMothText.visibility = View.GONE
-
+        currentMothText.text = date
 
 
         return binding.root

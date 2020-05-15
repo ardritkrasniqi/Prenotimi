@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|end"
-                    android:layout_margin="40dp"
+                    android:layout_margin="30dp"
                     android:clickable="true"
                     android:src="@drawable/ic_add" />
 
@@ -121,7 +121,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
-            android:background="#263238"
+            android:background="#B91B1B1B"
             android:id="@+id/nav_view"
             app:headerLayout="@layout/navigation_header"
             app:itemIconTint="#fff"

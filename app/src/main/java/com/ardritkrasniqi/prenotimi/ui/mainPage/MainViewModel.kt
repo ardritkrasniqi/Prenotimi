@@ -10,23 +10,32 @@ import com.ardritkrasniqi.prenotimi.model.LoginResponse
 import com.ardritkrasniqi.prenotimi.network.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import org.threeten.bp.YearMonth
+import org.threeten.bp.temporal.WeekFields
 import retrofit2.HttpException
+import java.util.*
 
 
 class MainViewModel : ViewModel() {
 
-
+    // Api call variables
     private val _status = MutableLiveData<String>()
     val status: LiveData<String>
         get() = _status
 
-
-    private var _listOfAppointments = MutableLiveData<List<Event>>()
-    val listOfAppointments: LiveData<List<Event>>
-        get() = _listOfAppointments
-
-
     var token = MutableLiveData<String>()
+
+    // business logic variables
+
+    private val _allAppointments = MutableLiveData<List<Event>>()
+    val allAppointments: LiveData<List<Event>>
+        get() = _allAppointments
+
+
+    val currentMonth = YearMonth.now()
+    val firstMonth = currentMonth.minusMonths(10)
+    val lastMonth = currentMonth.plusMonths(10)
+    val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
 
 
     fun getAppointments() {
@@ -35,7 +44,7 @@ class MainViewModel : ViewModel() {
                 ApiService.retrofitService.getAppointments(token.value.toString())
             try {
                 val appointmentsResult = getAppointments.await()
-                _listOfAppointments.value = appointmentsResult
+                _allAppointments.value = appointmentsResult
                 Log.i("GETAPPOINTMENTS", "HELLO HELLO")
             } catch (e: HttpException) {
                 val error =

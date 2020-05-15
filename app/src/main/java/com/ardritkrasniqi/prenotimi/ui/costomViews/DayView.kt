@@ -12,8 +12,8 @@ import android.widget.TextView
 import com.ardritkrasniqi.prenotimi.R
 
 private lateinit var textHour: TextView
+private lateinit var minuteHour: TextView
 private lateinit var separateHour: LinearLayout
-private val source: String = "12:00"
 
 class DayView : FrameLayout {
 

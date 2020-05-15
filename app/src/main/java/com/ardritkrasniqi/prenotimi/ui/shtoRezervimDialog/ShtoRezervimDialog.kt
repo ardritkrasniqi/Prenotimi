@@ -16,13 +16,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.CompoundButton
-import android.widget.EditText
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.selection.OperationMonitor
 import com.ardritkrasniqi.prenotimi.R
@@ -30,11 +29,14 @@ import com.ardritkrasniqi.prenotimi.databinding.FragmentBottomSheetDialogBinding
 import com.ardritkrasniqi.prenotimi.model.CreateEvent
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+import com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragmentDirections
 import com.ardritkrasniqi.prenotimi.utils.formatDateForEdits
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 import es.dmoral.toasty.Toasty
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,13 +49,13 @@ Proudly developed by Ardrit Krasniqi 2020, first Project ever done
 class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
 
-    var callback: DialogClosedListener? = null
+    var callback: CallSnackbar? = null
 
-    interface DialogClosedListener {
+    interface CallSnackbar {
         fun dialogIsClosed()
     }
 
-    fun setDialogClosedListener(callback: DialogClosedListener) {
+    fun setDialogClosedListener(callback: CallSnackbar) {
         this.callback = callback
     }
 
@@ -63,6 +65,7 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
     lateinit var deriEdit: EditText
     lateinit var shtoRezerviminButton: Button
     private var index = 0
+    var checkedItem = 0
     private var switcherValue = 0
     private var selectedItemDialog: Int? = null
     private var event: Event? = null
@@ -95,7 +98,17 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         val args = arguments?.let { ShtoRezervimDialogArgs.fromBundle(it) }
         event = args?.event
 
+        val dateFromDayView = args?.time
+
         viewModel.appointmentId.value = args?.event?.id
+        Log.i("ora", dateFromDayView.toString())
+
+        if (dateFromDayView != null) {
+            binding.prejEdit.setText(formatDateForEdits(dateFromDayView))
+            binding.deriEdit.setText(formatDateForEdits(dateFromDayView))
+        }
+
+
 
         if (event != null) {
             binding.shtoRezerviminButton.text = getString(R.string.ndrysho_text)
@@ -108,7 +121,8 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             binding.telefoniEdit.setText(event?.phone)
             binding.prejEdit.setText(formatDateForEdits(event!!.start_date))
             binding.deriEdit.setText(formatDateForEdits(event!!.end_date))
-            switcherValue = event?.recurring!!
+            binding.switcher.isChecked = trueOrFalse(event!!)
+            checkedItem = nullOrNot(event!!)
             binding.komentiEdit.setText(event?.comment)
         }
 
@@ -123,28 +137,33 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                 // nese callbacku nuk eshte null, ateher eshte thirr nga MainFragment, else thirret nga dayFragment
                 //i nuk ben call dialogisclosed dhe navigon ne mainFragment
 //                if (callback != null) callback?.dialogIsClosed() else
-                 activity?.let {
-                        Navigation.findNavController(it, R.id.myNavHostFragment)
-                            .navigate(R.id.mainFragment)
-                    }
+                activity?.let {
+                    val isAppointmentAdded = true
+                    val arguments = Bundle()
+                    arguments.putBoolean("isAppointmentAdded", isAppointmentAdded)
+                    Navigation.findNavController(it, R.id.myNavHostFragment)
+                        .navigate(R.id.mainFragment, arguments)
+                }
             }
         })
 
 
         // merr daten e dhene ne datepicker dhe i ben update EditTextit
-        val date = OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, monthOfYear)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            updateLabel()
 
-        }
+            val date = OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfYear)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                updateLabel()
+            }
+
 
         // merr kohen e dhene ne timepicker dhe i ben update EditTextit
-        val time = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minuteOfHour ->
-            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            calendar.set(Calendar.MINUTE, minuteOfHour)
-            updateLabel()
+        val time = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minuteOfHour ->
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                calendar.set(Calendar.MINUTE, minuteOfHour)
+                updateLabel()
+
         }
 
 
@@ -157,30 +176,43 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         // Timepicker dialog
         val timePickerDialog = TimePickerDialog(
-            context, R.style.CustomDatePickerDialog, time, calendar.get(Calendar.HOUR_OF_DAY),
-            calendar.get(Calendar.MINUTE), true
+            context, R.style.CustomDatePickerDialog, time, (dateFromDayView?.substring(11,13)
+                ?.toInt() ?: Calendar.HOUR_OF_DAY),
+            (dateFromDayView?.substring(14,15)
+                ?.toInt() ?: Calendar.HOUR_OF_DAY), true
         )
-
-
 
         prejEdit.setOnClickListener {
             index = 1
-            datePickerDialog.show()
-            datePickerDialog.setOnDismissListener {
-                timePickerDialog.show()
-            }
+            when(dateFromDayView == null){
+                true ->{
+                    datePickerDialog.show()
+                    datePickerDialog.setOnDismissListener() {
+                        timePickerDialog.show()
+                    }
+                }
+                else ->{
+                    timePickerDialog.show()
+                }
 
+            }
         }
         index = 0
 
         deriEdit.setOnClickListener {
             index = 2
-            datePickerDialog.show()
-            datePickerDialog.setOnCancelListener { datePickerDialog.dismiss() }
-            datePickerDialog.setOnDismissListener {
-                timePickerDialog.show()
-            }
+            when(dateFromDayView == null){
+                true ->{
+                    datePickerDialog.show()
+                    datePickerDialog.setOnDismissListener() {
+                        timePickerDialog.show()
+                    }
+                }
+                else ->{
+                    timePickerDialog.show()
+                }
 
+            }
         }
         index = 0
 
@@ -233,7 +265,6 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
             if (b){
                 val items = arrayOf("","Ditore", "Javore", "Mujore")
-                val checkedItem = 0
                 var internalSelectedItem: Int? = null
                 val dialog = MaterialAlertDialogBuilder(this.requireContext())
                 dialog.apply {
@@ -245,7 +276,9 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                     }
                     setPositiveButton("OK"){dialog, which ->
                         selectedItemDialog = internalSelectedItem
-                        Log.i("tag", internalSelectedItem.toString())
+                        if(selectedItemDialog == null){
+                            binding.switcher.isChecked = false
+                        }
                         dialog.dismiss()
                     }
                     setSingleChoiceItems(items, checkedItem){ dialog, which ->
@@ -255,6 +288,8 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                     setCancelable(false)
 
                 }.show()
+
+
             } else{
                 selectedItemDialog = null
             }
@@ -321,6 +356,19 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         (context as Activity?)!!.windowManager.defaultDisplay
             .getMetrics(displayMetrics)
         return displayMetrics.heightPixels
+    }
+
+
+
+    fun trueOrFalse(event: Event): Boolean{
+        return event.recurring == 1
+    }
+
+    fun nullOrNot(event: Event): Int{
+        if(event.recurring_frequency != null){
+            return event.recurring_frequency
+        }
+        return 0
     }
 
 

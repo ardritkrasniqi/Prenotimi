@@ -13,18 +13,26 @@
         <action
             android:id="@+id/action_mainFragment2_to_dayFragment"
             app:destination="@id/dayFragment"
-            app:enterAnim="@anim/nav_default_pop_enter_anim"
-            app:exitAnim="@anim/nav_default_pop_exit_anim" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
         <action
             android:id="@+id/action_mainFragment_to_authFragment"
             app:destination="@id/authFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_mainFragment_to_noInternetFragment"
             app:destination="@id/noInternetFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isAppointAdded"
+            app:argType="boolean"
+            android:defaultValue="false" />
 
 
     </fragment>
@@ -36,13 +44,6 @@
         <action
             android:id="@+id/action_dayFragment_to_shtoRezervimDialog"
             app:destination="@id/shtoRezervimDialog" />
-        <action
-            android:id="@+id/action_dayFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:enterAnim="@anim/nav_default_pop_enter_anim"
-            app:exitAnim="@anim/nav_default_pop_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/authFragment"
@@ -53,7 +54,8 @@
         <action
             android:id="@+id/action_authFragment_to_mainFragment"
             app:destination="@id/mainFragment"
-            app:enterAnim="@anim/nav_default_pop_enter_anim"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -70,6 +72,13 @@
             android:name="isEditing"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="time"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_shtoRezervimDialog_to_mainFragment2"
+            app:destination="@id/mainFragment" />
     </dialog>
     <fragment
         android:id="@+id/noInternetFragment"

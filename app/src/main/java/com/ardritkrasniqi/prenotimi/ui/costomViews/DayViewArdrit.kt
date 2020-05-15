@@ -3,19 +3,25 @@ package com.ardritkrasniqi.prenotimi.ui.costomViews
 import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.ardritkrasniqi.prenotimi.R
-import com.ardritkrasniqi.prenotimi.decoration.IDecoration
 import com.ardritkrasniqi.prenotimi.decoration.Decoration
+import com.ardritkrasniqi.prenotimi.decoration.IDecoration
 import com.ardritkrasniqi.prenotimi.model.Event
+import com.ardritkrasniqi.prenotimi.ui.dayUI.DayFragment
+import com.ardritkrasniqi.prenotimi.ui.dayUI.DayFragmentDirections
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class CalendarDayView : FrameLayout {
     private var dayHeight = 0
@@ -25,6 +31,8 @@ class CalendarDayView : FrameLayout {
     private var separateHourHeight = 0
     private var startHour = 0
     private var endHour = 24
+
+
     private var layoutDayView: LinearLayout? = null
     private var layoutEvent: FrameLayout? = null
     private var decorationn: IDecoration? = null
@@ -74,18 +82,39 @@ class CalendarDayView : FrameLayout {
         events = ArrayList()
         decorationn = Decoration(context)
         refresh()
+
     }
+
 
     private fun refresh() {
         drawDayViews()
         drawEvents()
     }
 
+    fun make24HTime(int: Int): String{
+        return if(int < 10) "0$int:00:00" else "$int:00:00"
+    }
+
+
+    // krijon linjat dhe oren per qdo ore te dayviewvit, merr nga item decoration
     private fun drawDayViews() {
+
+        val navhostFragment =
+            (context as AppCompatActivity).supportFragmentManager.primaryNavigationFragment as NavHostFragment
+        val dayFragment = navhostFragment.childFragmentManager.primaryNavigationFragment as DayFragment
+
         layoutDayView!!.removeAllViews()
         var dayView: DayView? = null
         for (i in startHour..endHour) {
             dayView = decorationn?.getDayView(i)
+
+            Log.i("ora", make24HTime(i))
+
+            dayView?.setOnClickListener {
+                findNavController().navigate(DayFragmentDirections.actionDayFragmentToShtoRezervimDialog(null,false,"${dayFragment.date} ${make24HTime(i)}"))
+            }
+
+
             layoutDayView!!.addView(dayView)
         }
         if (dayView != null) {
@@ -94,6 +123,7 @@ class CalendarDayView : FrameLayout {
             separateHourHeight = dayView.separateHeight.toInt()
         }
     }
+
 
     private fun drawEvents() {
         layoutEvent!!.removeAllViews()
