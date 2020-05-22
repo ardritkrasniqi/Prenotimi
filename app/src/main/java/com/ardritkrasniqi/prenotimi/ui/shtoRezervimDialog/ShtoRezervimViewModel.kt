@@ -1,6 +1,9 @@
 package com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ardritkrasniqi.prenotimi.model.CreateEvent
 import com.ardritkrasniqi.prenotimi.model.CreatedAppointment
 import com.ardritkrasniqi.prenotimi.model.LoginErrorResponse
@@ -8,8 +11,6 @@ import com.ardritkrasniqi.prenotimi.network.ApiService
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import retrofit2.Response
-import retrofit2.http.DELETE
 
 class ShtoRezervimViewModel : ViewModel() {
 
@@ -17,9 +18,17 @@ class ShtoRezervimViewModel : ViewModel() {
     val token = MutableLiveData<String>()
     val appointmentId = MutableLiveData<Int>()
 
-    private var _status = MutableLiveData<String>()
-    val status: LiveData<String>
-        get() = _status
+    private var _shtoRezerviminStatus = MutableLiveData<String>()
+    val shtoRezerviminStatus: LiveData<String>
+        get() = _shtoRezerviminStatus
+
+    private var _editoRezerviminStatus = MutableLiveData<String>()
+    val editoRezerviminStatus: LiveData<String>
+        get() = _editoRezerviminStatus
+
+    private var _fshijRezervmiminStatus = MutableLiveData<String>()
+    val fshijRezerviminStatus: LiveData<String>
+        get() = _fshijRezervmiminStatus
 
     val addAppointmentRequest = MutableLiveData<CreateEvent>()
 
@@ -40,7 +49,7 @@ class ShtoRezervimViewModel : ViewModel() {
             try {
                 val addAppointment: CreatedAppointment = addEvent.await()
                 _addAppointmentResponse.value = addAppointment
-                _status.value = "200"
+                _shtoRezerviminStatus.value = "200"
 
 
             } catch (e: HttpException) {
@@ -52,7 +61,7 @@ class ShtoRezervimViewModel : ViewModel() {
                         )
                             as LoginErrorResponse
 
-                _status.value = error.message
+                _shtoRezerviminStatus.value = error.message
             }
         }
     }
@@ -67,40 +76,39 @@ class ShtoRezervimViewModel : ViewModel() {
             try {
                 val editedEvent = editEvent.await()
                 _editedAppointmentResponse.value = editedEvent
-                _status.value = "200"
+                _editoRezerviminStatus.value = "200"
 
 
             } catch (e: HttpException) {
                 val error =
-                Gson().fromJson(e.response()?.errorBody()?.string(), LoginErrorResponse::class.java)
-                _status.value = error.message
+                    Gson().fromJson(
+                        e.response()?.errorBody()?.string(),
+                        LoginErrorResponse::class.java
+                    )
+                _editoRezerviminStatus.value = error.message
             }
         }
     }
 
 
-    fun deleteAppointment(id: Int){
+    fun deleteAppointment(id: Int) {
         viewModelScope.launch {
             val deleteAppointment = ApiService.retrofitService.deleteAppointment(
                 token.value.toString(), id
             )
             try {
                 deleteAppointment.await()
-                _status.value = "200"
-            } catch (e:HttpException){
+                _fshijRezervmiminStatus.value = "200"
+            } catch (e: HttpException) {
                 val error =
-                    Gson().fromJson(e.response()?.errorBody()?.string(), LoginErrorResponse::class.java)
-                _status.value = error.message
+                    Gson().fromJson(
+                        e.response()?.errorBody()?.string(),
+                        LoginErrorResponse::class.java
+                    )
+                _fshijRezervmiminStatus.value = error.message
             }
 
         }
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        _status.value = ""
-    }
-
-
 
 }

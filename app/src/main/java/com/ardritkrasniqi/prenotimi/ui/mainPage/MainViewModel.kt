@@ -8,8 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.model.LoginResponse
 import com.ardritkrasniqi.prenotimi.network.ApiService
+import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
+import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import retrofit2.HttpException
@@ -25,6 +27,25 @@ class MainViewModel : ViewModel() {
 
     var token = MutableLiveData<String>()
 
+    var incrementingMonthNumber = MutableLiveData<Int>()
+
+    private var currentNumber = 0
+
+    val daysOfWeek: Array<DayOfWeek> =
+        daysOfWeekFromLocale()
+    val currentMonth: YearMonth = YearMonth.now()
+    val firstMonth = currentMonth.minusMonths(10)
+    val lastMonth = currentMonth.plusMonths(10)
+    val firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
+    var sixMonths = currentMonth
+
+    init {
+        incrementingMonthNumber.value = 0
+        Log.i("created", "im created")
+    }
+
+
+
     // business logic variables
 
     private val _allAppointments = MutableLiveData<List<Event>>()
@@ -32,10 +53,6 @@ class MainViewModel : ViewModel() {
         get() = _allAppointments
 
 
-    val currentMonth = YearMonth.now()
-    val firstMonth = currentMonth.minusMonths(10)
-    val lastMonth = currentMonth.plusMonths(10)
-    val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
 
 
     fun getAppointments() {
@@ -55,6 +72,13 @@ class MainViewModel : ViewModel() {
 
                 _status.value = error.message
             }
+        }
+    }
+
+    fun incrementMonthNumber(){
+        currentNumber++
+        if(currentNumber == 5){
+            incrementingMonthNumber.value = 5
         }
     }
 

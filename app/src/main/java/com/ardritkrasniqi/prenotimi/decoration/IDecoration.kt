@@ -16,4 +16,5 @@ interface IDecoration {
 
 
     fun getDayView(hour: Int): DayView?
+
 }

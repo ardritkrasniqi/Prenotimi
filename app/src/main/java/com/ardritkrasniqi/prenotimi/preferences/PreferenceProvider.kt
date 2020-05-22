@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.preference.PreferenceManager
 
 private const val CURRENT_TOKEN = "current_token"
+private const val APPOINTMENT_ADDED = "appointment_added"
 
 class PreferenceProvider(context: Context?) {
 
@@ -25,6 +26,14 @@ class PreferenceProvider(context: Context?) {
 
     fun getToken() : String?{
         return preference.getString(CURRENT_TOKEN, "")
+    }
+
+    fun saveIsAppointmentAdded(trueOrFalse: Boolean){
+        return preference.edit().putBoolean(APPOINTMENT_ADDED, trueOrFalse).apply()
+    }
+
+    fun getIsappointmentAdded(): Boolean{
+        return preference.getBoolean(APPOINTMENT_ADDED, false)
     }
 
 

@@ -29,7 +29,7 @@
                 app:cv_inDateStyle="allMonths"
                 app:cv_monthHeaderResource="@layout/calendar_days_header"
                 app:cv_orientation="horizontal"
-                app:cv_outDateStyle="endOfRow"
+                app:cv_outDateStyle="endOfGrid"
                 app:cv_hasBoundaries="true"
                 app:cv_scrollMode="paged"
                 app:layout_constraintBottom_toBottomOf="parent"

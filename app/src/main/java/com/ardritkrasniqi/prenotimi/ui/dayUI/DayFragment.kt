@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.marginStart
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.ardritkrasniqi.prenotimi.R
@@ -17,7 +19,13 @@ import com.ardritkrasniqi.prenotimi.model.data.IEvent
 import com.ardritkrasniqi.prenotimi.ui.costomViews.CalendarDayView
 import com.ardritkrasniqi.prenotimi.ui.costomViews.EventView
 import com.ardritkrasniqi.prenotimi.ui.costomViews.EventView.OnEventClickListener
+import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialogDirections
 import com.ardritkrasniqi.prenotimi.utils.DrawerLocker
+import kotlinx.android.synthetic.main.calendar_day.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.time.days
+import kotlin.time.hours
 
 
 class DayFragment : Fragment() {
@@ -26,6 +34,7 @@ class DayFragment : Fragment() {
     private lateinit var nextMonthButton: ImageView
     private lateinit var previousMonthButton: ImageView
     private lateinit var currentMothText: TextView
+
     var date: String = ""
 
 
@@ -37,7 +46,6 @@ class DayFragment : Fragment() {
         val binding = FragmentDayBinding.inflate(inflater)
         dayView = binding.dayView
 
-
         dayView.setLimitTime(6, 23)
 
         events = mutableListOf()
@@ -47,7 +55,7 @@ class DayFragment : Fragment() {
         for (element in eventList) {
             events.add(element)
         }
-        date = bundle.get("DATE").toString()
+        date = bundle.get("DATE") as String
 
         (dayView.getDecoration() as Decoration?)?.setOnEventClickListener(
             object : OnEventClickListener {
@@ -80,6 +88,9 @@ class DayFragment : Fragment() {
 
         return binding.root
     }
+
+
+
 
 
 }

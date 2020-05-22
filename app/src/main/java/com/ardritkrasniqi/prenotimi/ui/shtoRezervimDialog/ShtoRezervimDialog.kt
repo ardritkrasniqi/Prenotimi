@@ -1,29 +1,26 @@
 package com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog
 
+
 import android.app.Activity
 import android.app.DatePickerDialog
-
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.app.TimePickerDialog
-import android.content.DialogInterface
-
-
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
-import android.widget.*
+import android.widget.Button
+import android.widget.CompoundButton
+import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
-import androidx.recyclerview.selection.OperationMonitor
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.FragmentBottomSheetDialogBinding
 import com.ardritkrasniqi.prenotimi.model.CreateEvent
@@ -35,8 +32,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.switchmaterial.SwitchMaterial
 import es.dmoral.toasty.Toasty
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,16 +43,6 @@ Proudly developed by Ardrit Krasniqi 2020, first Project ever done
 
 class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
-
-    var callback: CallSnackbar? = null
-
-    interface CallSnackbar {
-        fun dialogIsClosed()
-    }
-
-    fun setDialogClosedListener(callback: CallSnackbar) {
-        this.callback = callback
-    }
 
 
     private lateinit var calendar: Calendar
@@ -101,7 +86,6 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         val dateFromDayView = args?.time
 
         viewModel.appointmentId.value = args?.event?.id
-        Log.i("ora", dateFromDayView.toString())
 
         if (dateFromDayView != null) {
             binding.prejEdit.setText(formatDateForEdits(dateFromDayView))
@@ -129,21 +113,34 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
 
 
-        viewModel.status.observe(viewLifecycleOwner, Observer { newStatus ->
+        viewModel.shtoRezerviminStatus.observe(viewLifecycleOwner, Observer { newStatus ->
             if (newStatus != "200") {
                 Toasty.error(this.requireContext(), newStatus).show()
             } else {
-                dialog?.let { it1 -> onDismiss(it1) }
-                // nese callbacku nuk eshte null, ateher eshte thirr nga MainFragment, else thirret nga dayFragment
-                //i nuk ben call dialogisclosed dhe navigon ne mainFragment
-//                if (callback != null) callback?.dialogIsClosed() else
+                sharedP.saveIsAppointmentAdded(true)
                 activity?.let {
-                    val isAppointmentAdded = true
-                    val arguments = Bundle()
-                    arguments.putBoolean("isAppointmentAdded", isAppointmentAdded)
                     Navigation.findNavController(it, R.id.myNavHostFragment)
-                        .navigate(R.id.mainFragment, arguments)
+                        .navigate(R.id.mainFragment)
                 }
+        }
+        })
+
+
+        viewModel.editoRezerviminStatus.observe(viewLifecycleOwner, Observer {
+            if(it != "200"){
+                Toasty.error(this.requireContext(), it).show()
+            } else {
+                Toasty.success(requireContext(), "Rezervimi u editua me sukses", Toasty.LENGTH_LONG).show()
+                findNavController().navigate(R.id.mainFragment)
+            }
+        })
+
+        viewModel.fshijRezerviminStatus.observe(viewLifecycleOwner, Observer {
+            if(it != "200"){
+                Toasty.error(this.requireContext(), it).show()
+            } else {
+                Toasty.success(requireContext(), "Rezervimi u largua!", Toasty.LENGTH_LONG).show()
+                findNavController().navigate(R.id.mainFragment)
             }
         })
 
@@ -360,11 +357,11 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
 
 
-    fun trueOrFalse(event: Event): Boolean{
+    private fun trueOrFalse(event: Event): Boolean{
         return event.recurring == 1
     }
 
-    fun nullOrNot(event: Event): Int{
+    private fun nullOrNot(event: Event): Int{
         if(event.recurring_frequency != null){
             return event.recurring_frequency
         }

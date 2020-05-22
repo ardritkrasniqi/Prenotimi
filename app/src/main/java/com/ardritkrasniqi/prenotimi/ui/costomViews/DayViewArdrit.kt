@@ -139,6 +139,7 @@ class CalendarDayView : FrameLayout {
     }
 
 
+
     private fun getTimeBound(event: Event): Rect {
         val rect = Rect()
         rect.top =
@@ -149,6 +150,7 @@ class CalendarDayView : FrameLayout {
         rect.right = width
         return rect
     }
+
 
     private fun getPositionOfTime(calendar: Calendar): Int {
         val hour = calendar[Calendar.HOUR_OF_DAY] - startHour

@@ -29,10 +29,12 @@
             app:exitAnim="@android:anim/fade_out"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
-        <argument
-            android:name="isAppointAdded"
-            app:argType="boolean"
-            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_mainFragment_self"
+            app:destination="@id/mainFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
 
 
     </fragment>
@@ -78,7 +80,9 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_shtoRezervimDialog_to_mainFragment2"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
     </dialog>
     <fragment
         android:id="@+id/noInternetFragment"
