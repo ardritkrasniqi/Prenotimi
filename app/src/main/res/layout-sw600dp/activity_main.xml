@@ -123,10 +123,10 @@
             android:id="@+id/nav_view"
             android:layout_gravity="start"
             android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
-            android:background="#B91B1B1B"
+            android:background="#C8FFFFFF"
             app:headerLayout="@layout/navigation_header"
-            app:itemIconTint="#fff"
-            app:itemTextColor="#fff"
+            app:itemIconTint="#000"
+            app:itemTextColor="#000"
             app:menu="@menu/navigation_drawer_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>

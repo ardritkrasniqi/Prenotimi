@@ -24,6 +24,7 @@ import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.R.color.event_gone_color
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+import com.ardritkrasniqi.prenotimi.ui.listAppointments.ListAppointments
 import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
 import com.ardritkrasniqi.prenotimi.utils.setTextColorRes
 import com.ardritkrasniqi.prenotimi.utils.stringToLocalDate
@@ -43,12 +44,17 @@ import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_days_header.view.*
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.Serializable
 import java.util.*
 
 class MainFragment : Fragment() {
+
+    companion object {
+        fun newInstance() = MainFragment()
+    }
 
     private var selectedDate: LocalDate? = null
     private lateinit var allAppointments: MutableList<Event>
@@ -182,13 +188,11 @@ class MainFragment : Fragment() {
                     view.findNavController()
                         .navigate(R.id.action_mainFragment2_to_dayFragment, bundle)
                 }
-
-
             }
         }
 
                 allAppointments.sortBy { it.start_date }
-                allAppointments.groupBy { LocalDate.parse(it.start_date).dayOfMonth}
+//               val appointmentss =  allAppointments.groupBy { LocalDateTime.parse(it.start_date)}
 
         // krijimi e diteve te kalendarit
         calendarView.dayBinder = object : DayBinder<DayViewContainer> {
@@ -208,6 +212,7 @@ class MainFragment : Fragment() {
                     }
                 }
 
+
                 val textView = container.textView
                 val layout = container.layout
                 val sotIndicator = container.sotIndicator
@@ -217,6 +222,7 @@ class MainFragment : Fragment() {
                 val moreEvents = container.moreEvents
 
                 if (day.date.monthValue == currentMonthForCheck) {
+
 
                     if (eventItemCounter > 0) {
                         when (eventItemCounter) {

@@ -104,12 +104,10 @@ class CalendarDayView : FrameLayout {
         val dayFragment = navhostFragment.childFragmentManager.primaryNavigationFragment as DayFragment
 
         layoutDayView!!.removeAllViews()
+
         var dayView: DayView? = null
         for (i in startHour..endHour) {
             dayView = decorationn?.getDayView(i)
-
-            Log.i("ora", make24HTime(i))
-
             dayView?.setOnClickListener {
                 findNavController().navigate(DayFragmentDirections.actionDayFragmentToShtoRezervimDialog(null,false,"${dayFragment.date} ${make24HTime(i)}"))
             }

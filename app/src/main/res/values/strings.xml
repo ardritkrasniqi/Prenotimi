@@ -29,5 +29,6 @@
     <string name="makerspace_text">Makerspace</string>
     <string name="makerspace_gmail_com">makerspace@gmail.com</string>
     <string name="shko_te_rezervimi">Shko te rezervimi</string>
+    <string name="listo_rezervimet_text">Listo Rezervimet</string>
 
 </resources>

@@ -116,16 +116,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+
         <com.google.android.material.navigation.NavigationView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:id="@+id/nav_view"
             android:layout_gravity="start"
             android:layout_marginTop="@dimen/abc_action_bar_default_height_material"
-            android:background="#B91B1B1B"
-            android:id="@+id/nav_view"
+            android:background="#C8FFFFFF"
             app:headerLayout="@layout/navigation_header"
-            app:itemIconTint="#fff"
-            app:itemTextColor="#fff"
+            app:itemIconTint="#000"
+            android:layoutMode="opticalBounds"
+            app:itemTextColor="#000"
             app:menu="@menu/navigation_drawer_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
