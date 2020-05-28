@@ -110,7 +110,6 @@
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp"
                     android:id="@+id/telefoni_edit"
-
                     android:inputType="number"
                     android:textSize="25sp"
                     tools:layout_editor_absoluteX="702dp"

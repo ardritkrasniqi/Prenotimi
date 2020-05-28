@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:visibility="invisible"
-                android:src="@drawable/three_dots" />
+                android:src="@drawable/ic_menu" />
 
 
         </FrameLayout>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:elevation="20dp"
+    app:cardCornerRadius="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/emri_mbiemri"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basic"
+            android:textAllCaps="true"
+            android:textColor="@color/black_color"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/prej_data"
+            app:layout_constraintStart_toStartOf="@+id/prej_text"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ardrit Krasniqi" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/emri_mbiemri"
+            app:layout_constraintStart_toStartOf="@id/emri_mbiemri"
+            android:layout_marginTop="5dp"
+            android:textSize="17sp"
+            android:id="@+id/prej_text"
+            android:text="Prej:"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textSize="19sp"
+            android:fontFamily="@font/basic"
+            android:id="@+id/prej_data"
+            app:layout_constraintBaseline_toBaselineOf="@+id/prej_text"
+            app:layout_constraintStart_toEndOf="@id/prej_text"
+            tools:text="2020-04-22 12:00:00" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/prej_text"
+            android:textSize="17sp"
+            android:text="Deri:"
+            android:id="@+id/deri_text"
+            app:layout_constraintTop_toBottomOf="@id/prej_text"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:textSize="19sp"
+            android:id="@+id/deri_data"
+            android:fontFamily="@font/basic"
+            app:layout_constraintBaseline_toBaselineOf="@+id/deri_text"
+            app:layout_constraintStart_toEndOf="@id/deri_text"
+            tools:text="2020-04-22 12:00:00" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="261dp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kontakti:"
+            android:id="@+id/kontakti_text"
+            android:textSize="17sp"
+            app:layout_constraintBottom_toBottomOf="@+id/prej_text"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/prej_text" />
+
+        <TextView
+            android:id="@+id/kontakti_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/basic"
+            android:textSize="19sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/kontakti_text"
+            app:layout_constraintStart_toEndOf="@id/kontakti_text"
+            tools:text="048394038" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detajet:"
+            android:textSize="17sp"
+            android:id="@+id/detajet_text"
+            app:layout_constraintBottom_toBottomOf="@+id/deri_text"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/deri_text" />
+
+        <TextView
+            android:id="@+id/detajet_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/basic"
+            android:textSize="19sp"
+            app:layout_constraintStart_toStartOf="@id/kontakti_data"
+            app:layout_constraintBaseline_toBaselineOf="@+id/detajet_text"
+            app:layout_constraintStart_toEndOf="@id/detajet_text"
+            tools:text="Just a simple plain text" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

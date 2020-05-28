@@ -19,6 +19,9 @@
             android:screenOrientation="sensorLandscape"
             tools:ignore="LockedOrientationActivity"
             android:windowSoftInputMode="adjustPan">
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -34,11 +34,12 @@
                 android:text="@string/shto_rezervim"
                 android:textAllCaps="true"
                 android:textColor="#000"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/klienti_text"
@@ -52,13 +53,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/shtoRezervim_text" />
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outlinedTextField_emri"
                 style="@style/MaterialEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="10dp"
                 android:focusable="false"
@@ -68,23 +68,20 @@
                 app:boxStrokeWidth="2dp"
                 app:boxStrokeWidthFocused="3dp"
                 app:hintAnimationEnabled="true"
-                app:hintTextAppearance="@style/hintTextAppearance"
+                app:hintTextAppearance="@style/hintTextAppearanceSmallDevice"
                 app:layout_constraintEnd_toStartOf="@+id/outlinedTextField_telefoni"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/klienti_text"
-                app:shapeAppearance="@drawable/edit_text">
+                app:layout_constraintTop_toBottomOf="@id/klienti_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/emri_mbiemri"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
                     android:fontFamily="@font/basic"
                     android:inputType="textCapWords"
-                    android:paddingStart="10dp"
                     android:singleLine="true"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,7 +97,7 @@
                 android:hint="@string/nr_telefonit_hint"
                 app:boxStrokeColor="#283593"
                 app:boxStrokeWidth="2dp"
-                app:hintTextAppearance="@style/hintTextAppearance"
+                app:hintTextAppearance="@style/hintTextAppearanceSmallDevice"
                 app:layout_constraintBottom_toBottomOf="@+id/outlinedTextField_emri"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -112,48 +109,43 @@
                     android:id="@+id/telefoni_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
                     android:fontFamily="@font/basic"
-                    android:inputType="textCapWords"
-                    android:paddingStart="10dp"
+                    android:inputType="number"
                     android:singleLine="true"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outlinedTextField_komenti"
                 style="@style/MaterialEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginTop="8dp"
                 android:hint="@string/detajet_e_rezervimit_hint"
                 app:boxStrokeColor="#283593"
                 app:boxStrokeWidth="2dp"
                 app:boxStrokeWidthFocused="3dp"
                 app:hintAnimationEnabled="true"
-                app:hintTextAppearance="@style/hintTextAppearance"
-                app:layout_constraintEnd_toEndOf="@id/outlinedTextField_telefoni"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@id/outlinedTextField_emri"
-                app:layout_constraintTop_toBottomOf="@id/outlinedTextField_emri"
-                app:shapeAppearance="@drawable/edit_text">
+                app:hintTextAppearance="@style/hintTextAppearanceSmallDevice"
+                app:layout_constraintEnd_toEndOf="@+id/outlinedTextField_telefoni"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/outlinedTextField_emri"
+                app:layout_constraintTop_toBottomOf="@id/outlinedTextField_emri">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/komenti_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/basic"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
                     android:singleLine="true"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     tools:layout_editor_absoluteX="702dp"
                     tools:layout_editor_absoluteY="208dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <TextView
                 android:id="@+id/koha_text"
@@ -183,8 +175,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginEnd="20dp"
                 android:clickable="true"
                 android:focusable="false"
                 android:focusableInTouchMode="true"
@@ -218,7 +210,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="20dp"
                 android:clickable="true"
                 android:focusable="false"
                 android:focusableInTouchMode="true"
@@ -258,19 +250,17 @@
                 style="Widget.MaterialComponents.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:backgroundTint="#5400FD"
                 android:fontFamily="@font/basic"
                 android:text="Shto Rezervimin"
                 android:textColor="#fff"
                 android:textSize="15sp"
+                android:layout_marginTop="15dp"
                 android:textStyle="bold"
                 app:icon="@drawable/ic_add"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/prej_edit"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toBottomOf="@+id/prej_edit" />
 
             <Button
                 android:id="@+id/fshi_rezervimin_button"
@@ -285,11 +275,10 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:icon="@drawable/ic_delete_forever_black_24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/shtoRezervimin_button"
+                app:layout_constraintBaseline_toBaselineOf="@+id/shtoRezervimin_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.825"
-                app:layout_constraintStart_toEndOf="@+id/shtoRezervimin_button"
-                app:layout_constraintTop_toTopOf="@+id/shtoRezervimin_button" />
+                app:layout_constraintStart_toEndOf="@+id/shtoRezervimin_button" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

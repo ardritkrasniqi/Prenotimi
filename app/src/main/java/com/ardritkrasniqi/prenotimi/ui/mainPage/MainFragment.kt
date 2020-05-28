@@ -49,6 +49,7 @@ import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainFragment : Fragment() {
 
@@ -57,7 +58,7 @@ class MainFragment : Fragment() {
     }
 
     private var selectedDate: LocalDate? = null
-    private lateinit var allAppointments: MutableList<Event>
+    lateinit var allAppointments: MutableList<Event>
     private lateinit var nextMonthButton: ImageView
     private lateinit var previousMonthButton: ImageView
     private lateinit var currentMothText: TextView
@@ -422,6 +423,12 @@ class MainFragment : Fragment() {
                 .setActionTextColor(resources.getColor(R.color.black_color))
                 .show()
         }
+    }
+
+
+    fun navigating(){
+        bundle.putParcelableArrayList("appointments", allAppointments as java.util.ArrayList<out Parcelable>)
+        findNavController().navigate(R.id.action_mainFragment_to_listAppointments, bundle)
     }
 }
 

@@ -35,6 +35,11 @@
             app:launchSingleTop="false"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_mainFragment_to_listAppointments"
+            app:destination="@id/listAppointments"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
 
 
     </fragment>
@@ -89,5 +94,10 @@
         android:name="com.ardritkrasniqi.prenotimi.ui.noInternet.NoInternetFragment"
         android:label="fragment_no_internet"
         tools:layout="@layout/fragment_no_internet" />
+    <fragment
+        android:id="@+id/listAppointments"
+        android:name="com.ardritkrasniqi.prenotimi.ui.listAppointments.ListAppointments"
+        android:label="list_appointments_fragment"
+        tools:layout="@layout/list_appointments_fragment" />
 
 </navigation>

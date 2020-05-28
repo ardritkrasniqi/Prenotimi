@@ -10,8 +10,8 @@
 
     <ImageView
         android:layout_margin="10dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/logo_pic"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,19 +34,19 @@
             app:layout_constraintStart_toEndOf="@id/logo_pic"
             android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/company_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:textColor="#fff"
-            android:layout_marginStart="5dp"
-            app:layout_constraintStart_toEndOf="@id/logo_pic"
-            app:layout_constraintTop_toBottomOf="@id/company_name"
-            android:fontFamily="@font/amiko"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="50dp"
-            android:text="@string/makerspace_gmail_com"/>
+    <TextView
+        android:id="@+id/company_contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/amiko"
+
+        android:text="@string/makerspace_gmail_com"
+        android:textColor="#fff"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@id/logo_pic"
+        app:layout_constraintTop_toBottomOf="@id/company_name" />
 
 
 

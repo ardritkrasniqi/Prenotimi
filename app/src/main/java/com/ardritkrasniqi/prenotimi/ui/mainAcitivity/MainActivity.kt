@@ -1,18 +1,20 @@
 package com.ardritkrasniqi.prenotimi.ui.mainAcitivity
 
+import android.app.SearchManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
@@ -21,50 +23,16 @@ import androidx.navigation.ui.NavigationUI
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.ActivityMainBinding
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
-import com.ardritkrasniqi.prenotimi.ui.dayUI.DayFragment
 import com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragment
 import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog
 import com.ardritkrasniqi.prenotimi.utils.DrawerLocker
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.IOException
-import java.net.HttpURLConnection
-import java.net.URL
-
 
 
 class MainActivity : AppCompatActivity(),
     NavigationView.OnNavigationItemSelectedListener
     , DrawerLocker {
-
-    private var isDayFragment = true
-
-
-    // listens for the attached fragment, in this case i want to call a fun if shtorezdialog is closed
-//    override fun onAttachFragment(fragment: androidx.fragment.app.Fragment) {
-//        if (fragment is ShtoRezervimDialog) {
-//            fragment.setDialogClosedListener(this)
-//        } else if(fragment is DayFragment){
-//            isDayFragment = true
-//        }
-//    }
-
-
-//    // overrides the fun from shtorezervimindialog to call a function in another fragment
-//    override fun dialogIsClosed() {
-//            val navHostFragment =
-//                supportFragmentManager.primaryNavigationFragment as NavHostFragment
-//        if(!isDayFragment) {
-//            val mainFragment =
-//                navHostFragment.childFragmentManager.primaryNavigationFragment as MainFragment
-//            mainFragment.getAppointments()
-//        } else if(isDayFragment){
-//            val mainFragment = navHostFragment.childFragmentManager.fragments[0] as MainFragment
-//            mainFragment.getAppointments()
-//        }
-//
-//    }
-
 
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var drawer: DrawerLayout
@@ -80,8 +48,9 @@ class MainActivity : AppCompatActivity(),
         mainViewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
 
         // checks if has internet
-        if(!isNetworkAvailable()){
-            Navigation.findNavController(this,R.id.myNavHostFragment).navigate(R.id.action_mainFragment_to_noInternetFragment)
+        if (!isNetworkAvailable()) {
+            Navigation.findNavController(this, R.id.myNavHostFragment)
+                .navigate(R.id.action_mainFragment_to_noInternetFragment)
         }
 
         setSupportActionBar(toolbar)
@@ -105,7 +74,6 @@ class MainActivity : AppCompatActivity(),
         // preff and token related stuff :D
         sharedPref = PreferenceProvider(this)
         mainViewModel.token.value = "Bearer ${sharedPref.getToken()}"
-
 
 
         // BOTTOMSHEET DIALOG BEHAVIORS ON ADD appointment button CLICK
@@ -133,7 +101,11 @@ class MainActivity : AppCompatActivity(),
             if (destination.id == R.id.authFragment || destination.id == R.id.noInternetFragment) {
                 binding.toolbar.visibility = View.GONE
                 binding.buttonAddEvent.visibility = View.GONE
-            } else {
+            }
+            else if(destination.id == R.id.listAppointments) {
+                binding.buttonAddEvent.visibility = View.GONE
+            }
+            else {
                 binding.toolbar.visibility = View.VISIBLE
                 binding.buttonAddEvent.visibility = View.VISIBLE
             }
@@ -159,7 +131,16 @@ class MainActivity : AppCompatActivity(),
                 Navigation.findNavController(this, R.id.myNavHostFragment)
                     .navigate(R.id.action_mainFragment_to_authFragment)
             }
+
+            R.id.listoRezervimet -> {
+                val navHostFragment =
+                    supportFragmentManager.primaryNavigationFragment as NavHostFragment
+                val mainFragment =
+                    navHostFragment.childFragmentManager.primaryNavigationFragment as MainFragment
+                mainFragment.navigating()
+            }
         }
+
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
@@ -169,8 +150,6 @@ class MainActivity : AppCompatActivity(),
         if (b) drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         else drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
-
-
 
 
     private fun isNetworkAvailable(): Boolean {
@@ -183,3 +162,5 @@ class MainActivity : AppCompatActivity(),
 
 
 }
+
+
