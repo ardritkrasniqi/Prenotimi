@@ -30,7 +30,7 @@
 
     <!--    style for materialEditText-->
     <style name="MaterialEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-       <item name="boxCornerRadiusBottomStart">5dp</item>
+        <item name="boxCornerRadiusBottomStart">5dp</item>
         <item name="boxCornerRadiusTopStart">5dp</item>
         <item name="boxCornerRadiusTopEnd">5dp</item>
         <item name="boxCornerRadiusBottomEnd">5dp</item>
@@ -39,35 +39,56 @@
     </style>
 
 
-    <style name="CustomDatePickerDialog"
-        parent="Theme.MaterialComponents.DayNight.Dialog">
+    <!--    <style name="CustomDatePickerDialog"-->
+    <!--        parent="Theme.MaterialComponents.DayNight.Dialog">-->
+    <!--        <item name="android:dialogTheme">@style/MyDialogTheme</item>-->
+    <!--        <item name="android:timePickerStyle">@style/TimePicker</item>-->
+    <!--        <item name="colorPrimary">#3F51B5</item>-->
+    <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+    <!--        <item name="colorAccent">#3F51B5</item>-->
+    <!--        <item name="android:buttonBarPositiveButtonStyle">@style/DatePickerButtonStyle</item>-->
+    <!--        <item name="android:buttonBarNegativeButtonStyle">@style/DatePickerButtonStyle</item>-->
+    <!--    </style>-->
+    <!--    <style name="DatePickerButtonStyle" parent="Base.Widget.AppCompat.Button.Borderless">-->
+    <!--        <item name="android:textColor">@color/colorPrimary</item>-->
+    <!--        <item name="android:backgroundTint">@color/white</item>-->
+    <!--    </style>-->
+    <!--    <style name="MyDialogTheme"-->
+    <!--        parent="Theme.MaterialComponents.Light.Dialog.Alert">-->
+    <!--        <item name="android:timePickerStyle">@style/TimePicker</item>-->
+
+    <!--    </style>-->
+
+    <!--    <style name="TimePicker"-->
+    <!--        parent="@android:style/Widget.Material.Light.TimePicker">-->
+    <!--        <item name="android:timePickerMode">spinner</item>-->
+    <!--        <item name="android:timePickerDialogTheme">@style/Theme.MaterialComponents.DayNight.Dialog</item>-->
+
+
+    <!--    </style>-->
+    <!--    -->
+
+    <style name="CustomDatePickerDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:dialogTheme">@style/MyDialogTheme</item>
-        <item name="android:timePickerStyle">@style/TimePicker</item>
-        <item name="colorPrimary">#3F51B5</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#3F51B5</item>
+        <item name="android:timePickerStyle">@style/MyTimePicker</item>
         <item name="android:layout_width">500dp</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/DatePickerButtonStyle</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/DatePickerButtonStyle</item>
     </style>
-    <style name="DatePickerButtonStyle" parent="Base.Widget.AppCompat.Button.Borderless">
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:backgroundTint">@color/white</item>
-    </style>
-    <style name="MyDialogTheme"
-        parent="Theme.MaterialComponents.Light.Dialog.Alert">
-        <item name="android:timePickerStyle">@style/TimePicker</item>
 
+        <style name="DatePickerButtonStyle" parent="Base.Widget.AppCompat.Button.Borderless">
+            <item name="android:textColor">@color/colorPrimary</item>
+            <item name="android:backgroundTint">@color/white</item>
+        </style>
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:timePickerStyle">@style/MyTimePicker</item>
     </style>
 
-    <style name="TimePicker"
-        parent="@android:style/Widget.Material.Light.TimePicker">
+
+    <style name="MyTimePicker" parent="@android:style/Widget.Material.Light.TimePicker">
         <item name="android:timePickerMode">spinner</item>
-        <item name="android:timePickerDialogTheme">@style/Theme.MaterialComponents.DayNight.Dialog</item>
-
-
     </style>
-
 
 
     <style name="Theme.MyToolbarFancyTheme" parent="android:Theme.Holo">

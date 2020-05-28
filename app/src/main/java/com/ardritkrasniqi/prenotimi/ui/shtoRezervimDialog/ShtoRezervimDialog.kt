@@ -19,14 +19,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.databinding.FragmentBottomSheetDialogBinding
 import com.ardritkrasniqi.prenotimi.model.CreateEvent
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
-import com.ardritkrasniqi.prenotimi.ui.mainPage.MainFragmentDirections
 import com.ardritkrasniqi.prenotimi.utils.formatDateForEdits
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -42,7 +40,6 @@ Proudly developed by Ardrit Krasniqi 2020, first Project ever done
  */
 
 class ShtoRezervimDialog : BottomSheetDialogFragment() {
-
 
 
     private lateinit var calendar: Calendar
@@ -122,24 +119,25 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                     Navigation.findNavController(it, R.id.myNavHostFragment)
                         .navigate(R.id.mainFragment)
                 }
-        }
+            }
         })
 
 
         viewModel.editoRezerviminStatus.observe(viewLifecycleOwner, Observer {
-            if(it != "200"){
+            if (it != "200") {
                 Toasty.error(this.requireContext(), it).show()
             } else {
-                Toasty.success(requireContext(), "Rezervimi u editua me sukses", Toasty.LENGTH_LONG).show()
+                Toasty.success(requireContext(), "Rezervimi per ${event?.client_name?.toUpperCase()} u editua me sukses", Toasty.LENGTH_LONG)
+                    .show()
                 findNavController().navigate(R.id.mainFragment)
             }
         })
 
         viewModel.fshijRezerviminStatus.observe(viewLifecycleOwner, Observer {
-            if(it != "200"){
+            if (it != "200") {
                 Toasty.error(this.requireContext(), it).show()
             } else {
-                Toasty.success(requireContext(), "Rezervimi u largua!", Toasty.LENGTH_LONG).show()
+                Toasty.success(requireContext(), "Rezervimi per ${event?.client_name?.toUpperCase()} u largua!", Toasty.LENGTH_LONG).show()
                 findNavController().navigate(R.id.mainFragment)
             }
         })
@@ -147,19 +145,19 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         // merr daten e dhene ne datepicker dhe i ben update EditTextit
 
-            val date = OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-                calendar.set(Calendar.YEAR, year)
-                calendar.set(Calendar.MONTH, monthOfYear)
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                updateLabel()
-            }
+        val date = OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, monthOfYear)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            updateLabel()
+        }
 
 
         // merr kohen e dhene ne timepicker dhe i ben update EditTextit
         val time = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minuteOfHour ->
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                calendar.set(Calendar.MINUTE, minuteOfHour)
-                updateLabel()
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+            calendar.set(Calendar.MINUTE, minuteOfHour)
+            updateLabel()
 
         }
 
@@ -173,22 +171,22 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         // Timepicker dialog
         val timePickerDialog = TimePickerDialog(
-            context, R.style.CustomDatePickerDialog, time, (dateFromDayView?.substring(11,13)
+            context, R.style.CustomDatePickerDialog, time, (dateFromDayView?.substring(11, 13)
                 ?.toInt() ?: Calendar.HOUR_OF_DAY),
-            (dateFromDayView?.substring(14,15)
+            (dateFromDayView?.substring(14, 15)
                 ?.toInt() ?: Calendar.HOUR_OF_DAY), true
         )
 
         prejEdit.setOnClickListener {
             index = 1
-            when(dateFromDayView == null){
-                true ->{
+            when (dateFromDayView == null) {
+                true -> {
                     datePickerDialog.show()
                     datePickerDialog.setOnDismissListener() {
                         timePickerDialog.show()
                     }
                 }
-                else ->{
+                else -> {
                     timePickerDialog.show()
                 }
 
@@ -198,14 +196,14 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         deriEdit.setOnClickListener {
             index = 2
-            when(dateFromDayView == null){
-                true ->{
+            when (dateFromDayView == null) {
+                true -> {
                     datePickerDialog.show()
                     datePickerDialog.setOnDismissListener() {
                         timePickerDialog.show()
                     }
                 }
-                else ->{
+                else -> {
                     timePickerDialog.show()
                 }
 
@@ -216,19 +214,20 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         // Shto rezervimin button
         shtoRezerviminButton.setOnClickListener {
-            if(binding.emriMbiemri.text.isNullOrEmpty() || binding.telefoniEdit.text.isNullOrEmpty() || binding.komentiEdit.text.isNullOrEmpty()
-                || binding.prejEdit.text.isNullOrEmpty() || binding.deriEdit.text.isNullOrEmpty()){
+            if (binding.emriMbiemri.text.isNullOrEmpty() || binding.telefoniEdit.text.isNullOrEmpty() || binding.komentiEdit.text.isNullOrEmpty()
+                || binding.prejEdit.text.isNullOrEmpty() || binding.deriEdit.text.isNullOrEmpty()
+            ) {
                 Toasty.warning(this.requireContext(), "Plotesoji te gjitha fushat").show()
-            }else {
-            viewModel.addAppointmentRequest.value = CreateEvent(
-                binding.emriMbiemri.text.toString(),
-                binding.telefoniEdit.text.toString(),
-                formatDate(binding.prejEdit.text.toString()),
-                formatDate(binding.deriEdit.text.toString()),
-                switcherValue,
-                selectedItemDialog,
-                binding.komentiEdit.text.toString()
-            )
+            } else {
+                viewModel.addAppointmentRequest.value = CreateEvent(
+                    binding.emriMbiemri.text.toString(),
+                    binding.telefoniEdit.text.toString(),
+                    formatDate(binding.prejEdit.text.toString()),
+                    formatDate(binding.deriEdit.text.toString()),
+                    switcherValue,
+                    selectedItemDialog,
+                    binding.komentiEdit.text.toString()
+                )
 
 
                 if (event == null) viewModel.addEvent() else viewModel.editoRezervimin()
@@ -241,15 +240,15 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
             val dialog = MaterialAlertDialogBuilder(this.requireContext())
             dialog.setMessage("Po e fshini rezervimin, a jeni i sigurte?")
-            dialog.setPositiveButton(getString(R.string.fshije_text_button)){ dialog, which ->
+            dialog.setPositiveButton(getString(R.string.fshije_text_button)) { dialog, which ->
                 viewModel.deleteAppointment(event?.id!!)
                 dialog.dismiss()
             }
-            dialog.setNegativeButton("Mos e fshij"){dialog, which ->
+            dialog.setNegativeButton("Mos e fshij") { dialog, which ->
                 dialog.dismiss()
             }
             dialog.setCancelable(false).show()
-            }
+        }
 
 
 
@@ -260,25 +259,25 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                 0
             })
 
-            if (b){
-                val items = arrayOf("","Ditore", "Javore", "Mujore")
+            if (b) {
+                val items = arrayOf("", "Ditore", "Javore", "Mujore")
                 var internalSelectedItem: Int? = null
                 val dialog = MaterialAlertDialogBuilder(this.requireContext())
                 dialog.apply {
                     setTitle("Frekuenca e rezervimit")
-                    setNegativeButton("Cancel"){dialog, which ->
+                    setNegativeButton("Cancel") { dialog, which ->
                         binding.switcher.isChecked = false
                         selectedItemDialog = null
                         dialog.dismiss()
                     }
-                    setPositiveButton("OK"){dialog, which ->
+                    setPositiveButton("OK") { dialog, which ->
                         selectedItemDialog = internalSelectedItem
-                        if(selectedItemDialog == null){
+                        if (selectedItemDialog == null) {
                             binding.switcher.isChecked = false
                         }
                         dialog.dismiss()
                     }
-                    setSingleChoiceItems(items, checkedItem){ dialog, which ->
+                    setSingleChoiceItems(items, checkedItem) { dialog, which ->
                         internalSelectedItem = which
                     }
 
@@ -287,7 +286,7 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                 }.show()
 
 
-            } else{
+            } else {
                 selectedItemDialog = null
             }
         }
@@ -356,20 +355,16 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
     }
 
 
-
-    private fun trueOrFalse(event: Event): Boolean{
+    private fun trueOrFalse(event: Event): Boolean {
         return event.recurring == 1
     }
 
-    private fun nullOrNot(event: Event): Int{
-        if(event.recurring_frequency != null){
+    private fun nullOrNot(event: Event): Int {
+        if (event.recurring_frequency != null) {
             return event.recurring_frequency
         }
         return 0
     }
-
-
-
 
 
 }

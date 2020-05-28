@@ -417,7 +417,7 @@ class MainFragment : Fragment() {
                     )} deri ${lastItemAdded.endTime.substring(0, 6)} u shtua"
                 )
                 .setAction("Shko tek rezervimi", View.OnClickListener {
-                    calendarView.smoothScrollToDate(stringToLocalDate(allAppointments.last().start_date))
+                    calendarView.smoothScrollToDate(stringToLocalDate(allAppointments.last().start_date.substring(0,10)))
                 })
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                 .setActionTextColor(resources.getColor(R.color.black_color))
