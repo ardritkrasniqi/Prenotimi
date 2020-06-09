@@ -9,7 +9,7 @@
     <string name="emri_dhe_mbiemri_hint">Emri &amp; Mbiemri</string>
     <string name="nr_telefonit_hint">Nr.Telefonit</string>
     <string name="koha_add_event">Koha</string>
-    <string name="shto_rezervim">Shto Rezervim</string>
+    <string name="shto_rezervim">Shto Rezervimin</string>
     <string name="detajet_e_rezervimit_hint">Detajet e Rezervimit</string>
 
 
@@ -30,5 +30,8 @@
     <string name="makerspace_gmail_com">makerspace@gmail.com</string>
     <string name="shko_te_rezervimi">Shko te rezervimi</string>
     <string name="listo_rezervimet_text">Listo Rezervimet</string>
+    <string name="rezervim_i_perseritshem_text">Rezervim i perseritshem</string>
+    <string name="zgjedhe_daten_prej">Prej</string>
+    <string name="zgjedhe_daten_deri">Deri</string>
 
 </resources>

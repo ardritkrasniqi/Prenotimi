@@ -14,17 +14,13 @@
     </style>
 
     <style name="hintTextAppearance">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/black_color</item>
-        <item name="android:textStyle">italic</item>
-        <item name="fontFamily">@font/basic</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontFamily">@font/roboto_condensed_light</item>
     </style>
 
     <style name="hintTextAppearanceSmallDevice">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/black_color</item>
-        <item name="android:textStyle">italic</item>
-        <item name="fontFamily">@font/basic</item>
+        <item name="fontFamily">@font/roboto_condensed_light</item>
     </style>
 
 
@@ -34,8 +30,13 @@
         <item name="boxCornerRadiusTopStart">5dp</item>
         <item name="boxCornerRadiusTopEnd">5dp</item>
         <item name="boxCornerRadiusBottomEnd">5dp</item>
+    </style>
 
 
+    <style name="FloatingActionButtonTheme" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="tint">#fff</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
     </style>
 
 

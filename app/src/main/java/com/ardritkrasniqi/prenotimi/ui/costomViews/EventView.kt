@@ -15,14 +15,18 @@ import com.ardritkrasniqi.prenotimi.model.data.IEvent
 import java.util.*
 
 
+/*
+Ardrit Krasniqi 2020.
+ */
+
+
 class EventView : FrameLayout {
     private lateinit var eventi: IEvent
     private lateinit var eventClickListener: OnEventClickListener
     private lateinit var eventContent: ConstraintLayout
     private lateinit var eventName: TextView
     private lateinit var topTime: TextView
-    private lateinit var bottomTime:TextView
-
+    private lateinit var bottomTime: TextView
 
     constructor(context: Context?) : super(context!!) {
         init(null)
@@ -65,9 +69,10 @@ class EventView : FrameLayout {
     }
 
     override fun setOnClickListener(l: OnClickListener?) {
-        throw UnsupportedOperationException("you should use setOnEventClickListener()")
+        throw UnsupportedOperationException("perdore setOnEventClickListener()")
     }
 
+    //populon nje event me te dhenat perkatese
     fun setEvent(event: IEvent) {
         eventi = event
         val res = resources
@@ -76,24 +81,19 @@ class EventView : FrameLayout {
             event.clientName.toUpperCase(Locale.getDefault()),
             event.commenti, event.nrTel
         )
-        topTime.text = event.startTime.substring(0,6)
-        bottomTime.text = event.endTime.subSequence(0,6)
+        topTime.text = event.startTime.substring(0, 6)
+        bottomTime.text = event.endTime.subSequence(0, 6)
 
     }
 
-
-
+    // merr rektin, top dhe bottom margin (nese ka) dhe e vendos ne view
     fun setPosition(rect: Rect, topMargin: Int, bottomMargin: Int) {
         val params = LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        params.topMargin = (rect.top - 0 - 8 + topMargin)
-        params.height = (rect.height()
-                + 0
-                + 8
-                + bottomMargin
-                + resources.getDimensionPixelSize(R.dimen.cdv_extra_dimen))
+        params.topMargin = (rect.top)
+        params.height = (rect.height())
         params.leftMargin = rect.left
         params.rightMargin = 3
         layoutParams = params
@@ -107,7 +107,4 @@ class EventView : FrameLayout {
             data: IEvent
         )
     }
-
-
-
 }

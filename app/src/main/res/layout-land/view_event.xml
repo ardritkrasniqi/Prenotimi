@@ -5,9 +5,9 @@
     android:id="@+id/item_event_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="25dp"
     android:background="@drawable/hour_appointment_form"
     android:gravity="center"
+    android:layout_marginStart="15dp"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/basic"
+            android:fontFamily="@font/roboto_condensed_bold"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:fontFamily="@font/righteous"
+            android:fontFamily="@font/roboto_condensed_regular"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,8 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:fontFamily="@font/righteous"
-            android:text="13:00"
+            android:fontFamily="@font/roboto_condensed_regular"
+            tools:text="13:00"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

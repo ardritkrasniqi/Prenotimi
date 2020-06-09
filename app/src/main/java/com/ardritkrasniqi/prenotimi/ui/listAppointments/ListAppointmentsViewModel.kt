@@ -6,6 +6,4 @@ import com.ardritkrasniqi.prenotimi.model.Event
 class ListAppointmentsViewModel : ViewModel() {
 
     var appointments: List<Event>? = null
-
-
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimViewModel" />
@@ -15,281 +16,330 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottom_sheet_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottom_sheet_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/shtoRezervim_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#fff"
-            android:orientation="vertical"
-            app:behavior_hideable="true"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:gravity="center"
+            android:text="@string/shto_rezervim"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/klienti_card_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            app:cardElevation="2dp"
+            app:contentPadding="16dp"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shtoRezervim_text">
 
-            <TextView
-                android:id="@+id/shtoRezervim_text"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:fontFamily="@font/basic"
-                android:text="@string/shto_rezervim"
-                android:textColor="#000"
-                android:textAllCaps="true"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:padding="16dp"
+                android:background="@color/white">
 
-            <TextView
-                android:id="@+id/klienti_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/basic"
-                android:text="Klienti"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/shtoRezervim_text" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextField_emri"
-                style="@style/MaterialEditText"
-                android:layout_width="500dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:hint="@string/emri_dhe_mbiemri_hint"
-                app:boxStrokeColor="#00FFCA"
-                app:boxStrokeWidth="2dp"
-                app:boxStrokeWidthFocused="3dp"
-                android:focusable="false"
-                android:focusableInTouchMode="true"
-                app:hintAnimationEnabled="true"
-                app:hintTextAppearance="@style/hintTextAppearance"
-                app:layout_constraintEnd_toStartOf="@+id/outlinedTextField_telefoni"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/klienti_text"
-                app:shapeAppearance="@drawable/edit_text">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/emri_mbiemri"
+                <TextView
+                    android:id="@+id/klienti_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/basic"
-                    android:singleLine="true"
+                    android:textColor="@color/colorPrimary"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:text="Klienti"
+                    android:textSize="26sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextField_emri"
+                    style="@style/MaterialEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="8dp"
+                    android:focusable="false"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/emri_dhe_mbiemri_hint"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeWidth="1dp"
+                    app:boxStrokeWidthFocused="2dp"
                     android:inputType="textCapWords"
-                    android:textSize="25sp" />
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/hintTextAppearance"
+                    app:layout_constraintEnd_toStartOf="@+id/outlinedTextField_telefoni"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/klienti_text">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emri_mbiemri"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_condensed_light"
+                        android:inputType="textCapWords"
+                        android:singleLine="true"
+                        android:textSize="22sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextField_telefoni"
-                style="@style/MaterialEditText"
-                android:layout_width="500dp"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:animationCache="true"
-                android:gravity="center"
-                android:hint="@string/nr_telefonit_hint"
-                app:boxStrokeColor="#00FFCA"
-                app:boxStrokeWidth="2dp"
-                app:hintTextAppearance="@style/hintTextAppearance"
-                app:layout_constraintBottom_toBottomOf="@+id/outlinedTextField_emri"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/outlinedTextField_emri"
-                app:layout_constraintTop_toTopOf="@+id/outlinedTextField_emri">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextField_telefoni"
+                    style="@style/MaterialEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:animateLayoutChanges="true"
+                    android:animationCache="true"
+                    android:gravity="center"
+                    android:hint="@string/nr_telefonit_hint"
+                    app:boxStrokeWidth="1dp"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintTextAppearance="@style/hintTextAppearance"
+                    app:layout_constraintBottom_toBottomOf="@+id/outlinedTextField_emri"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/outlinedTextField_emri"
+                    app:layout_constraintTop_toTopOf="@+id/outlinedTextField_emri">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/telefoni_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_condensed_light"
+                        android:inputType="number"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:singleLine="true"
+                        android:textSize="22sp"
+                        tools:layout_editor_absoluteX="702dp"
+                        tools:layout_editor_absoluteY="208dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextField_komenti"
+                    style="@style/MaterialEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:hint="@string/detajet_e_rezervimit_hint"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="60"
+                    app:endIconMode="clear_text"
+                    app:boxStrokeWidth="1dp"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/hintTextAppearance"
+                    app:layout_constraintEnd_toEndOf="@id/outlinedTextField_telefoni"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@id/outlinedTextField_emri"
+                    app:layout_constraintTop_toBottomOf="@id/outlinedTextField_emri">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/komenti_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/roboto_condensed_light"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:singleLine="true"
+                        android:textSize="22sp"
+                        tools:layout_editor_absoluteX="702dp"
+                        tools:layout_editor_absoluteY="208dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/koha_card_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="32dp"
+            app:cardCornerRadius="10dp"
+            android:layout_marginTop="20dp"
+            app:cardElevation="2dp"
+            app:contentPadding="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/shtoRezervimin_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/klienti_card_container">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/koha_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:paddingBottom="10dp"
+                    android:text="@string/koha_add_event"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="26sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/prej_edit_container"
+                    style="@style/MaterialEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:fontFamily="@font/basic"
-                    android:singleLine="true"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:id="@+id/telefoni_edit"
-                    android:inputType="number"
-                    android:textSize="25sp"
-                    tools:layout_editor_absoluteX="702dp"
-                    tools:layout_editor_absoluteY="208dp" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:hint="@string/zgjedhe_daten_prej"
+                    android:inputType="none"
+                    android:textIsSelectable="false"
+                    android:textSize="27sp"
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextField_komenti"
-                style="@style/MaterialEditText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:hint="@string/detajet_e_rezervimit_hint"
-                app:boxStrokeColor="#00FFCA"
-                app:boxStrokeWidth="2dp"
-                app:boxStrokeWidthFocused="3dp"
-                app:hintAnimationEnabled="true"
-                app:hintTextAppearance="@style/hintTextAppearance"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@id/outlinedTextField_emri"
-                app:layout_constraintTop_toBottomOf="@id/outlinedTextField_emri"
-                app:layout_constraintEnd_toEndOf="@id/outlinedTextField_telefoni"
-                app:shapeAppearance="@drawable/edit_text">
+                    app:boxBackgroundMode="outline"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/hintTextAppearance"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/deri_edit_container"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="@+id/koha_text"
+                    app:layout_constraintTop_toBottomOf="@+id/koha_text"
+                    app:startIconDrawable="@drawable/ic_date_range">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/prej_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:fontFamily="@font/roboto_condensed_light"
+                        android:inputType="none"
+                        android:singleLine="true"
+                        android:textSize="22sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/deri_edit_container"
+                    style="@style/MaterialEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginEnd="10dp"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:fontFamily="@font/basic"
-                    android:id="@+id/komenti_edit"
-                    android:singleLine="true"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    android:textSize="25sp"
-                    tools:layout_editor_absoluteX="702dp"
-                    tools:layout_editor_absoluteY="208dp" />
+                    android:hint="@string/zgjedhe_daten_deri"
+                    android:inputType="none"
+                    android:textSize="27sp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeWidth="1dp"
+                    app:boxStrokeWidthFocused="2dp"
+                    app:hintAnimationEnabled="true"
+                    app:hintTextAppearance="@style/hintTextAppearance"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/prej_edit_container"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/prej_edit_container"
+                    app:startIconDrawable="@drawable/ic_date_range">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/deri_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:fontFamily="@font/roboto_condensed_light"
+                        android:inputType="none"
+                        android:singleLine="true"
+                        android:textSize="22sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
+                <TextView
+                    android:id="@+id/frekuenca_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:drawableStart="@drawable/ic_ndrysho"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/roboto_condensed_regular"
+                    android:text="@string/rezervim_i_perseritshem_text"
+                    android:textSize="20sp"
+                    app:drawableTint="#A2A6AA"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/koha_text"
+                    app:layout_constraintEnd_toEndOf="@+id/deri_edit_container" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="400dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/koha_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/basic"
-                android:text="@string/koha_add_event"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@id/klienti_text"
-                app:layout_constraintTop_toBottomOf="@id/guideline" />
+        </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/prej_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:drawableStart="@drawable/ic_date_range"
-                android:drawablePadding="10dp"
-                android:text="Prej"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/prej_edit"
-                app:layout_constraintTop_toBottomOf="@id/koha_text" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/shtoRezervimin_button"
+            style="Widget.MaterialComponents.Button.Icon"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="#4CAF50"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="+ Shto Rezervimin"
+            android:textColor="#fff"
+            app:cornerRadius="0dp"
+            android:textSize="20sp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fshi_rezervimin_button" />
 
-            <EditText
-                android:id="@+id/prej_edit"
-                android:layout_width="400dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:inputType="none"
-                android:textIsSelectable="false"
-                android:clickable="true"
-                android:focusable="false"
-                android:focusableInTouchMode="true"
-                android:textSize="27sp"
-                android:hint="Zgjedhe Daten"
-                android:textColor="@color/black_color"
-                android:textColorHint="#83000000"
-                android:fontFamily="@font/basic"
-                app:layout_constraintEnd_toStartOf="@+id/deri_edit"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/prej_text" />
-
-
-            <TextView
-                android:id="@+id/deri_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_date_range"
-                android:drawablePadding="10dp"
-                android:text="Deri"
-                android:textIsSelectable="false"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/prej_text"
-                app:layout_constraintStart_toStartOf="@+id/deri_edit" />
-
-            <EditText
-                android:id="@+id/deri_edit"
-                android:layout_width="400dp"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="false"
-                android:inputType="none"
-                android:textSize="27sp"
-                android:focusableInTouchMode="true"
-                android:fontFamily="@font/basic"
-                android:layout_marginTop="30dp"
-                android:hint="Zgjedhe daten"
-                android:textColor="#000000"
-                android:textColorHint="#80000000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/prej_edit"
-                app:layout_constraintTop_toBottomOf="@id/prej_text" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fshi_rezervimin_button"
+            style="Widget.MaterialComponents.Button.Icon"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:backgroundTint="#E53935"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:text="Fshije"
+            android:textColor="#fff"
+            android:textSize="20sp"
+            android:insetLeft="0dp"
+            android:insetTop="0dp"
+            android:insetRight="0dp"
+            android:insetBottom="0dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:cornerRadius="0dp"
+            app:icon="@drawable/ic_delete_forever_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:fontFamily="@font/basic"
-                android:text="Rezervim i perseritshem"
-                android:textSize="20sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/switcher"
-                app:layout_constraintEnd_toStartOf="@id/switcher" />
-
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/switcher"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:layout_editor_absoluteY="400dp"
-                app:layout_constraintTop_toBottomOf="@id/guideline"/>
-
-            <Button
-                android:id="@+id/shtoRezervimin_button"
-                style="Widget.MaterialComponents.Button.Icon"
-                android:layout_width="300dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="45dp"
-                android:backgroundTint="#5400FD"
-                android:fontFamily="@font/basic"
-                android:text="Shto Rezervimin"
-                android:textColor="#fff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:icon="@drawable/ic_add"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <Button
-                android:id="@+id/fshi_rezervimin_button"
-                style="Widget.MaterialComponents.Button.Icon"
-                android:layout_width="150dp"
-                android:layout_height="60dp"
-                android:backgroundTint="#E53935"
-                android:fontFamily="@font/basic"
-                android:textColor="#fff"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:icon="@drawable/ic_delete_forever_black_24dp"
-                app:layout_constraintBottom_toBottomOf="@+id/shtoRezervimin_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.825"
-                app:layout_constraintStart_toEndOf="@+id/shtoRezervimin_button"
-                app:layout_constraintTop_toTopOf="@+id/shtoRezervimin_button"
-                android:text="Fshije"
-                android:visibility="gone"/>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

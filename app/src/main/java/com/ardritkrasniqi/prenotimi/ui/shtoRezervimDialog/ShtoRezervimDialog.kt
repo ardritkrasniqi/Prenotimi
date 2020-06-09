@@ -1,20 +1,20 @@
 package com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CompoundButton
-import android.widget.EditText
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -25,11 +25,15 @@ import com.ardritkrasniqi.prenotimi.databinding.FragmentBottomSheetDialogBinding
 import com.ardritkrasniqi.prenotimi.model.CreateEvent
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
+import com.ardritkrasniqi.prenotimi.utils.dateToSimpleDate
+import com.ardritkrasniqi.prenotimi.utils.dateToString
 import com.ardritkrasniqi.prenotimi.utils.formatDateForEdits
-import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.ardritkrasniqi.prenotimi.utils.stringToDate
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 import es.dmoral.toasty.Toasty
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,16 +47,19 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
 
     private lateinit var calendar: Calendar
-    lateinit var prejEdit: EditText
-    lateinit var deriEdit: EditText
-    lateinit var shtoRezerviminButton: Button
+    lateinit var prejEdit: TextInputEditText
+    lateinit var deriEdit: TextInputEditText
+    lateinit var shtoRezerviminButton: MaterialButton
     private var index = 0
     var checkedItem = 0
     private var switcherValue = 0
     private var selectedItemDialog: Int? = null
     private var event: Event? = null
+    private val items = arrayOf("Nuk Përsëritet", "Çdo Dite", "Çdo Javë", "Çdo Muaj")
+    private lateinit var timePickerDialog: TimePickerDialog
 
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,7 +79,7 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         // instantiating stuff
         prejEdit = binding.prejEdit
         deriEdit = binding.deriEdit
-        shtoRezerviminButton = binding.shtoRezerviminButton
+        shtoRezerviminButton = binding.shtoRezerviminButton as MaterialButton
 
         calendar = Calendar.getInstance()
 
@@ -84,25 +91,37 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         viewModel.appointmentId.value = args?.event?.id
 
+        // checks if recurring freq is not null, if not than frekuenca text gets the value of the endpoint if its null, rezervimi nuk perseritet
+        if (event?.recurring_frequency != null) {
+            binding.frekuencaText.text =
+                "Rezervimi perseritet ${items[(event?.recurring_frequency)!!].toLowerCase(Locale.getDefault())}"
+        } else {
+            binding.frekuencaText.text = "Rezervimi ${items[0].toLowerCase(Locale.getDefault())}"
+        }
+
+
+        // nese dateFromDayView nuk eshte null, i ploteson prej dhe deri me daten e ardhur nga DayViewArdrit
         if (dateFromDayView != null) {
             binding.prejEdit.setText(formatDateForEdits(dateFromDayView))
-            binding.deriEdit.setText(formatDateForEdits(dateFromDayView))
+            val editedDate = stringToDate(dateFromDayView)
+            val calendar = Calendar.getInstance()
+            calendar.time = editedDate
+            calendar.add(Calendar.MINUTE, 30)
+            val datePlusMinutes: Date = calendar.time
+            binding.deriEdit.setText(formatDateForEdits(dateToString(datePlusMinutes)))
         }
+
 
 
 
         if (event != null) {
             binding.shtoRezerviminButton.text = getString(R.string.ndrysho_text)
-            binding.shtoRezerviminButton.setCompoundDrawables(
-                resources.getDrawable(R.drawable.ic_ndrysho, null), null, null, null
-            )
             binding.fshiRezerviminButton.visibility = View.VISIBLE
-            binding.shtoRezervimText.setText("Ndrysho Rezervimin")
+            binding.shtoRezervimText.text = "Ndrysho Rezervimin"
             binding.emriMbiemri.setText(event?.client_name)
             binding.telefoniEdit.setText(event?.phone)
             binding.prejEdit.setText(formatDateForEdits(event!!.start_date))
             binding.deriEdit.setText(formatDateForEdits(event!!.end_date))
-            binding.switcher.isChecked = trueOrFalse(event!!)
             checkedItem = nullOrNot(event!!)
             binding.komentiEdit.setText(event?.comment)
         }
@@ -127,7 +146,11 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             if (it != "200") {
                 Toasty.error(this.requireContext(), it).show()
             } else {
-                Toasty.success(requireContext(), "Rezervimi per ${event?.client_name?.toUpperCase()} u editua me sukses", Toasty.LENGTH_LONG)
+                Toasty.success(
+                    requireContext(),
+                    "Rezervimi per ${event?.client_name?.toUpperCase(Locale.getDefault())} u editua me sukses",
+                    Toasty.LENGTH_LONG
+                )
                     .show()
                 findNavController().navigate(R.id.mainFragment)
             }
@@ -137,7 +160,11 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             if (it != "200") {
                 Toasty.error(this.requireContext(), it).show()
             } else {
-                Toasty.success(requireContext(), "Rezervimi per ${event?.client_name?.toUpperCase()} u largua!", Toasty.LENGTH_LONG).show()
+                Toasty.success(
+                    requireContext(),
+                    "Rezervimi per ${event?.client_name?.toUpperCase(Locale.getDefault())} u largua!",
+                    Toasty.LENGTH_LONG
+                ).show()
                 findNavController().navigate(R.id.mainFragment)
             }
         })
@@ -150,6 +177,7 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             calendar.set(Calendar.MONTH, monthOfYear)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             updateLabel()
+
         }
 
 
@@ -162,51 +190,47 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         }
 
 
+//        yyyy-MM-dd HH:mm:ss
+
         // Datepicker dialog
         val datePickerDialog = DatePickerDialog(
-            context!!, R.style.CustomDatePickerDialog, date, calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)
+            context!!,
+            R.style.CustomDatePickerDialog,
+            date,
+            dateFromDayView?.substring(0, 4)?.toInt() ?: calendar.get(Calendar.YEAR),
+            (dateFromDayView?.substring(5, 7)?.toInt()?.minus(1)) ?: calendar.get(Calendar.MONTH),
+            dateFromDayView?.substring(8, 10)?.toInt() ?: calendar.get(Calendar.DAY_OF_MONTH)
         )
+
+        datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "OK"
+        ) { _, _ ->  timePickerDialog.show()}
 
 
         // Timepicker dialog
-        val timePickerDialog = TimePickerDialog(
-            context, R.style.CustomDatePickerDialog, time, (dateFromDayView?.substring(11, 13)
-                ?.toInt() ?: Calendar.HOUR_OF_DAY),
-            (dateFromDayView?.substring(14, 15)
-                ?.toInt() ?: Calendar.HOUR_OF_DAY), true
+        timePickerDialog = TimePickerDialog(
+            context, R.style.CustomDatePickerDialog, time,
+            dateFromDayView?.substring(11, 13)
+                ?.toInt() ?: Calendar.HOUR_OF_DAY,
+            dateFromDayView?.substring(14, 15)
+                ?.toInt() ?: Calendar.MINUTE, true
         )
 
         prejEdit.setOnClickListener {
             index = 1
-            when (dateFromDayView == null) {
+            when (true) {
                 true -> {
                     datePickerDialog.show()
-                    datePickerDialog.setOnDismissListener() {
-                        timePickerDialog.show()
-                    }
                 }
-                else -> {
-                    timePickerDialog.show()
-                }
-
             }
         }
         index = 0
 
         deriEdit.setOnClickListener {
             index = 2
-            when (dateFromDayView == null) {
+            when (true) {
                 true -> {
                     datePickerDialog.show()
-                    datePickerDialog.setOnDismissListener() {
-                        timePickerDialog.show()
-                    }
                 }
-                else -> {
-                    timePickerDialog.show()
-                }
-
             }
         }
         index = 0
@@ -228,71 +252,68 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
                     selectedItemDialog,
                     binding.komentiEdit.text.toString()
                 )
-
-
                 if (event == null) viewModel.addEvent() else viewModel.editoRezervimin()
             }
         }
 
+        binding.closeDialogImg?.setOnClickListener {
+            dialog?.dismiss()
+        }
+
 
         binding.fshiRezerviminButton.setOnClickListener {
-
-
             val dialog = MaterialAlertDialogBuilder(this.requireContext())
             dialog.setMessage("Po e fshini rezervimin, a jeni i sigurte?")
-            dialog.setPositiveButton(getString(R.string.fshije_text_button)) { dialog, which ->
+            dialog.setPositiveButton(getString(R.string.fshije_text_button)) { dialogu, _ ->
                 viewModel.deleteAppointment(event?.id!!)
-                dialog.dismiss()
+                dialogu.dismiss()
             }
-            dialog.setNegativeButton("Mos e fshij") { dialog, which ->
-                dialog.dismiss()
+            dialog.setNegativeButton("Mos e fshij") { dialogu, _ ->
+                dialogu.dismiss()
             }
             dialog.setCancelable(false).show()
         }
 
 
-
-        binding.switcher.setOnCheckedChangeListener { a: CompoundButton, b: Boolean ->
-            switcherValue = (if (b) {
-                1
-            } else {
-                0
-            })
-
-            if (b) {
-                val items = arrayOf("", "Ditore", "Javore", "Mujore")
-                var internalSelectedItem: Int? = null
-                val dialog = MaterialAlertDialogBuilder(this.requireContext())
-                dialog.apply {
-                    setTitle("Frekuenca e rezervimit")
-                    setNegativeButton("Cancel") { dialog, which ->
-                        binding.switcher.isChecked = false
-                        selectedItemDialog = null
-                        dialog.dismiss()
+        // dialog for the recurring frequency
+        var internalSelectedItem: Int? = null
+        val dialog = MaterialAlertDialogBuilder(this.requireContext())
+        dialog.apply {
+            setTitle("Frekuenca e rezervimit")
+            setNegativeButton("Cancel") { dialog, _ ->
+                if (event?.recurring_frequency != null) {
+                    when (event!!.recurring_frequency!!) {
+                        0 -> binding.frekuencaText.text =
+                            "Rezervimi ${items[event!!.recurring_frequency!!].toLowerCase(Locale.getDefault())}"
+                        else -> binding.frekuencaText.text =
+                            "Rezervimi përsëritet ${items[event!!.recurring_frequency!!].toLowerCase(Locale.getDefault())}"
                     }
-                    setPositiveButton("OK") { dialog, which ->
-                        selectedItemDialog = internalSelectedItem
-                        if (selectedItemDialog == null) {
-                            binding.switcher.isChecked = false
-                        }
-                        dialog.dismiss()
-                    }
-                    setSingleChoiceItems(items, checkedItem) { dialog, which ->
-                        internalSelectedItem = which
-                    }
-
-                    setCancelable(false)
-
-                }.show()
-
-
-            } else {
+                } else binding.frekuencaText.text = "Rezervimi ${items[0].toLowerCase(Locale.getDefault())}"
                 selectedItemDialog = null
+                dialog.dismiss()
             }
+            setPositiveButton("OK") { dialog, which ->
+                selectedItemDialog = internalSelectedItem
+                if (selectedItemDialog == null) {
+                    binding.frekuencaText.text = selectedItemDialog?.let { items.get(it) }
+                }
+                dialog.dismiss()
+            }
+            setSingleChoiceItems(items, checkedItem) { dialog, which ->
+                internalSelectedItem = which
+                when (which) {
+                    0 -> binding.frekuencaText.text = "Rezervimi ${items[which].toLowerCase(Locale.getDefault())}"
+                    else -> binding.frekuencaText.text =
+                        "Rezervimi përsëritet ${items[which].toLowerCase(Locale.getDefault())}"
+                }
+            }
+            setCancelable(false)
         }
 
 
-
+        binding.frekuencaText.setOnClickListener {
+            dialog.show()
+        }
 
         return binding.root
     }
@@ -312,40 +333,33 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         val format = "yyyy-MM-dd HH:mm:ss"
         val simpleDateFormat: Date =
             SimpleDateFormat("EEEE, MMMM dd, yyyy   HH:mm").parse(string)
-        return SimpleDateFormat(format).format(simpleDateFormat)
+        return SimpleDateFormat(format, Locale.getDefault()).format(simpleDateFormat)
     }
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.setOnShowListener { dialogInterface ->
-            val bottomSheetDialog =
-                dialogInterface as BottomSheetDialog
+            val bottomSheetDialog = dialogInterface as BottomSheetDialog
             bottomSheetDialog.behavior.setPeekHeight(getWindowHeight(), false)
-            setupFullHeight(bottomSheetDialog)
-
 
         }
         return dialog
-
-
     }
 
 
-    private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
-        val bottomSheet =
-            bottomSheetDialog.findViewById<ConstraintLayout>(R.id.bottom_sheet_layout) as ConstraintLayout
-        val behavior = BottomSheetBehavior.from(bottomSheet)
-        val layoutParams = bottomSheet.layoutParams
-
-
-        val windowHeight = getWindowHeight()
-        if (layoutParams != null) {
-            layoutParams.height = windowHeight
-        }
-        bottomSheet.layoutParams = layoutParams
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-    }
+//    private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
+////        val bottomSheet = bottomSheetDialog.findViewById<LinearLayout>(R.id.bottom_sheet_layout) as LinearLayout
+////        val behavior = BottomSheetBehavior.from(bottomSheet)
+////        val layoutParams = bottomSheet.layoutParams
+////
+////
+////        val windowHeight = getWindowHeight()
+////        if (layoutParams != null) {
+////            layoutParams.height = windowHeight
+////        }
+////        bottomSheet.layoutParams = layoutParams
+////        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+//    }
 
     private fun getWindowHeight(): Int { // Calculate window height for fullscreen use
         val displayMetrics = DisplayMetrics()
@@ -365,6 +379,4 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
         }
         return 0
     }
-
-
 }

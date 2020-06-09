@@ -31,8 +31,6 @@ class CalendarDayView : FrameLayout {
     private var separateHourHeight = 0
     private var startHour = 0
     private var endHour = 24
-
-
     private var layoutDayView: LinearLayout? = null
     private var layoutEvent: FrameLayout? = null
     private var decorationn: IDecoration? = null
@@ -91,6 +89,7 @@ class CalendarDayView : FrameLayout {
         drawEvents()
     }
 
+    // perdoret per te naviguar ne shtorezerviminDialog
     fun make24HTime(int: Int): String{
         return if(int < 10) "0$int:00:00" else "$int:00:00"
     }
@@ -98,21 +97,24 @@ class CalendarDayView : FrameLayout {
 
     // krijon linjat dhe oren per qdo ore te dayviewvit, merr nga item decoration
     private fun drawDayViews() {
-
         val navhostFragment =
             (context as AppCompatActivity).supportFragmentManager.primaryNavigationFragment as NavHostFragment
         val dayFragment = navhostFragment.childFragmentManager.primaryNavigationFragment as DayFragment
 
         layoutDayView!!.removeAllViews()
 
+        // perdoret per te mos klikuar me shume se nje here layoutin(dayView)
+        var isClickedOnce = false
+
         var dayView: DayView? = null
         for (i in startHour..endHour) {
             dayView = decorationn?.getDayView(i)
+            if(!isClickedOnce){
             dayView?.setOnClickListener {
                 findNavController().navigate(DayFragmentDirections.actionDayFragmentToShtoRezervimDialog(null,false,"${dayFragment.date} ${make24HTime(i)}"))
+                isClickedOnce = true
+                }
             }
-
-
             layoutDayView!!.addView(dayView)
         }
         if (dayView != null) {
@@ -122,7 +124,7 @@ class CalendarDayView : FrameLayout {
         }
     }
 
-
+// i behet iterimi listes se eventeve dhe i vendos te gjitha ne layoutEvent
     private fun drawEvents() {
         layoutEvent!!.removeAllViews()
         for (event in events!!) {
@@ -138,6 +140,7 @@ class CalendarDayView : FrameLayout {
 
 
 
+    // krijon rectin me dimensionet e caktuara si eventstart time separate hour height etj
     private fun getTimeBound(event: Event): Rect {
         val rect = Rect()
         rect.top =
@@ -150,6 +153,10 @@ class CalendarDayView : FrameLayout {
     }
 
 
+    /*
+    merr oren - startHour(nese do qe layouti te mos jete 24H), kthen oren*dayHeight(gjatesia e ores) 100dp ne kete rast
+    minutat dhe dayheigh dhe i pjeston me 60 per ti nxjerre minutat ne secilen ore
+     */
     private fun getPositionOfTime(calendar: Calendar): Int {
         val hour = calendar[Calendar.HOUR_OF_DAY] - startHour
         val minute = calendar[Calendar.MINUTE]
@@ -162,7 +169,7 @@ class CalendarDayView : FrameLayout {
     }
 
     fun setLimitTime(startHour: Int, endHour: Int) {
-        require(startHour < endHour) { "start hour must before end hour" }
+        require(startHour < endHour) { "Start Hour duhet te jete para End Hour" }
         this.startHour = startHour
         this.endHour = endHour
         refresh()
@@ -176,9 +183,7 @@ class CalendarDayView : FrameLayout {
         return calendar
     }
 
-    /**
-     * @param decorator decoration for draw event, popup, time
-     */
+
     fun setDecorator(@NonNull decorator: IDecoration?) {
         decorationn = decorator
         refresh()

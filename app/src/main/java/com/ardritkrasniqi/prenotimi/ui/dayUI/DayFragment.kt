@@ -46,7 +46,7 @@ class DayFragment : Fragment() {
         val binding = FragmentDayBinding.inflate(inflater)
         dayView = binding.dayView
 
-        dayView.setLimitTime(6, 23)
+        dayView.setLimitTime(0, 23)
 
         events = mutableListOf()
 
@@ -83,11 +83,20 @@ class DayFragment : Fragment() {
         previousMonthButton = activity?.findViewById(R.id.previousMonthButton)!!
         previousMonthButton.visibility = View.GONE
         currentMothText = activity?.findViewById(R.id.monthYear_text)!!
-        currentMothText.text = date
+        currentMothText.text = dateFormaterForToolbar(date)
 
 
         return binding.root
     }
+
+
+    private fun dateFormaterForToolbar(date: String): String{
+        val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val date = formatter.parse(date)
+        return SimpleDateFormat("EEEE dd MMMM yyyy", Locale.getDefault()).format(date)
+
+    }
+
 
 
 

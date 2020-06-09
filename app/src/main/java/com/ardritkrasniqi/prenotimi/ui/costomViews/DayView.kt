@@ -9,11 +9,12 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.ardritkrasniqi.prenotimi.R
 
 private lateinit var textHour: TextView
 private lateinit var minuteHour: TextView
-private lateinit var separateHour: LinearLayout
+private lateinit var separateHour: View
 
 class DayView : FrameLayout {
 
@@ -39,7 +40,7 @@ class DayView : FrameLayout {
     private fun init(attrs: AttributeSet?) {
         LayoutInflater.from(context).inflate(R.layout.view_day, this, true)
         textHour = findViewById<View>(R.id.text_hour) as TextView
-        separateHour = findViewById<View>(R.id.separate_hour) as LinearLayout
+        separateHour = findViewById(R.id.separate_hour)
     }
 
     fun setText(text: String?) {
@@ -48,8 +49,8 @@ class DayView : FrameLayout {
 
     val hourTextWidth: Float
         get() {
-            val param: LinearLayout.LayoutParams =
-                textHour.layoutParams as LinearLayout.LayoutParams
+            val param: ConstraintLayout.LayoutParams =
+                textHour.layoutParams as ConstraintLayout.LayoutParams
             val measureTextWidth: Float = textHour.paint.measureText("12:00")
             return (measureTextWidth.coerceAtLeast(param.width.toFloat())
                     + param.marginEnd

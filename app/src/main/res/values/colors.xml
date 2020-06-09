@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3949AB</color>
-    <color name="colorPrimaryDark">#283593</color>
-    <color name="colorAccent">#1E88E5</color>
+    <color name="colorPrimary">#4e73df</color>
+    <color name="colorPrimaryDark">#4e73df</color>
+    <color name="colorAccent">#f6c23e</color>
     <color name="page_bg_color">#0E0E0E</color>
     <color name="item_view_bg_color">#1B1B1B</color>
-    <color name="toolbar_color">#303F9F</color>
+    <color name="toolbar_color">#4e73df</color>
     <color name="text_grey">#bdbdbd</color>
     <color name="text_grey_light">#616161</color>
     <color name="event_gone_color">#8E8E8E</color>

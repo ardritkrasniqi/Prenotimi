@@ -31,6 +31,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/calendarDay_layout"
         android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
         android:layout_height="match_parent"
         android:background="@drawable/day_form">
 
@@ -38,17 +41,21 @@
             android:id="@+id/calendarDay_frameLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="3dp"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="3dp"
-            android:layout_marginBottom="3dp"
             android:background="@drawable/day_form"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/sot_indicator"
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/today_indicator_circle"
+                android:visibility="invisible" />
             <TextView
                 android:id="@+id/calendarDay_text"
                 android:layout_width="wrap_content"
@@ -56,22 +63,13 @@
                 android:layout_gravity="top|end"
                 android:layout_marginTop="7dp"
                 android:layout_marginEnd="13dp"
-                android:fontFamily="@font/amiko"
+                android:fontFamily="@font/roboto_condensed_bold"
                 android:gravity="center"
                 android:textColor="@color/page_bg_color"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="24" />
 
-            <ImageView
-                android:id="@+id/sot_indicator"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="top|end"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/today_indicator_circle"
-                android:visibility="invisible" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -92,9 +90,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:background="#0238F6"
+                    android:background="@color/colorPrimary"
                     android:singleLine="true"
-                    android:fontFamily="@font/basic"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -115,8 +113,8 @@
                     android:layout_marginTop="10dp"
                     android:singleLine="true"
                     android:layout_marginEnd="5dp"
-                    android:background="#0238F6"
-                    android:fontFamily="@font/basic"
+                    android:background="@color/colorPrimary"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     android:visibility="invisible"
                     tools:text="11:20-12:20 Filan Fisteku"
                     android:textAlignment="center"
@@ -130,8 +128,8 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="5dp"
-                    android:background="#0238F6"
-                    android:fontFamily="@font/basic"
+                    android:background="@color/colorPrimary"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     android:singleLine="true"
                     android:visibility="invisible"
                     app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:visibility="invisible"
-                android:src="@drawable/ic_menu" />
+                android:src="@drawable/ic_more" />
 
 
         </FrameLayout>

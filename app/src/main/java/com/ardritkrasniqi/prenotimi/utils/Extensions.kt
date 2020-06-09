@@ -13,6 +13,7 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.WeekFields
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 import java.util.*
@@ -85,5 +86,22 @@ fun formatDateForEdits(string: String): String {
         SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(string)
     return SimpleDateFormat(format).format(simpleDateFormat)
 }
+
+
+fun stringToDate(stringDate: String): Date{
+    val format = "yyyy-MM-dd HH:mm:ss"
+    return SimpleDateFormat(format, Locale.getDefault()).parse(stringDate)
+}
+
+fun dateToString(date: Date): String{
+    val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    return dateFormat.format(date)
+}
+
+fun dateToSimpleDate(date: Date, pattern: String): String{
+    val simpleDateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+    return simpleDateFormat.format(date)
+}
+
 
 

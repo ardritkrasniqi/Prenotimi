@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#283593">
+    android:background="@color/colorPrimary">
 
 
 
@@ -26,9 +26,9 @@
             android:id="@+id/company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/amiko"
+            android:fontFamily="@font/roboto_condensed_regular"
             android:text="@string/makerspace_text"
-            android:textColor="#fff"
+            android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="@id/logo_pic"
             android:layout_marginStart="5dp"
             app:layout_constraintStart_toEndOf="@id/logo_pic"
@@ -40,10 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:fontFamily="@font/amiko"
-
+        android:fontFamily="@font/roboto_condensed_regular"
         android:text="@string/makerspace_gmail_com"
-        android:textColor="#fff"
+        android:textColor="@color/white"
         android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@id/logo_pic"
         app:layout_constraintTop_toBottomOf="@id/company_name" />

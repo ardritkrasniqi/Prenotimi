@@ -26,7 +26,7 @@
                 android:id="@+id/outlinedTextField_email"
                 style="@style/MaterialEditText"
                 android:layout_width="500dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="50dp"
                 android:layout_height="wrap_content"
                 android:focusable="false"
                 android:focusableInTouchMode="true"
@@ -45,9 +45,9 @@
                     android:id="@+id/et_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/basic"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     android:singleLine="true"
-                    android:textSize="13sp" />
+                    android:textSize="16sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,10 +75,10 @@
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/basic"
+                    android:fontFamily="@font/roboto_condensed_regular"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:textSize="13sp"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="@+id/outlinedTextField_email"
                     app:layout_constraintStart_toStartOf="@+id/outlinedTextField_email"
                     app:layout_constraintTop_toBottomOf="@+id/outlinedTextField_email" />
@@ -108,6 +108,7 @@
                 android:layout_marginTop="15dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:visibility="gone"
                 android:text="@string/forgot_password_text"
                 android:textSize="18sp"
                 android:layout_marginBottom="20dp"

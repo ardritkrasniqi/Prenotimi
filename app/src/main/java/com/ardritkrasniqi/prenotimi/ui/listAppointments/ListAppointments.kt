@@ -11,7 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -59,7 +58,7 @@ class ListAppointments : Fragment() {
         display?.getMetrics(displayMetrics)
         val density = resources.displayMetrics.density
         val dpWidth = displayMetrics.widthPixels / density
-        val columns = (dpWidth / 600).roundToInt()
+        val columns = (dpWidth / 650).roundToInt()
         binding.appointListRv.layoutManager = GridLayoutManager(context, columns)
 
         (activity as DrawerLocker?)?.setDrawerLocked(true)
@@ -109,9 +108,6 @@ class ListAppointments : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppointmentHolder {
             val view = layoutInflater.inflate(R.layout.listed_appointment_item, parent, false)
-            if(viewType == 0){
-                view.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.event_gone_color))
-            }
             return AppointmentHolder(view)
         }
 
@@ -126,23 +122,25 @@ class ListAppointments : Fragment() {
 
 
         override fun getFilter(): Filter {
-            return object : Filter(){
+            return object : Filter() {
                 override fun performFiltering(constraint: CharSequence?): FilterResults {
                     val charSearch = constraint.toString()
-                    if(charSearch.isEmpty()){
+                    if (charSearch.isEmpty()) {
                         appointmentsFilterList = appointments
                     } else {
                         val resultAppointments = mutableListOf<Event>()
-                        for(event in appointments){
-                            if(event.client_name.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))){
+                        for (event in appointments) {
+                            if (event.client_name.toLowerCase(Locale.ROOT)
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
+                            ) {
                                 resultAppointments.add(event)
                             }
                         }
                         appointmentsFilterList = resultAppointments
                     }
-                        val filterResults = FilterResults()
-                        filterResults.values = appointmentsFilterList
-                        return filterResults
+                    val filterResults = FilterResults()
+                    filterResults.values = appointmentsFilterList
+                    return filterResults
                 }
 
                 override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
@@ -151,19 +149,6 @@ class ListAppointments : Fragment() {
                 }
             }
         }
-
-
-
-
-
-        override fun getItemViewType(position: Int): Int {
-            return if(stringToDateConverter(appointments[position].end_date, getCurrentDateTime())){
-                1
-            } else {
-                0
-            }
-        }
-
     }
 
 
@@ -184,7 +169,7 @@ class ListAppointments : Fragment() {
     }
 
 
-    fun getCurrentDateTime():String {
+    fun getCurrentDateTime(): String {
         val c: Calendar = Calendar.getInstance()
         val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return sdf.format(c.time)
@@ -220,7 +205,7 @@ class ListAppointments : Fragment() {
     }
 
 
-    private fun stringToDateConverter(stringDate1: String, stringDate2: String): Boolean{
+    private fun stringToDateConverter(stringDate1: String, stringDate2: String): Boolean {
         val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val date1 = format.parse(stringDate1)
         val date2 = format.parse(stringDate2)

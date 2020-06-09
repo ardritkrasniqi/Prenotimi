@@ -12,8 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,7 +24,6 @@ import com.ardritkrasniqi.prenotimi.R
 import com.ardritkrasniqi.prenotimi.R.color.event_gone_color
 import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.preferences.PreferenceProvider
-import com.ardritkrasniqi.prenotimi.ui.listAppointments.ListAppointments
 import com.ardritkrasniqi.prenotimi.utils.daysOfWeekFromLocale
 import com.ardritkrasniqi.prenotimi.utils.setTextColorRes
 import com.ardritkrasniqi.prenotimi.utils.stringToLocalDate
@@ -44,12 +43,10 @@ import kotlinx.android.synthetic.main.calendar_day.view.*
 import kotlinx.android.synthetic.main.calendar_days_header.view.*
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.DateTimeFormatter
 import java.io.Serializable
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainFragment : Fragment() {
 
@@ -63,14 +60,16 @@ class MainFragment : Fragment() {
     private lateinit var previousMonthButton: ImageView
     private lateinit var currentMothText: TextView
     private lateinit var viewModel: MainViewModel
+    private lateinit var goToday: ImageView
     private lateinit var calendarView: CalendarView
     private var currentMonthForCheck: Int? = null
     private lateinit var bundle: Bundle
     private lateinit var monthListener: YearMonth
     private val today = LocalDate.now()
-    private  var monthYears: String? = null
+    private var monthYears: String? = null
 
-    val ditetEJaves = arrayOf("Dielë", "Hënë", "Martë", "Mërkurë", "Enjte", "Premte", "Shtunë")
+    val ditetEJaves =
+        arrayOf("E Dielë", "E Hënë", "E Martë", "E Mërkurë", "E Enjte", "E Premte", "E Shtunë")
 
     private var getAppointmentsExectued = false
 
@@ -100,6 +99,11 @@ class MainFragment : Fragment() {
         Log.i("called", "onviewCreated was called")
 
         viewModel.token.value = "Bearer ${sharedPreferences.getToken()}"
+        goToday = view.findViewById(R.id.goToToday)
+
+        goToday.setOnClickListener {
+            calendarView.smoothScrollToDate(today)
+        }
 
 
 
@@ -192,7 +196,7 @@ class MainFragment : Fragment() {
             }
         }
 
-                allAppointments.sortBy { it.start_date }
+        allAppointments.sortBy { it.start_date }
 //               val appointmentss =  allAppointments.groupBy { LocalDateTime.parse(it.start_date)}
 
         // krijimi e diteve te kalendarit
@@ -297,23 +301,16 @@ class MainFragment : Fragment() {
                     if (day.date < today) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             eventItem1.setBackgroundColor(
-                                resources.getColor(
-                                    event_gone_color,
-                                    null
-                                )
+                                ContextCompat.getColor(requireContext(), R.color.text_grey)
                             )
                             eventItem2.setBackgroundColor(
-                                resources.getColor(
-                                    event_gone_color,
-                                    null
-                                )
+                                ContextCompat.getColor(requireContext(), R.color.text_grey)
                             )
                             eventItem3.setBackgroundColor(
-                                resources.getColor(
-                                    event_gone_color,
-                                    null
-                                )
+                                ContextCompat.getColor(requireContext(), R.color.text_grey)
+
                             )
+
                         } else {
                             eventItem1.setBackgroundColor(event_gone_color)
                             eventItem2.setBackgroundColor(event_gone_color)
@@ -362,7 +359,7 @@ class MainFragment : Fragment() {
                                 ditetEJaves[index]
                                     .toUpperCase(Locale.ENGLISH)
                             tv.setTextColorRes(R.color.white)
-                            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
+                            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)
                         }
 
                     month.yearMonth
@@ -370,14 +367,35 @@ class MainFragment : Fragment() {
             }
         }
         calendarView.monthScrollListener = { month ->
-            val title = "${monthTitleFormatter.format(month.yearMonth)} ${month.yearMonth.year}"
+            val shqipMonth =
+                when(month.yearMonth.monthValue){
+                    1 -> "Janar"
+                    2 -> "Shkurt"
+                    3 -> "Mars"
+                    4 -> "Prill"
+                    5 -> "Maj"
+                    6 -> "Qershor"
+                    7 -> "Korrik"
+                    8 -> "Gusht"
+                    9 -> "Shtator"
+                    10 -> "Tetor"
+                    11 -> "Nëntor"
+                    12 -> "Dhjetor"
+                    else -> "Null"
+                }
+            val title = "$shqipMonth ${month.yearMonth.year}"
             @Parcelize
             monthListener = month.yearMonth
-            Log.i("tagu", viewModel.sixMonths.toString())
             currentMothText.text = title
             currentMonthForCheck = month.yearMonth.monthValue
             viewModel.incrementMonthNumber()
             calendarView.notifyCalendarChanged()
+
+            if (month.yearMonth.monthValue == today.monthValue) {
+                goToday.visibility = View.GONE
+            } else {
+                goToday.visibility = View.VISIBLE
+            }
 
 
 
@@ -405,7 +423,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun appointmentIsAddedSnack(allAppointments: List<Event>, calendarView: CalendarView) {
+    private fun appointmentIsAddedSnack(allAppointments: List<Event>, calendarView: CalendarView) {
         val lastItemAdded = allAppointments.last()
         view?.let {
             val snackbar = Snackbar.make(it, "", Snackbar.LENGTH_LONG)
@@ -417,7 +435,14 @@ class MainFragment : Fragment() {
                     )} deri ${lastItemAdded.endTime.substring(0, 6)} u shtua"
                 )
                 .setAction("Shko tek rezervimi", View.OnClickListener {
-                    calendarView.smoothScrollToDate(stringToLocalDate(allAppointments.last().start_date.substring(0,10)))
+                    calendarView.smoothScrollToDate(
+                        stringToLocalDate(
+                            allAppointments.last().start_date.substring(
+                                0,
+                                10
+                            )
+                        )
+                    )
                 })
                 .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
                 .setActionTextColor(resources.getColor(R.color.black_color))
@@ -426,8 +451,11 @@ class MainFragment : Fragment() {
     }
 
 
-    fun navigating(){
-        bundle.putParcelableArrayList("appointments", allAppointments as java.util.ArrayList<out Parcelable>)
+    fun navigating() {
+        bundle.putParcelableArrayList(
+            "appointments",
+            allAppointments as java.util.ArrayList<out Parcelable>
+        )
         findNavController().navigate(R.id.action_mainFragment_to_listAppointments, bundle)
     }
 }

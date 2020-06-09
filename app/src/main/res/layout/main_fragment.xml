@@ -37,6 +37,16 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </ScrollView>
 
+    <ImageView
+        android:id="@+id/goToToday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_today_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="20dp"
+        android:elevation="30dp"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

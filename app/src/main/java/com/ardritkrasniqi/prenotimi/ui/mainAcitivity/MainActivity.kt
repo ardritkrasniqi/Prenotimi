@@ -1,15 +1,11 @@
 package com.ardritkrasniqi.prenotimi.ui.mainAcitivity
 
-import android.app.SearchManager
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.widget.SearchView
-import android.widget.SearchView.OnQueryTextListener
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -101,11 +97,9 @@ class MainActivity : AppCompatActivity(),
             if (destination.id == R.id.authFragment || destination.id == R.id.noInternetFragment) {
                 binding.toolbar.visibility = View.GONE
                 binding.buttonAddEvent.visibility = View.GONE
-            }
-            else if(destination.id == R.id.listAppointments) {
+            } else if (destination.id == R.id.listAppointments) {
                 binding.buttonAddEvent.visibility = View.GONE
-            }
-            else {
+            } else {
                 binding.toolbar.visibility = View.VISIBLE
                 binding.buttonAddEvent.visibility = View.VISIBLE
             }

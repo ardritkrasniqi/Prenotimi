@@ -15,8 +15,9 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="SUN"
+        android:fontFamily="@font/roboto_condensed_regular"
         android:textColor="#fff"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/mon"
@@ -26,7 +27,8 @@
         android:gravity="center"
         android:text="MON"
         android:textColor="#fff"
-        android:textSize="18sp" />
+        android:fontFamily="@font/roboto_condensed_regular"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/tue"
@@ -35,8 +37,9 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="TUE"
+        android:fontFamily="@font/roboto_condensed_regular"
         android:textColor="#fff"
-        android:textSize="18sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/wed"
@@ -44,9 +47,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:fontFamily="@font/roboto_condensed_regular"
         android:text="WED"
         android:textColor="#fff"
-        android:textSize="18sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/thu"
@@ -54,9 +58,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:fontFamily="@font/roboto_condensed_regular"
         android:text="THU"
         android:textColor="#fff"
-        android:textSize="18sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/fri"
@@ -65,8 +70,9 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="FRI"
+        android:fontFamily="@font/roboto_condensed_regular"
         android:textColor="#fff"
-        android:textSize="18sp" />
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/sat"
@@ -75,7 +81,8 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="SAT"
+        android:fontFamily="@font/roboto_condensed_regular"
         android:textColor="#fff"
-        android:textSize="18sp" />
+        android:textSize="12sp" />
 
 </LinearLayout>
