@@ -1,9 +1,11 @@
 package com.ardritkrasniqi.prenotimi.ui.mainAcitivity
 
 import android.content.Context
+import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -24,6 +26,7 @@ import com.ardritkrasniqi.prenotimi.ui.shtoRezervimDialog.ShtoRezervimDialog
 import com.ardritkrasniqi.prenotimi.utils.DrawerLocker
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(),
@@ -53,6 +56,14 @@ class MainActivity : AppCompatActivity(),
         drawer = binding.drawerLayout
 
 
+        val lang = "SQ"
+        val locale = Locale(lang)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+        baseContext.createConfigurationContext(config)
+
+
         //sets up actionBar with Nav controller
         NavigationUI.setupActionBarWithNavController(
             this,
@@ -79,6 +90,12 @@ class MainActivity : AppCompatActivity(),
             dialog.show(supportFragmentManager, "BOTTOMSHEETDIALOG")
 
 
+        }
+
+        if(sharedPref.getIsWeekCalendar()){
+            navigationView.menu.getItem(1).isChecked = true
+        } else{
+            navigationView.menu.getItem(2).isChecked = true
         }
 
 
@@ -119,6 +136,10 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        val navHostFragment =
+            supportFragmentManager.primaryNavigationFragment as NavHostFragment
+        val mainFragment =
+            navHostFragment.childFragmentManager.primaryNavigationFragment as MainFragment
         when (item.itemId) {
             R.id.logOut -> {
                 sharedPref.saveToken("")
@@ -127,17 +148,26 @@ class MainActivity : AppCompatActivity(),
             }
 
             R.id.listoRezervimet -> {
-                val navHostFragment =
-                    supportFragmentManager.primaryNavigationFragment as NavHostFragment
-                val mainFragment =
-                    navHostFragment.childFragmentManager.primaryNavigationFragment as MainFragment
                 mainFragment.navigating()
+            }
+
+            R.id.weekCalendar -> {
+                sharedPref.isWeekCalendar(true)
+                mainFragment.refreshFragment()
+            }
+
+            R.id.monthCalendar -> {
+                sharedPref.isWeekCalendar(false)
+                mainFragment.refreshFragment()
             }
         }
 
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
+
+
 
 
     override fun setDrawerLocked(b: Boolean) {

@@ -92,8 +92,8 @@ class DayFragment : Fragment() {
 
     private fun dateFormaterForToolbar(date: String): String{
         val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val date = formatter.parse(date)
-        return SimpleDateFormat("EEEE dd MMMM yyyy", Locale.getDefault()).format(date)
+        val datee = formatter.parse(date)
+        return SimpleDateFormat("EEEE dd MMMM yyyy", Locale.getDefault()).format(datee)
 
     }
 

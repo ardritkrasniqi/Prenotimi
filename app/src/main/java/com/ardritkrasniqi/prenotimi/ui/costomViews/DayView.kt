@@ -13,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.ardritkrasniqi.prenotimi.R
 
 private lateinit var textHour: TextView
-private lateinit var minuteHour: TextView
 private lateinit var separateHour: View
 
 class DayView : FrameLayout {

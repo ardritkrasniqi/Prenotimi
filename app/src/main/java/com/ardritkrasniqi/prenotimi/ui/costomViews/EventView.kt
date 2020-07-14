@@ -1,6 +1,7 @@
 package com.ardritkrasniqi.prenotimi.ui.costomViews
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -10,7 +11,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.ardritkrasniqi.prenotimi.R
+import com.ardritkrasniqi.prenotimi.model.Event
 import com.ardritkrasniqi.prenotimi.model.data.IEvent
 import java.util.*
 
@@ -73,17 +76,16 @@ class EventView : FrameLayout {
     }
 
     //populon nje event me te dhenat perkatese
-    fun setEvent(event: IEvent) {
+    fun setEvent(event: Event) {
         eventi = event
-        val res = resources
         eventName.text = String.format(
-            res.getString(R.string.details_placeholder),
+            resources.getString(R.string.details_placeholder),
             event.clientName.toUpperCase(Locale.getDefault()),
             event.commenti, event.nrTel
         )
         topTime.text = event.startTime.substring(0, 6)
         bottomTime.text = event.endTime.subSequence(0, 6)
-
+        eventContent.setBackgroundColor(Color.parseColor(event.getEventColor()))
     }
 
     // merr rektin, top dhe bottom margin (nese ka) dhe e vendos ne view

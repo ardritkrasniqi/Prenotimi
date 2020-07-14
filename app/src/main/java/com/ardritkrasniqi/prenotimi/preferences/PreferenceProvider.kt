@@ -7,6 +7,7 @@ import androidx.preference.PreferenceManager
 
 private const val CURRENT_TOKEN = "current_token"
 private const val APPOINTMENT_ADDED = "appointment_added"
+private const val ISWEEKCALENDAR = "week_calendar"
 
 class PreferenceProvider(context: Context?) {
 
@@ -34,6 +35,14 @@ class PreferenceProvider(context: Context?) {
 
     fun getIsappointmentAdded(): Boolean{
         return preference.getBoolean(APPOINTMENT_ADDED, false)
+    }
+
+    fun isWeekCalendar(trueOrFalse: Boolean){
+        return preference.edit().putBoolean(ISWEEKCALENDAR, trueOrFalse).apply()
+    }
+
+    fun getIsWeekCalendar(): Boolean{
+        return preference.getBoolean(ISWEEKCALENDAR, false)
     }
 
 

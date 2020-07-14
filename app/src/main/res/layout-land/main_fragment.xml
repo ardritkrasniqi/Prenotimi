@@ -22,7 +22,6 @@
 
             <com.kizitonwose.calendarview.CalendarView
                 android:id="@+id/calendarView"
-                android:paddingStart="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:cv_dayViewResource="@layout/calendar_day"
@@ -51,6 +50,7 @@
             android:padding="10dp"
             android:visibility="gone"
             android:clickable="true"/>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

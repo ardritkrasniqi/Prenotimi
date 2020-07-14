@@ -42,12 +42,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@drawable/day_form"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/sot_indicator"
@@ -57,7 +55,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="9dp"
                 android:background="@drawable/today_indicator_circle"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/calendarDay_text"
@@ -73,88 +71,312 @@
                 android:textStyle="bold"
                 tools:text="24" />
 
-
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/event_item_parent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/event_item_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
-                    android:background="@color/colorPrimary"
-                    android:fontFamily="@font/roboto_condensed_regular"
-                    android:singleLine="true"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:textSize="12sp"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="11:20-12:20 Ardrit Krasniqi" />
-
-                <TextView
-                    android:id="@+id/event_item_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="2dp"
-                    android:background="@color/colorPrimary"
-                    android:fontFamily="@font/roboto_condensed_regular"
-                    android:singleLine="true"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:textSize="12sp"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/event_item_1"
-                    tools:text="11:20-12:20 Filan Fisteku" />
-
-                <TextView
-                    android:id="@+id/event_item_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="2dp"
-                    android:background="@color/colorPrimary"
-                    android:fontFamily="@font/roboto_condensed_regular"
-                    android:singleLine="true"
-                    android:textAlignment="center"
-                    android:textColor="#fff"
-                    android:textSize="12sp"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/event_item_2"
-                    tools:text="11:20-12:20 Ardrit Krasniqi" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <ImageView
                 android:id="@+id/more_appointments_dots"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:src="@drawable/ic_more"
-                android:visibility="invisible" />
-
-
+                android:visibility="gone" />
         </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/event_item_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="35dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/event_item_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_1"
+                tools:text="11:20-12:20 Filan Fisteku" />
+
+            <TextView
+                android:id="@+id/event_item_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_2"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_3"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_4"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_5"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_6"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_7"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_8"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_9"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_10"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_11"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_12"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_13"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+            <TextView
+                android:id="@+id/event_item_15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="2dp"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/roboto_condensed_regular"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/event_item_14"
+                tools:text="11:20-12:20 Ardrit Krasniqi" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

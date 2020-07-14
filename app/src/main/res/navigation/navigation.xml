@@ -48,6 +48,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+        <action
+            android:id="@+id/action_mainFragment_to_testWeekCalendar"
+            app:destination="@id/testWeekCalendar" />
 
 
     </fragment>
@@ -117,5 +120,10 @@
         android:name="com.ardritkrasniqi.prenotimi.ui.listAppointments.ListAppointments"
         android:label="list_appointments_fragment"
         tools:layout="@layout/list_appointments_fragment" />
+    <fragment
+        android:id="@+id/testWeekCalendar"
+        android:name="com.ardritkrasniqi.prenotimi.ui.TEST.TestWeekCalendar"
+        android:label="test_week_calendar_fragment"
+        tools:layout="@layout/test_week_calendar_fragment" />
 
 </navigation>

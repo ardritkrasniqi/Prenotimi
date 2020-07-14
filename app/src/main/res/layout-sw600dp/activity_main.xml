@@ -25,7 +25,7 @@
                 android:layout_height="@dimen/abc_action_bar_default_height_material"
                 android:animationCache="true"
                 android:background="@color/toolbar_color"
-                android:elevation="10dp"
+                android:elevation="0dp"
                 android:theme="@style/ToolbarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

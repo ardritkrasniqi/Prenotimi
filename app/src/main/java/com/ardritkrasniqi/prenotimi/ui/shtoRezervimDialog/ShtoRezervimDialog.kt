@@ -171,13 +171,11 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
 
         // merr daten e dhene ne datepicker dhe i ben update EditTextit
-
         val date = OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, monthOfYear)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             updateLabel()
-
         }
 
 
@@ -201,9 +199,9 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
             (dateFromDayView?.substring(5, 7)?.toInt()?.minus(1)) ?: calendar.get(Calendar.MONTH),
             dateFromDayView?.substring(8, 10)?.toInt() ?: calendar.get(Calendar.DAY_OF_MONTH)
         )
-
-        datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "OK"
-        ) { _, _ ->  timePickerDialog.show()}
+//        datePickerDialog.setButton(DatePickerDialog.BUTTON_POSITIVE, "OK"
+//        ) { _, _ ->  timePickerDialog.show()
+//        calendar.set()}
 
 
         // Timepicker dialog
@@ -217,20 +215,18 @@ class ShtoRezervimDialog : BottomSheetDialogFragment() {
 
         prejEdit.setOnClickListener {
             index = 1
-            when (true) {
-                true -> {
-                    datePickerDialog.show()
-                }
+           datePickerDialog.show()
+            datePickerDialog.setOnDismissListener {
+                timePickerDialog.show()
             }
         }
         index = 0
 
         deriEdit.setOnClickListener {
             index = 2
-            when (true) {
-                true -> {
-                    datePickerDialog.show()
-                }
+            datePickerDialog.show()
+            datePickerDialog.setOnDismissListener {
+                timePickerDialog.show()
             }
         }
         index = 0

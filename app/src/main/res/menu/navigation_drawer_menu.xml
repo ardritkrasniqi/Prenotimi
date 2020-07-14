@@ -2,28 +2,31 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group
-        android:id="@+id/functionalGroup">
+        android:id="@+id/functionalGroup"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/listoRezervimet"
-            android:icon="@drawable/ic_list_black_24dp"
+            android:icon="@drawable/ic_list"
+            android:iconTint="@color/black_color"
             android:title="@string/listo_rezervimet_text"/>
 
         <item
-            android:checkable="false"
-            android:enabled="false"
-            android:title="" />
+            android:id="@+id/weekCalendar"
+            android:icon="@drawable/ic_7calendar"
+            android:title="Kalendari Javor"/>
 
         <item
-            android:checkable="false"
-            android:enabled="false"
-            android:title="" />
+            android:id="@+id/monthCalendar"
+            android:icon="@drawable/ic_monthly"
+            android:title="Kalendari Mujor" />
+
     </group>
     <group
         android:id="@+id/logoutGroup">
         <item
             android:id="@+id/logOut"
             android:icon="@drawable/ic_logout"
-
+            android:iconTint="@color/black_color"
             android:title="@string/log_out_text" />
 
 

@@ -3,7 +3,6 @@ package com.ardritkrasniqi.prenotimi.ui.costomViews
 import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -90,8 +89,8 @@ class CalendarDayView : FrameLayout {
     }
 
     // perdoret per te naviguar ne shtorezerviminDialog
-    fun make24HTime(int: Int): String{
-        return if(int < 10) "0$int:00:00" else "$int:00:00"
+    fun make24HTime(int: Int): String {
+        return if (int < 10) "0$int:00:00" else "$int:00:00"
     }
 
 
@@ -109,7 +108,9 @@ class CalendarDayView : FrameLayout {
         var dayView: DayView? = null
         for (i in startHour..endHour) {
             dayView = decorationn?.getDayView(i)
-            if(!isClickedOnce){
+
+            ////// I FUCKED THIS ONE UP, NEEDS TO BE REWRITEN
+            if (!isClickedOnce) {
             dayView?.setOnClickListener {
                 findNavController().navigate(DayFragmentDirections.actionDayFragmentToShtoRezervimDialog(null,false,"${dayFragment.date} ${make24HTime(i)}"))
                 isClickedOnce = true
@@ -124,7 +125,7 @@ class CalendarDayView : FrameLayout {
         }
     }
 
-// i behet iterimi listes se eventeve dhe i vendos te gjitha ne layoutEvent
+    // i behet iterimi listes se eventeve dhe i vendos te gjitha ne layoutEvent
     private fun drawEvents() {
         layoutEvent!!.removeAllViews()
         for (event in events!!) {
@@ -137,7 +138,6 @@ class CalendarDayView : FrameLayout {
             }
         }
     }
-
 
 
     // krijon rectin me dimensionet e caktuara si eventstart time separate hour height etj
@@ -169,7 +169,7 @@ class CalendarDayView : FrameLayout {
     }
 
     fun setLimitTime(startHour: Int, endHour: Int) {
-        require(startHour < endHour) { "Start Hour duhet te jete para End Hour" }
+        require(startHour < endHour) { "StartHour duhet te jete para EndHour" }
         this.startHour = startHour
         this.endHour = endHour
         refresh()

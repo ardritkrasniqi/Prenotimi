@@ -17,5 +17,10 @@
     <color name="eventColorSelected">#aab2c99a</color>
     <color name="eventColorReal">#95154EDF</color>
     <color name="calendar_background_color">#D3B0C0D5</color>
-
+    <color name="yellow">#FFEB3B</color>
+    <color name="almostWhite">#ECECEC</color>
+    <color name="rezervimiMujorColor">#B396D151</color>
+    <color name="rezervimiJavorColor">#B359B545</color>
+    <color name="rezervimiDitorColor">#B32E7A2E</color>
+    <color name="eventColorr">#B36574DC</color>
 </resources>

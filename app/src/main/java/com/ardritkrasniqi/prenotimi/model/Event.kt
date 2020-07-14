@@ -3,17 +3,15 @@ package com.ardritkrasniqi.prenotimi.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.ardritkrasniqi.prenotimi.model.data.IEvent
-
 import com.squareup.moshi.Json
-import kotlinx.android.parcel.Parceler
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Event(
     @Json(name = "client_name")
-    val client_name: String,
+    val client_name: String = "",
     @Json(name = "client_phone")
-    val phone: String,
+    val phone: String = "",
     @Json(name = "start_date")
     val start_date: String,
     @Json(name = "end_date")
@@ -21,7 +19,7 @@ data class Event(
     @Json(name = "recurring")
     val recurring: Int = 0,
     @Json(name = "recurring_frequency")
-    val recurring_frequency: Int? = null,
+    val recurring_frequency: Int? = -1,
     @Json(name = "comment")
     val comment: String? = "",
     @Json(name = "created_at")
@@ -29,10 +27,19 @@ data class Event(
     @Json(name = "updated_at")
     val updated_at: String? = null,
     @Json(name = "id")
-    val id: Int? = null
+    val id: Int? = null,
+    val color: String = ""
 
 ) : IEvent, Parcelable {
 
+    fun getEventColor(): String {
+        return when (this.recurring_frequency) {
+            1 -> "#2E7A2E"
+            2 -> "#59B545"
+            3 -> "#96D151"
+            else -> "#AB6574DC"
+        }
+    }
 
 
     override val clientName: String
@@ -59,13 +66,6 @@ data class Event(
         parcel.readValue(Int::class.java.classLoader) as? Int
     )
 
-//    companion object : Parceler<Event> {
-//
-//        override fun Event.write(parcel: Parcel, flags: Int): Nothing = null
-//        override fun create(parcel: Parcel): Event {
-//            return Event(parcel)
-//        }
-//    }
 }
 
 

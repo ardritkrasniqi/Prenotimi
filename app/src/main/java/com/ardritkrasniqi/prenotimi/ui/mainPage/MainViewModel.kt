@@ -34,20 +34,17 @@ class MainViewModel : ViewModel() {
     val daysOfWeek: Array<DayOfWeek> =
         daysOfWeekFromLocale()
     val currentMonth: YearMonth = YearMonth.now()
-    val firstMonth = currentMonth.minusMonths(10)
-    val lastMonth = currentMonth.plusMonths(10)
+    val firstMonth: YearMonth = currentMonth.minusMonths(24)
+    val lastMonth: YearMonth = currentMonth.plusMonths(24)
     val firstDayOfWeek: DayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
-    var sixMonths = currentMonth
 
     init {
         incrementingMonthNumber.value = 0
-        Log.i("created", "im created")
     }
 
 
 
     // business logic variables
-
     private val _allAppointments = MutableLiveData<List<Event>>()
     val allAppointments: LiveData<List<Event>>
         get() = _allAppointments
@@ -76,6 +73,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun incrementMonthNumber(){
+        Log.i("called", "imCalled")
         currentNumber++
         if(currentNumber == 5){
             incrementingMonthNumber.value = 5
