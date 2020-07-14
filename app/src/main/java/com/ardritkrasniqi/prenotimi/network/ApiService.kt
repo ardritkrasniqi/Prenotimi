@@ -1,7 +1,6 @@
 package com.ardritkrasniqi.prenotimi.network
 
 
-import com.ardritkrasniqi.prenotimi.BuildConfig
 import com.ardritkrasniqi.prenotimi.model.*
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -13,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
 
-const val BASE_URL = BuildConfig.BASE_URL
+const val BASE_URL = "http://45.76.43.73/appointment-app-backend/public/api/"
 
 
 val moshi: Moshi = Moshi.Builder()
